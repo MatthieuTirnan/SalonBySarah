@@ -221,3 +221,13 @@ export const addArticle = async (req,res) => {
 
     })
 }
+
+export const deleteArticle = async (req,res) => {
+    const {id}=  req.body
+    const data = await Image.find();
+    const result = data.find(element => element._id == id)
+    console.log(result)
+    const imagePath = "./public/images/"+result.fileName;
+
+}
+

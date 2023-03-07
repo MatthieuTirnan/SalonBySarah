@@ -2,6 +2,7 @@ import User from "../models/usersShema.js"
 import Prestation from "../models/prestationSchema.js"
 import jwt from "jsonwebtoken"
 import Image from "../models/imagesSchema.js"
+import Article from "../models/articleSchema.js"
 
 export const register = async(req, res) => {
     const {pseudo,email, password} =  req.body
@@ -92,3 +93,12 @@ export const listImageGalerie = async (req,res) => {
         return res.status(200).json({count:data.length,data});
     }
 }
+export const showArticle = async(req, res) => {
+    const data = await Article.find();
+    if (!data) {
+        return res.status(404).json({ message: "article introuvable." });
+    }
+    else{
+        return res.status(200).json({count:data.length,data});
+    }
+};
