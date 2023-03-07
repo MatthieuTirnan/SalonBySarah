@@ -9,7 +9,7 @@ export const register = async(req, res) => {
         pseudo,
         email,
         password,
-        isAdmin: email === "admin@admin.fr"
+        isAdmin: email === process.env.ADMIN_PASSWORD
     })
     const jwt = newUser.createJWT()
     newUser.save()

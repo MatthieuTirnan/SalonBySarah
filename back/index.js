@@ -10,7 +10,7 @@ dotenv.config()
 const app = express();
 const PORT = 9010;
 
-console.log(process.env.JWT_SECRET)
+console.log(process.env.ADMIN_PASSWORD)
 app.use(cors())
 
 app.use(express.json())

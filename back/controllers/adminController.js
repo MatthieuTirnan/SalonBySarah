@@ -1,5 +1,7 @@
 import User from "../models/usersShema.js"
 import Prestation from "../models/prestationSchema.js"
+import formidable from "formidable";
+import Image from "../models/imagesSchema.js"
 import fs from "fs"
 
 export const listUser = async (req, res) => {
@@ -95,5 +97,62 @@ export const updatePrestation = async (req,res) => {
         .then((result) => res.status(201).json({message: "Update product successful", result}))
         .catch((err) => res.status(400).json({error: err.message}))
 }
+export const addImageGalerie = async (req,res) => {
+    const form = formidable();
+    form.parse(req, function (err, fields, files){
+        console.log(fields,files)
 
+    let oldpath = files.fichier.filepath;
+    
+    function getExtension(fileExtension) {
+        return fileExtension.split("/")[1];
+    }
+    let fileExtension = files.fichier.mimetype;
+    let currentExtension = "."+getExtension(fileExtension)
+    
+    let newpath = 'public/images/' + files.fichier.newFilename +currentExtension;
 
+    fs.copyFile(oldpath, newpath, function (err){
+        if (err) throw err;
+        console.log("fichier ajouter")
+    })
+    const page = 'Galerie'
+    const alt = files.fichier.originalFilename
+    const src ="http://localhost:9010/public/images/"+files.fichier.newFilename+currentExtension
+    const fileName=files.fichier.newFilename+currentExtension
+    const newImage = new Image ({
+        page,
+        alt,
+        src,
+        fileName
+    })
+    newImage.save()
+        .then(() => {
+            res.status(201).json({message :"image ajouter"})
+        })
+        .catch((err)=>{
+            res.status(400).json({message :"fichier  pas ajouter"})
+        })
+    
+    })
+}
+
+export const deleteImageGalerie = async (req,res) => {
+    const {id}=  req.body
+    const data = await Image.find();
+    const result = data.find(element => element._id == id)
+    console.log(result)
+    const imagePath = "./public/images/"+result.fileName;
+
+    fs.unlink(imagePath, (err) => {
+        if (err) {
+            console.error(err);
+            return 
+        }else{
+        console.log(`Le fichier ${imagePath} a été supprimé.`);
+        res.status(200).json({message: 'fichier supprimé'})
+        }
+    })
+    
+    
+}
