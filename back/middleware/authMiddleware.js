@@ -1,6 +1,6 @@
 import User from '../models/usersShema.js';
 import  jwt from 'jsonwebtoken';
-import { jwtPassword } from './../models/usersShema.js';
+
 
 
 export const verifiedToken = async(req, res, next) => {
@@ -15,7 +15,7 @@ export const verifiedToken = async(req, res, next) => {
         return
     }
 
-    jwt.verify(token, jwtPassword, async (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             res.status(401).send({message: "Unauthorized!"});
             return

@@ -8,7 +8,7 @@ export const listUser = async (req, res) => {
     if(user == null){
         res.status(400).json({message :"email ou mot de passe erroné"})
     } else {
-        res.status(200).json({count:user.length,user})
+        return res.status(200).json({count:user.length,user})
     }
 };
 
@@ -17,12 +17,15 @@ export const deleteUser = async (req, res) => {
     const data = await User.find();
     const result = data.find(element => element._id == id)
     console.log(result)
+    if (!result) {
+        return res.status(404).json({ message: "user introuvable." });
+    }
     User.findByIdAndDelete(result._id)
     .then(()=>{
         console.log("Successful deletion")
     }).catch((err)=>{
         console.log(err)
-            res.status(400).json(err)
+            return res.status(400).json(err)
     })
 };
 export const PassRemoveAdmin = async (req, res) => {
@@ -57,7 +60,40 @@ export const createPrestation = async (req,res) => {
         res.status(200).json({newPrestation})
     })
     .catch((err)=>{
-        res.status(400).json({message :"un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme accepter"})
+        return res.status(400).json({message :"un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme accepter"})
     })
-
 }
+export const deletePrestation = async (req,res) => {
+    const id = req.body.id;
+    const data = await Prestation.find();
+    const result = data.find(element => element._id == id)
+    if (!result) {
+        return res.status(404).json({ message: "Prestation introuvable." });
+    }
+    Prestation.findByIdAndDelete(result._id)
+    .then(()=>{
+        console.log("Successful deletion")
+    }).catch((err)=>{
+        console.log(err)
+            return res.status(400).json(err)
+    })
+}
+export const updatePrestation = async (req,res) => {
+    const id = req.body.id;
+
+    
+    const data = await Prestation.find();
+    const result = data.find(element => element._id == id)
+    if (!result) {
+        return res.status(404).json({ message: "Prestation introuvable." });
+    }
+    Prestation.findByIdAndUpdate(result._id, {
+        genre: req.body.genre,
+        prestation: req.body.prestation,
+        price: req.body.price,
+    }, {new: true})
+        .then((result) => res.status(201).json({message: "Update product successful", result}))
+        .catch((err) => res.status(400).json({error: err.message}))
+}
+
+

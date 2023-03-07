@@ -1,4 +1,5 @@
-import User, { jwtPassword } from "../models/usersShema.js"
+import User from "../models/usersShema.js"
+import Prestation from "../models/prestationSchema.js"
 import jwt from "jsonwebtoken"
 
 export const register = async(req, res) => {
@@ -51,7 +52,7 @@ export const userprovider = async(req, res) => {
         return
     }
 
-    jwt.verify(token, jwtPassword, async (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             res.status(403).send({message: "Unauthorized!"});
             return
@@ -69,3 +70,13 @@ export const userprovider = async(req, res) => {
         })
     });
 };
+
+export const listPrestation = async(req,res) => {
+    const data = await Prestation.find();
+    if (!data) {
+        return res.status(404).json({ message: "Prestation introuvable." });
+    }
+    else{
+        return res.status(200).json({count:data.length,data});
+    }
+}

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken"
 
-export const jwtPassword = '37c73fe5834740bbe87bcfe158bae65787323928299a403c88227a476b58d9f9'
+
 
 let userSchema = mongoose.Schema({
         pseudo:{
@@ -43,12 +43,12 @@ userSchema.methods.createJWT = function () {
     pseudo: this._pseudo,
     id: this._id,
     email: this.email
-    }, jwtPassword, {expiresIn: '24h'})
+    }, process.env.JWT_SECRET, {expiresIn: '24h'})
 }
 
 userSchema.statics.decodeJWT = async function (token) {
     try {
-    const decoded = jwt.verify(token, jwtPassword);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await this.findOne({ email: decoded.email });
 
     if (!user) {
