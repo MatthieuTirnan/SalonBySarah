@@ -1,5 +1,5 @@
 import express from "express";
-import { createPrestation, deleteUser, listUser,PassRemoveAdmin,deletePrestation, updatePrestation, addImageGalerie, deleteImageGalerie,addArticle } from '../controllers/adminController.js';
+import { createPrestation, deleteUser, listUser,PassRemoveAdmin,deletePrestation, updatePrestation, addImageGalerie, deleteImageGalerie,addArticle, deleteArticle } from '../controllers/adminController.js';
 
 
 
@@ -23,7 +23,7 @@ adminRouter.post("/add-Article", addArticle)
 adminRouter.delete("/delete-user", deleteUser )
 adminRouter.delete("/delete-prestation", deletePrestation )
 adminRouter.delete("/delete-image-galerie", deleteImageGalerie )
-
+adminRouter.delete("/delete-article", deleteArticle )
 
 
 adminRouter.put("/putAdmin-user", PassRemoveAdmin )

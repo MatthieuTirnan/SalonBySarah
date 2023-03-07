@@ -142,7 +142,10 @@ export const deleteImageGalerie = async (req,res) => {
     const {id}=  req.body
     const data = await Image.find();
     const result = data.find(element => element._id == id)
-    console.log(result)
+    if (!result) {
+        return res.status(404).json({ message: "user introuvable." });
+    }
+    
     const imagePath = "./public/images/"+result.fileName;
 
     fs.unlink(imagePath, (err) => {
@@ -224,10 +227,33 @@ export const addArticle = async (req,res) => {
 
 export const deleteArticle = async (req,res) => {
     const {id}=  req.body
-    const data = await Image.find();
+    const data = await Article.find();
     const result = data.find(element => element._id == id)
+    if (!result) {
+        return res.status(404).json({ message: "article introuvable." });
+    }
+    if (result.image){
+        const images = await Image.findOne({_id :result.image});
+        const imagePath = "./public/images/"+images.fileName;
+        console.log(images)
+        console.log(imagePath)
+        fs.unlink(imagePath, (err) => {
+            if (err) {
+                console.error(err);
+                return 
+            }else{
+            console.log(`Le fichier ${imagePath} a été supprimé.`);
+            res.status(200).json({message: 'fichier supprimé'})
+            }
+        })
+    }
     console.log(result)
-    const imagePath = "./public/images/"+result.fileName;
-
+    Article.findByIdAndDelete(result._id)
+        .then(()=>{
+            console.log("Successful deletion")
+        }).catch((err)=>{
+            console.log(err)
+                return res.status(400).json(err)
+        })
 }
 
