@@ -3,6 +3,7 @@ import express from "express";
 import useRouter from "./routes/userRoute.js";
 import adminRouter from './routes/adminRouter.js';
 import cors from "cors";
+import {auth} from "./middleware/authMiddleware.js";
 
 
 
@@ -27,8 +28,9 @@ mongoose.connection.on("error", () => {
 mongoose.connection.on("open", () => {
     console.log("Connexion à la base de donénes établie");
     app.use('/', useRouter);
-    app.use('/admin',adminRouter);
+    app.use('/admin',[auth.verifiedToken,auth.isAdmin],adminRouter);
 })
+
 // ,[auth.verifiedToken,auth.isAdmin]
 
 app.listen(PORT, () => {

@@ -1,10 +1,12 @@
 import express from "express";
-import { testuser } from "../controllers/userscontroller.js";
+import { login, register, userprovider } from "../controllers/usersController.js";
 
 
 
 const useRouter = express.Router()
 
 
-useRouter.get("/test", testuser )
+useRouter.get("/login", login )
+useRouter.get("/register", register )
+useRouter.get("/userprovider", userprovider )
 export default useRouter
