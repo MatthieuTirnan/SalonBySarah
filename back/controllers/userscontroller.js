@@ -1,6 +1,7 @@
 import User from "../models/usersShema.js"
 import Prestation from "../models/prestationSchema.js"
 import jwt from "jsonwebtoken"
+import Image from "../models/imagesSchema.js"
 
 export const register = async(req, res) => {
     const {pseudo,email, password} =  req.body
@@ -75,6 +76,17 @@ export const listPrestation = async(req,res) => {
     const data = await Prestation.find();
     if (!data) {
         return res.status(404).json({ message: "Prestation introuvable." });
+    }
+    else{
+        return res.status(200).json({count:data.length,data});
+    }
+}
+export const listImageGalerie = async (req,res) => {
+
+    const data = await Image.find();
+
+    if (!data) {
+        return res.status(404).json({ message: "images introuvable." });
     }
     else{
         return res.status(200).json({count:data.length,data});

@@ -2,6 +2,7 @@ import User from "../models/usersShema.js"
 import Prestation from "../models/prestationSchema.js"
 import formidable from "formidable";
 import Image from "../models/imagesSchema.js"
+import Article from "../models/articleSchema.js"
 import fs from "fs"
 
 export const listUser = async (req, res) => {
@@ -153,6 +154,70 @@ export const deleteImageGalerie = async (req,res) => {
         res.status(200).json({message: 'fichier supprimé'})
         }
     })
+}
+export const addArticle = async (req,res) => {
+    const form = formidable();
+    form.parse(req, function (err, fields, files){
+        console.log(fields,files)
+    if (files.fichier) {
+
+    const oldpath = files.fichier.filepath;
+    function getExtension(fileExtension) {
+        return fileExtension.split("/")[1];
+    }
+    let fileExtension = files.fichier.mimetype;
+    const currentExtension = "."+getExtension(fileExtension)
     
+    const newpath = 'public/images/' + files.fichier.newFilename +currentExtension;
+
+    fs.copyFile(oldpath, newpath, function (err){
+        if (err) throw err;
+        console.log("fichier ajouter")
+    })
+    const page = 'Article'
+    const alt = files.fichier.originalFilename
+    const src ="http://localhost:9010/public/images/"+files.fichier.newFilename+currentExtension
+    const fileName=files.fichier.newFilename+currentExtension
+    const newImage = new Image ({
+        page,
+        alt,
+        src,
+        fileName
+    })
+    newImage.save()
+        
+
+        const titre = fields.titre
+        const description = fields.description
+        const newArticle = new Article({
+            titre,
+            description,
+            image:newImage,
+            imagepath:src
+        })
+        newArticle.save()
+            .then(() => {
+                res.status(201).json({message :"article ajouter"})
+            })
+            .catch((err)=>{
+                res.status(400).json({message :"article pas ajouter"})
+            })
+    }else{
+        const titre = fields.titre
+        const description = fields.description
+        const newArticle = new Article({
+            titre,
+            description,
+        })
+        newArticle.save()
+            .then(() => {
+                res.status(201).json({message :"article ajouter"})
+            })
+            .catch((err)=>{
+                res.status(400).json({message :"article pas ajouter"})
+            })
+    }
     
+
+    })
 }
