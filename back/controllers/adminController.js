@@ -251,9 +251,104 @@ export const deleteArticle = async (req,res) => {
     Article.findByIdAndDelete(result._id)
         .then(()=>{
             console.log("Successful deletion")
-        }).catch((err)=>{
+            return
+        })
+        .catch((err)=>{
             console.log(err)
-                return res.status(400).json(err)
+            return res.status(400).json(err)
         })
 }
+export const updateArticle = async (req, res) => {
+    let form = new formidable.IncomingForm();
+    
+    form.parse(req, async function (err, fields, files) {
+        console.log(files)
+        if (err) {
+            console.log(err);
+        throw err;
+        }
+
+        try {
+            const id = fields.id;
+            const article = await Article.findById(id);
+    
+            if (!article) {
+                return res.status(404).json({ message: "article introuvable." });
+            }
+    
+            const titre = fields.titre || article.titre;
+            const description = fields.description || article.description;
+    
+
+            if (files.fichier) {
+            const oldpath = files.fichier.filepath;
+            
+            function getExtension(fileExtension) {
+                return fileExtension.split("/")[1];
+            }
+
+            let fileExtension = files.fichier.mimetype;
+            const currentExtension = "."+getExtension(fileExtension)
+            
+            const newpath = 'public/images/' + files.fichier.newFilename +currentExtension;
+            const allowedExtensions = ['.png','.jpg','.jpeg','.gif','.bmp'];
+    
+            if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
+                throw new Error('Unsupported image file type');
+            }
+
+            if (article.image) {
+                const images = await Image.findOne({_id :article.image});
+                const imagePath = "./public/images/"+images.fileName;
+                
+                fs.unlink(imagePath, (err) => {
+                    if (err) {
+                        console.error(err);
+
+                    }
+                })
+            }
+
+            const page = 'Article';
+            const alt = files.fichier.originalFilename;
+            const src = "http://localhost:9010/public/images/"+files.fichier.newFilename+currentExtension;
+            const fileName=files.fichier.newFilename+currentExtension
+            fs.copyFile(oldpath, newpath, function (err){
+                if (err) throw err;
+                console.log("fichier ajouter")
+            })
+            const newImage = new Image({
+                page,
+                alt,
+                src,
+                fileName
+            });
+    
+            await newImage.save();
+    
+            article.titre = titre;
+            article.description = description;
+            article.image = newImage;
+            article.imagepath = src;
+    
+            await article.save();
+    
+            } else {
+            article.titre = titre;
+            article.description = description;
+            await article.save();
+            }
+    
+            res.status(200).json({
+            message: 'Article updated successfully',
+            article: article
+            });
+    
+        } catch(err) {
+            console.log(err);
+            res.status(400).json({message: err.message});
+        }
+    });
+};
+
 
