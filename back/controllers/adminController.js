@@ -102,7 +102,7 @@ export const addImageGalerie = async (req,res) => {
     const form = formidable();
     form.parse(req, function (err, fields, files){
         console.log(fields,files)
-        if(!files){
+        if(!files.fichier){
             return res.status(400).json({message:'fichier manquant'})
         }
     let oldpath = files.fichier.filepath;

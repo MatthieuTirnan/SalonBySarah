@@ -7,10 +7,10 @@ import { listPrestation, login, register, userprovider,listImageGalerie, showArt
 const useRouter = express.Router()
 
 
-useRouter.get("/login", login )
-useRouter.get("/register", register )
-useRouter.get("/userprovider", userprovider )
+useRouter.post("/login", login )
+useRouter.post("/register", register )
 
+useRouter.get("/userprovider", userprovider )
 useRouter.get("/prestation", listPrestation )
 useRouter.get("/show-article", showArticle )
 useRouter.get("/galerie", listImageGalerie )
