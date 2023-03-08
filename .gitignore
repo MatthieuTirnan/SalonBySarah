@@ -1,5 +1,6 @@
 node_modules
 /back/.env
+!/back/public/images
 /back/public/images/*
 
 
