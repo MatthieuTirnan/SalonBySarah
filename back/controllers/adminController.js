@@ -25,7 +25,7 @@ export const deleteUser = async (req, res) => {
     }
     User.findByIdAndDelete(result._id)
     .then(()=>{
-        console.log("Successful deletion")
+        return res.status(200).json({message:'delete'})
     }).catch((err)=>{
         console.log(err)
             return res.status(400).json(err)
@@ -102,7 +102,9 @@ export const addImageGalerie = async (req,res) => {
     const form = formidable();
     form.parse(req, function (err, fields, files){
         console.log(fields,files)
-
+        if(!files){
+            return res.status(400).json({message:'fichier manquant'})
+        }
     let oldpath = files.fichier.filepath;
     
     function getExtension(fileExtension) {

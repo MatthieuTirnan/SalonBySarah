@@ -8,7 +8,9 @@ let userSchema = mongoose.Schema({
         pseudo:{
             type: String,
             required: true,
-            index: { unique: true } },
+            index: { unique: true } ,
+            unique: true,
+        },
         email: {
             type: String,
             required: [true, 'This property Email is required'],
@@ -60,4 +62,4 @@ userSchema.statics.decodeJWT = async function (token) {
     }
 };
 
-    export default mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);
