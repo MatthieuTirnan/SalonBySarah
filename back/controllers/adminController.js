@@ -151,7 +151,7 @@ export const deleteImageGalerie = async (req, res) => {
     const data = await Image.find();
     const result = data.find(element => element._id == id)
     if (!result) {
-        return res.status(404).json({ message: "user introuvable." });
+        return res.status(404).json({ message: "image introuvable." });
     }
 
     const imagePath = "./public/images/" + result.fileName;
