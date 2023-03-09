@@ -40,6 +40,7 @@ export const addImageGalerie = async (req, res) => {
         if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
             return res.status(404).json({message:'Unsupported image file type'});
         }
+        
         fs.copyFile(oldpath, newpath, function (err) {
             if (err) return res.status(404).json({message:'échec de l\'ajout'});
             console.log("fichier ajouter")

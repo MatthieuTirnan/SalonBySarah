@@ -47,7 +47,7 @@ export const PassRemoveAdmin = async (req, res) => {
         user.isAdmin = !user.isAdmin;
         await user.save();
 
-        res.json({ message: `User ${user.pseudo} updated successfully` });
+        res.json({ message: `user updated successfully`,user });
     }
     catch (error) {
         console.log(error);

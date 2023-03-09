@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 let inboxSchema = mongoose.Schema({
 
-    to: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },

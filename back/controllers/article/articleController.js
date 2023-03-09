@@ -65,10 +65,10 @@ export const addArticle = async (req, res) => {
             })
             newArticle.save()
                 .then(() => {
-                    res.status(201).json({ message: `l'article ayant pour titre${newArticle.titre} a été ajouté` })
+                    res.status(201).json({ message: `l'article a été ajouté`,article:newArticle })
                 })
                 .catch((err) => {
-                    res.status(400).json({ message: `l'article ayant pour titre${newArticle.titre} n'a été ajouté` })
+                    res.status(400).json({ message: `l'article n'a pas été ajouté`,err:err })
                 })
         } else {
             const titre = fields.titre
@@ -79,10 +79,10 @@ export const addArticle = async (req, res) => {
             })
             newArticle.save()
                 .then(() => {
-                    res.status(201).json({ message: `l'article ayant pour titre ${newArticle.titre} a été ajouté` })
+                    res.status(201).json({ message: `l'article a été ajouté`,article:newArticle })
                 })
                 .catch((err) => {
-                    res.status(400).json({ message: `l'article ayant pour titre${newArticle.titre} n'a été ajouté` })
+                    res.status(400).json({  message: `l'article n'a pas été ajouté`,err:err })
                 })
         }
 
@@ -206,7 +206,7 @@ export const updateArticle = async (req, res) => {
 
             res.status(200).json({
                 message: 'Article updated successfully',
-                article: article
+                NewArticle: article
             });
 
         } catch (err) {

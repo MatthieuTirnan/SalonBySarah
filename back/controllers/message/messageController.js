@@ -10,11 +10,11 @@ import Inbox from "../../models/inboxSchema.js";
 import Messages from "../../models/messagesSchema.js";
 
 export const addMessage = async (req, res) => {
-    
+
 
     const form = formidable();
     form.parse(req, function (err, fields, files) {
-        
+
         if (!fields.titre || !fields.description) {
             return res.status(400).json({ message: "champ manquant" });
         }
@@ -63,30 +63,29 @@ export const addMessage = async (req, res) => {
             });
             newMessage.save();
 
-            Inbox.findOne({ to: req.userId })
+            Inbox.findOne({ user: req.userId })
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
-                        inbox
-                            .save()
+                        inbox.save()
                             .then(() => {
-                                res.status(201).json({ message: `message ${newMessage.titre} ajouté` });
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
                                 res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
                     } else {
                         const newInbox = new Inbox({
-                            to: req.userId,
+                            user: req.userId,
                             message: [newMessage],
                         });
                         newInbox
                             .save()
                             .then(() => {
-                                res.status(201).json({ message: `message ${newMessage.titre} de ${req.userId} ajouté` });
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
-                                res.status(400).json({ message: `message ${newMessage.titre}  non ajouté` });
+                                res.status(400).json({ message: err });
                             });
                     }
                 })
@@ -104,21 +103,21 @@ export const addMessage = async (req, res) => {
             });
             newMessage.save();
 
-            Inbox.findOne({ to: req.userId })
+            Inbox.findOne({ user: req.userId })
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
                         inbox
                             .save()
                             .then(() => {
-                                res.status(201).json({ message: `message ${newMessage.titre}  ajouté` });
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
                                 res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
                     } else {
                         const newInbox = new Inbox({
-                            to: req.userId,
+                            user: req.userId,
                             message: [newMessage],
                         });
                         newInbox
@@ -127,7 +126,7 @@ export const addMessage = async (req, res) => {
                                 res.status(201).json({ message: `message ${newMessage.titre}  ajouté` });
                             })
                             .catch((err) => {
-                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté`});
+                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
                     }
                 })
@@ -144,8 +143,8 @@ export const deleteMessage = async (req, res) => {
         const userId = req.userId;
         const data = await Messages.find();
         const messageToDelete = data.find(element => element._id == messageId)
-        
-        
+
+
         if (!messageToDelete)
             return res.status(400).json({ message: "message introuvable" });
         if (messageToDelete.from.toString() !== userId) {
@@ -164,35 +163,76 @@ export const deleteMessage = async (req, res) => {
                 if (err) {
                     return res.status(400).json({ message: "image absente" });
                 }
-                
+
                 console.log(`Image supprimée : ${imagePath}`);
             });
 
             await Image.findByIdAndRemove(imageToDelete._id);
         }
-        
+
         const inboxToUpdate = await Inbox.findOne({
-            to: userId,
+            user: userId,
             message: { $in: [messageToDelete._id] },
         });
 
         if (inboxToUpdate) {
             inboxToUpdate.message.pull(messageToDelete._id);
             inboxToUpdate.save()
-                .then(()=> console.log("message supprimé de inbox "))
-                .catch((err)=> console.log(err))
+                .then(() => console.log("message supprimé de inbox "))
+                .catch((err) => console.log(err))
         }
 
         Messages.findByIdAndRemove(messageToDelete._id)
-            .then(()=>  {
+            .then(() => {
                 console.log("message remove")
-                return res.status(204).json({message:"204"})
+                return res.status(204).json({ message: "204" })
             })
-            .catch((err)=> {console.log(err)})
-        
+            .catch((err) => { console.log(err) })
+
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erreur lors de la suppression du message" });
     }
-    
+
+};
+
+// export const listUserMessage = async (req, res) => {
+//     const id = req.userId
+//     const messageFromUser = []
+//     const messages = await Messages.find()
+//     const inbox = await Inbox.findOne({ user: id })
+
+//     if (!inbox || !messages) {
+//         res.status(400).json({ message: "aucun message trouvé" })
+//     }
+
+//     inbox.message.forEach((e, i) => {
+//         console.log(e)
+//         const currentMessage = Messages.findOne({ _id: e })
+//             .then((currentMessage) => {
+//                 console.log(currentMessage)
+//                 messageFromUser.push(currentMessage);
+//             })
+//             .catch((err) => {
+//                 console.log(err)
+//             })
+//     });
+
+//     console.log(messageFromUser)
+
+
+// }
+export const listUserMessage = async (req, res) => {
+    try {
+        const id = req.userId;
+        const inbox = await Inbox.findOne({ user: id }).populate("message");
+        if (!inbox) {
+            return res.status(400).json({ message: "Boîte de réception introuvable" });
+        }
+        const messages = inbox.message;
+        res.status(200).json({ messages });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
 };

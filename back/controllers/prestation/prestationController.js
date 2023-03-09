@@ -31,7 +31,7 @@ export const createPrestation = async (req, res) => {
             res.status(200).json({ prestation:newPrestation })
         })
         .catch((err) => {
-            return res.status(400).json({ message: "un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme accepter" })
+            return res.status(400).json({ message: "un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre" })
         })
 }
 export const deletePrestation = async (req, res) => {
@@ -49,7 +49,7 @@ export const deletePrestation = async (req, res) => {
             return res.status(400).json(err)
         })
 }
-export const updatePrestation = async (req, res) => {
+export const updatePrestation = async (req, res) => {   
     const id = req.body.id;
 
 
@@ -66,6 +66,6 @@ export const updatePrestation = async (req, res) => {
     result.prestation = prestation
     result.price = price
     result.save()
-        .then((result) => res.status(201).json({ message: `Update  successful de ${result.prestation} pour le genre ${result.genre}`, result }))
+        .then((result) => res.status(201).json({ message: `Update  successful`, result }))
         .catch((err) => res.status(400).json({ message: err.message }))
 }
