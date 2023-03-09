@@ -196,32 +196,6 @@ export const deleteMessage = async (req, res) => {
 
 };
 
-// export const listUserMessage = async (req, res) => {
-//     const id = req.userId
-//     const messageFromUser = []
-//     const messages = await Messages.find()
-//     const inbox = await Inbox.findOne({ user: id })
-
-//     if (!inbox || !messages) {
-//         res.status(400).json({ message: "aucun message trouvé" })
-//     }
-
-//     inbox.message.forEach((e, i) => {
-//         console.log(e)
-//         const currentMessage = Messages.findOne({ _id: e })
-//             .then((currentMessage) => {
-//                 console.log(currentMessage)
-//                 messageFromUser.push(currentMessage);
-//             })
-//             .catch((err) => {
-//                 console.log(err)
-//             })
-//     });
-
-//     console.log(messageFromUser)
-
-
-// }
 export const listUserMessage = async (req, res) => {
     try {
         const id = req.userId;
@@ -235,4 +209,7 @@ export const listUserMessage = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: "Erreur serveur" });
     }
+};
+export const listInbox = async (req, res) => {
+    
 };

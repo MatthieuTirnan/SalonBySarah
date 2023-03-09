@@ -54,3 +54,13 @@ export const PassRemoveAdmin = async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 }
+
+export const listUserAdmin = async (req, res) => {
+    const user = await User.find({ isAdmin: true },{email:1,_id:0})
+    
+    if (!user ) {
+        res.status(400).json({ message: "pas d'admin" })
+    } else {
+        return res.status(200).json({ count: user.length, adminUser:user })
+    }
+};
