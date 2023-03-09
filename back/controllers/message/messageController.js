@@ -211,5 +211,6 @@ export const listUserMessage = async (req, res) => {
     }
 };
 export const listInbox = async (req, res) => {
-    
+    const inbox = await Inbox.find()
+    console.log(inbox)
 };
