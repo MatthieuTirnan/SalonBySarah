@@ -211,6 +211,11 @@ export const listUserMessage = async (req, res) => {
     }
 };
 export const listInbox = async (req, res) => {
-    const inbox = await Inbox.find()
+    const inbox = await Inbox.find().populate("user message")
+    if (!inbox) {
+        return res.status(400).json({ message: "Boîte de réception introuvable" });
+    }
+    
     console.log(inbox)
+    res.status(200).json({inbox:inbox})
 };

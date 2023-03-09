@@ -4,12 +4,13 @@ import { deleteUser, listUser, PassRemoveAdmin } from './../controllers/user/use
 import { addArticle, deleteArticle, updateArticle } from "../controllers/article/articleController.js";
 import { deletePrestation, updatePrestation,createPrestation } from "../controllers/prestation/prestationController.js";
 import { deleteImageGalerie, addImageGalerie } from "../controllers/image/imageController.js";
+import { listInbox } from "../controllers/message/messageController.js";
 
 
 const adminRouter = express.Router()
 
 adminRouter.get("/list-user", listUser)
-
+adminRouter.get("/list-inbox", listInbox)
 adminRouter.post("/create-prestation", createPrestation)
 adminRouter.post("/add-image-galerie", addImageGalerie)
 adminRouter.post("/add-Article", addArticle)
