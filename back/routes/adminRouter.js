@@ -1,5 +1,9 @@
 import express from "express";
-import { createPrestation, deleteUser, listUser, PassRemoveAdmin, deletePrestation, updatePrestation, addImageGalerie, deleteImageGalerie, addArticle, deleteArticle, updateArticle } from '../controllers/adminController.js';
+import { deleteUser, listUser, PassRemoveAdmin } from './../controllers/user/userController.js';
+
+import { addArticle, deleteArticle, updateArticle } from "../controllers/article/articleController.js";
+import { deletePrestation, updatePrestation,createPrestation } from "../controllers/prestation/prestationController.js";
+import { deleteImageGalerie, addImageGalerie } from "../controllers/image/imageController.js";
 
 
 const adminRouter = express.Router()

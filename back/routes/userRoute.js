@@ -1,5 +1,10 @@
 import express from "express";
-import { listPrestation, login, register, userprovider,listImageGalerie, showArticle,addMessage, deleteMessage } from "../controllers/usersController.js";
+import { showArticle } from "../controllers/article/articleController.js";
+import { listImageGalerie } from "../controllers/image/imageController.js";
+import { addMessage, deleteMessage } from "../controllers/message/messageController.js";
+import { listPrestation } from "../controllers/prestation/prestationController.js";
+import { login, register, userprovider } from "../controllers/auth/authController.js";
+
 import { auth } from "../middleware/authMiddleware.js";
 
 const useRouter = express.Router()
