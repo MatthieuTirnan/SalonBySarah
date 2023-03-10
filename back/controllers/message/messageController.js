@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import formidable from "formidable";
 import fs from "fs";
 
@@ -15,13 +14,15 @@ export const addMessage = async (req, res) => {
     form.parse(req, function (err, fields, files) {
 
         if (!fields.titre || !fields.description) {
-            return res.status(400).json({ message: "champ manquant" });
+            return res.status(400).json({message: "champ manquant"});
         }
         if (files.fichier) {
             const oldpath = files.fichier.filepath;
+
             function getExtension(fileExtension) {
                 return fileExtension.split("/")[1];
             }
+
             let fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension);
 
@@ -60,18 +61,21 @@ export const addMessage = async (req, res) => {
                 src,
                 from: req.userId,
             });
-            newMessage.save();
+            newMessage.save()
+                .then((data) => console.log(data))
+                .catch((rr) => console.log(rr))
 
-            Inbox.findOne({ user: req.userId })
+            Inbox.findOne({user: req.userId})
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
                         inbox.save()
                             .then(() => {
-                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
+                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
                             })
                             .catch((err) => {
-                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
+                                console.log(err)
+                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
                             });
                     } else {
                         const newInbox = new Inbox({
@@ -81,16 +85,16 @@ export const addMessage = async (req, res) => {
                         newInbox
                             .save()
                             .then(() => {
-                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
+                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
                             })
                             .catch((err) => {
-                                res.status(400).json({ message: err });
+                                res.status(400).json({message: err});
                             });
                     }
                 })
                 .catch((err) => {
                     console.error(err);
-                    res.status(500).json({ message: "Erreur serveur" });
+                    res.status(500).json({message: "Erreur serveur"});
                 });
         } else {
             const titre = fields.titre;
@@ -102,17 +106,18 @@ export const addMessage = async (req, res) => {
             });
             newMessage.save();
 
-            Inbox.findOne({ user: req.userId })
+            Inbox.findOne({user: req.userId})
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
                         inbox
                             .save()
                             .then(() => {
-                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
+                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
                             })
                             .catch((err) => {
-                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
+                                console.log(err)
+                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
                             });
                     } else {
                         const newInbox = new Inbox({
@@ -122,16 +127,17 @@ export const addMessage = async (req, res) => {
                         newInbox
                             .save()
                             .then(() => {
-                                res.status(201).json({ message: `message ${newMessage.titre}  ajouté` });
+                                res.status(201).json({message: `message ${newMessage.titre}  ajouté`});
                             })
                             .catch((err) => {
-                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
+                                console.log(err)
+                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
                             });
                     }
                 })
                 .catch((err) => {
                     console.error(err);
-                    res.status(500).json({ message: "Erreur serveur" });
+                    res.status(500).json({message: "Erreur serveur"});
                 });
         }
     });
@@ -141,26 +147,26 @@ export const deleteMessage = async (req, res) => {
         const messageId = req.body.id;
         const userId = req.userId;
         const data = await Messages.find();
-        const messageToDelete = data.find(element => element._id == messageId)
+        const messageToDelete = data.find(element => element._id === messageId)
 
 
         if (!messageToDelete)
-            return res.status(400).json({ message: "message introuvable" });
+            return res.status(400).json({message: "message introuvable"});
         if (messageToDelete.from.toString() !== userId) {
-            return res.status(401).json({ message: "User not authorized" });
+            return res.status(401).json({message: "User not authorized"});
         }
 
         if (messageToDelete.image) {
             const imageToDelete = await Image.findById(messageToDelete.image);
 
             if (!imageToDelete) {
-                return res.status(400).json({ message: "image absente" });
-            };
+                return res.status(400).json({message: "image absente"});
+            }
 
             const imagePath = `public/images/${imageToDelete.fileName}`;
             fs.unlink(imagePath, (err) => {
                 if (err) {
-                    return res.status(400).json({ message: "image absente" });
+                    return res.status(400).json({message: "image absente"});
                 }
 
                 console.log(`Image supprimée : ${imagePath}`);
@@ -171,7 +177,7 @@ export const deleteMessage = async (req, res) => {
 
         const inboxToUpdate = await Inbox.findOne({
             user: userId,
-            message: { $in: [messageToDelete._id] },
+            message: {$in: [messageToDelete._id]},
         });
 
         if (inboxToUpdate) {
@@ -184,13 +190,15 @@ export const deleteMessage = async (req, res) => {
         Messages.findByIdAndRemove(messageToDelete._id)
             .then(() => {
                 console.log("message remove")
-                return res.status(204).json({ message: "204" })
+                return res.status(204).json({message: "204"})
             })
-            .catch((err) => { console.log(err) })
+            .catch((err) => {
+                console.log(err)
+            })
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: "Erreur lors de la suppression du message" });
+        return res.status(500).json({message: "Erreur lors de la suppression du message"});
     }
 
 };
@@ -198,29 +206,29 @@ export const deleteMessage = async (req, res) => {
 export const listUserMessage = async (req, res) => {
     try {
         const id = req.userId;
-        const inbox = await Inbox.findOne({ user: id }).populate("message user");
+        const inbox = await Inbox.findOne({user: id}).populate("message user");
         if (!inbox) {
-            return res.status(400).json({ message: "Boîte de réception introuvable" });
+            return res.status(400).json({message: "Boîte de réception introuvable"});
         }
         console.log(inbox)
-        
-        res.status(200).json({ inbox });
+
+        res.status(200).json({inbox});
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Erreur serveur" });
+        res.status(500).json({message: "Erreur serveur"});
     }
 };
 export const listInbox = async (req, res) => {
     const inbox = await Inbox.find().populate("user message")
     if (!inbox) {
-        return res.status(400).json({ message: "Boîte de réception introuvable" });
+        return res.status(400).json({message: "Boîte de réception introuvable"});
     }
-    
+
     console.log(inbox)
-    res.status(200).json({inbox:inbox})
+    res.status(200).json({inbox: inbox})
 };
 
-export const createAnswerMessage = async (req,res) => {
+export const createAnswerMessage = async (req, res) => {
     const form = formidable();
 
 
