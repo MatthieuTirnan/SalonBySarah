@@ -56,7 +56,7 @@ export const PassRemoveAdmin = async (req, res) => {
 }
 
 export const listUserAdmin = async (req, res) => {
-    const user = await User.find({ isAdmin: true },{email:1,_id:0})
+    const user = await User.find({ isAdmin: true },{email:1,pseudo:1})
     
     if (!user ) {
         res.status(400).json({ message: "pas d'admin" })

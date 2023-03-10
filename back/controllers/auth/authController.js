@@ -36,14 +36,14 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
     console.log(user);
     if (user == null) {
-        res.status(400).json({ message: "email ou mot de passe erroné" });
+        res.status(400).json({ message: "identifiant incorrect" });
     } else {
         user.comparePassword(password, async (err, isMatch) => {
             if (isMatch) {
                 const jwt = user.createJWT();
                 res.status(200).json({ user, jwt, isMatch });
             } else {
-                res.status(400).json({ message: "email ou mot de passe erroné" });
+                res.status(400).json({ message: "identifiant incorrect" });
             }
         });
     }
