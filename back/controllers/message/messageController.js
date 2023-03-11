@@ -65,6 +65,7 @@ export const addMessage = async (req, res) => {
                 .then((data) => console.log(data))
                 .catch((rr) => console.log(rr))
 
+
             Inbox.findOne({user: req.userId})
                 .then((inbox) => {
                     if (inbox) {
@@ -229,117 +230,109 @@ export const listInbox = async (req, res) => {
 };
 
 export const createAnswerMessage = async (req, res) => {
+
     const form = formidable();
 
 
     form.parse(req, function (err, fields, files) {
+        const Userbox = fields.user
+        console.log(fields)
+        if (!fields.description) {
+            return res.status(400).json({message: "corps du message manquant"});
+        }
+        if (files.fichier) {
+            const oldpath = files.fichier.filepath;
 
-        // if (!fields.description) {
-        //     return res.status(400).json({ message: "corps du message manquant" });
-        // }
-        // if (files.fichier) {
-        //     const oldpath = files.fichier.filepath;
-        //     function getExtension(fileExtension) {
-        //         return fileExtension.split("/")[1];
-        //     }
-        //     let fileExtension = files.fichier.mimetype;
-        //     const currentExtension = "." + getExtension(fileExtension);
+            function getExtension(fileExtension) {
+                return fileExtension.split("/")[1];
+            }
 
-        //     const newpath =
-        //         "public/images/" + files.fichier.newFilename + currentExtension;
-        //     const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp"];
+            let fileExtension = files.fichier.mimetype;
+            const currentExtension = "." + getExtension(fileExtension);
 
-        //     if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
-        //         throw new Error("Unsupported image file type");
-        //     }
-        //     fs.copyFile(oldpath, newpath, function (err) {
-        //         if (err) throw err;
-        //         console.log("fichier ajouter");
-        //     });
-        //     const page = "Message";
-        //     const alt = files.fichier.originalFilename;
-        //     const src =
-        //         "http://localhost:9010/public/images/" +
-        //         files.fichier.newFilename +
-        //         currentExtension;
-        //     const fileName = files.fichier.newFilename + currentExtension;
-        //     const newImage = new Image({
-        //         page,
-        //         alt,
-        //         src,
-        //         fileName,
-        //     });
-        //     newImage.save();
+            const newpath =
+                "public/images/" + files.fichier.newFilename + currentExtension;
+            const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp"];
 
-        //     const titre = "réponse à" + fields.titre;
-        //     const description = fields.description;
-        //     const newMessage = new Messages({
-        //         titre,
-        //         description,
-        //         image: newImage,
-        //         src,
-        //         from: req.userId,
-        //     });
-        //     newMessage.save();
+            if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
+                throw new Error("Unsupported image file type");
+            }
+            fs.copyFile(oldpath, newpath, function (err) {
+                if (err) throw err;
+                console.log("fichier ajouter");
+            });
+            const page = "Message";
+            const alt = files.fichier.originalFilename;
+            const src =
+                "http:localhost:9010/public/images/" +
+                files.fichier.newFilename +
+                currentExtension;
+            const fileName = files.fichier.newFilename + currentExtension;
+            const newImage = new Image({
+                page,
+                alt,
+                src,
+                fileName,
+            });
+            newImage.save();
 
-        //     Inbox.findOne({ user: req.userId })
-        //         .then((inbox) => {
-        //             
-        //                 inbox.message.push(newMessage);
-        //                 inbox.save()
-        //                     .then(() => {
-        //                         res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
-        //                     })
-        //                     .catch((err) => {
-        //                         res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
-        //                     });
-        //             
-        //         })
-        //         .catch((err) => {
-        //             console.error(err);
-        //             res.status(500).json({ message: "Erreur serveur" });
-        //         });
-        // } else {
-        //     const titre = "réponse à" + fields.titre;
-        //     const description = fields.description;
-        //     const newMessage = new Article({
-        //         titre,
-        //         description,
-        //         from: req.userId,
-        //     });
-        //     newMessage.save();
+            const titre = `réponse à ${fields.titre}`;
+            const description = fields.description;
+            const newMessage = new Messages({
+                titre,
+                description,
+                image: newImage,
+                src,
+                from: req.userId,
+            });
+            newMessage.save();
 
-        //     Inbox.findOne({ user: req.userId })
-        //         .then((inbox) => {
-        //             if (inbox) {
-        //                 inbox.message.push(newMessage);
-        //                 inbox
-        //                     .save()
-        //                     .then(() => {
-        //                         res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
-        //                     })
-        //                     .catch((err) => {
-        //                         res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
-        //                     });
-        //             } else {
-        //                 const newInbox = new Inbox({
-        //                     user: req.userId,
-        //                     message: [newMessage],
-        //                 });
-        //                 newInbox
-        //                     .save()
-        //                     .then(() => {
-        //                         res.status(201).json({ message: `message ${newMessage.titre}  ajouté` });
-        //                     })
-        //                     .catch((err) => {
-        //                         res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
-        //                     });
-        //             }
-        //         })
-        //         .catch((err) => {
-        //             console.error(err);
-        //             res.status(500).json({ message: "Erreur serveur" });
-        //         });
-        // }
+            Inbox.findOne({user: Userbox}).populate("user message")
+                .then((inbox) => {
+                    inbox.message.push(newMessage);
+                    inbox.save()
+                        .then(() => {
+                            res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                        })
+                        .catch((err) => {
+                            log(err)
+                            res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                        });
+
+                })
+                .catch((err) => {
+                    console.error(err);
+                    res.status(500).json({message: "Erreur serveur"});
+                });
+        } else {
+            const titre = `réponse à ${fields.titre}`;
+            const description = fields.description;
+            const newMessage = new Article({
+                titre,
+                description,
+                from: req.userId,
+            });
+            newMessage.save();
+
+            Inbox.findOne({user: Userbox}).populate("user message")
+                .then((inbox) => {
+                    if (inbox) {
+                        inbox.message.push(newMessage);
+                        inbox
+                            .save()
+                            .then(() => {
+                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                            });
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                    res.status(500).json({message: "Erreur serveur"});
+                });
+        }
     });
 }
