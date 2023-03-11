@@ -1,13 +1,6 @@
 import jwt from "jsonwebtoken";
-import formidable from "formidable";
-import fs from "fs";
 
-import Image from "../../models/imagesSchema.js";
-import Article from "../../models/articleSchema.js";
 import User from "../../models/usersShema.js";
-import Prestation from "../../models/prestationSchema.js";
-import Inbox from "../../models/inboxSchema.js";
-import Messages from "../../models/messagesSchema.js";
 
 export const register = async (req, res) => {
     const { pseudo, email, password } = req.body;

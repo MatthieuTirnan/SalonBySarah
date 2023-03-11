@@ -1,18 +1,11 @@
-import jwt from "jsonwebtoken";
-import formidable from "formidable";
-import fs from "fs";
 
-import Image from "../../models/imagesSchema.js";
-import Article from "../../models/articleSchema.js";
 import User from "../../models/usersShema.js";
-import Prestation from "../../models/prestationSchema.js";
-import Inbox from "../../models/inboxSchema.js";
-import Messages from "../../models/messagesSchema.js";
+
 
 export const listUser = async (req, res) => {
     const user = await User.find()
     console.log(user.length)
-    if (user == null) {
+    if (!user) {
         res.status(400).json({ message: "email ou mot de passe erroné" })
     } else {
         return res.status(200).json({ count: user.length, user })
