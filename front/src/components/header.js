@@ -42,7 +42,7 @@ export const Header = () => {
         }))
     }
 
-    
+
     return (
         <>
             <header>
@@ -57,6 +57,7 @@ export const Header = () => {
             </header>
             <nav className="nav-header">
                 <div className={menu_class}>
+
                     {!state.user.isMatch ? (
                         < div className="lien">
                             <Link className="link-header" to="/login"> SIGN IN </Link>
@@ -66,20 +67,20 @@ export const Header = () => {
                     ) : (
                         <div className="lien">
                             <Link className="link-header" to="/" onClick={handleclick}> DECONNECTER </Link>
-
                         </div>
                     )
                     }
-                    {!state.user.isAdmin ? (
+                    {state.user.isAdmin &&
                         <div className="lien">
-
+                            <Link className="link-header" to="/dashboard"> DASHBOARD </Link>
                         </div>
-                    ) : (
-                        <div className="lien">
-
-                        </div>
-                    )
                     }
+                    <div className="lien">
+
+                        <Link className="link-header" to="/galerie"> GALERIE </Link>
+                        <Link className="link-header" to="/article"> ARTICLE </Link>
+                        <Link className="link-header" to="/tarif"> TARIF </Link>
+                    </div>
                 </div>
             </nav>
         </>

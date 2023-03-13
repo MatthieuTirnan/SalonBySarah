@@ -2,9 +2,9 @@ import {createSlice} from '@reduxjs/toolkit'
 
 export const listAdminSlice = createSlice({
     name: 'listAdminSlice',
-    initialState: {
-        listAdmin: false
-    },
+    initialState:
+        false
+    ,
 
 
     reducers: {

@@ -61,3 +61,17 @@ export async function getAuth() {
     let res = await response.json();
     return res;
 }
+
+export async function getAminUser() {
+    let url = new Request("http://localhost:9010/list-user-admin", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+
+
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}

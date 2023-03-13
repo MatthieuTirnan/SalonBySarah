@@ -12,8 +12,11 @@ import {Galerie} from "./pages/général/galerie";
 import {Header} from "./components/header";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getAuth} from "./helper/fetch";
+import {getAminUser, getAuth} from "./helper/fetch";
 import {user} from "./store/slices/userSlice";
+import {PrestationManagement} from "./pages/admin/prestation-management";
+import {Dashboard} from "./pages/général/dashbord";
+import {listAdmin} from "./store/slices/listAdminSlice";
 
 function App() {
 
@@ -23,7 +26,6 @@ function App() {
         if (localStorage.getItem("jwt")) {
             getAuth()
                 .then((res) => {
-                    console.log(res)
                     dispatch(user({
                         pseudo: res.user.pseudo,
                         isAdmin: res.user.isAdmin,
@@ -35,31 +37,39 @@ function App() {
                 .catch((err) => {
                     console.log(err)
                     localStorage.removeItem('jwt')
-
                 })
         }
 
+        if (!state.listAdmin) {
+
+            getAminUser()
+                .then((res) => {
+                    dispatch(listAdmin(res))
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
     }, [])
 
-    return (
-        <>
-            <BrowserRouter>
-                <Header/>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/tarif" element={<Tarif/>}/>
-                    <Route path="/message" element={<Message/>}/>
-                    <Route path="/message-admin" element={<MessageAdmin/>}/>
-                    <Route path="/user-management" element={<UserManagement/>}/>
-                    <Route path="/article" element={<Article/>}/>
-                    <Route path="/galerie" element={<Galerie/>}/>
-
-                </Routes>
-            </BrowserRouter>
-        </>
-    );
+    return (<>
+        <BrowserRouter>
+            <Header/>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/tarif" element={<Tarif/>}/>
+                <Route path="/message" element={<Message/>}/>
+                <Route path="/message-admin" element={<MessageAdmin/>}/>
+                <Route path="/user-management" element={<UserManagement/>}/>
+                <Route path="/prestation-management" element={<PrestationManagement/>}/>
+                <Route path="/article" element={<Article/>}/>
+                <Route path="/galerie" element={<Galerie/>}/>
+                <Route path="/dashboard" element={<Dashboard/>}/>
+            </Routes>
+        </BrowserRouter>
+    </>);
 }
 
 export default App;

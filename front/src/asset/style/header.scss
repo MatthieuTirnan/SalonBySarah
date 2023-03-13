@@ -23,7 +23,8 @@ header {
     margin: auto 30%;
     color: $vert-titre;
     text-shadow: 1px 1px 0 black;
-    padding: 10px;
+    padding: 5px;
+    font-size: $text-h1;
     @include mobile {
       margin: auto auto;
     }

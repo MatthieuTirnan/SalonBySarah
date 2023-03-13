@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import '../../asset/style/login.scss'
 import {useState} from 'react';
@@ -10,7 +10,6 @@ export const Register = () => {
     const [pseudo, setPseudo] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const state = useSelector(state => state)
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const handleSubmit = (e) => {
