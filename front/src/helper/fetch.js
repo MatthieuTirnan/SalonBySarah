@@ -75,3 +75,17 @@ export async function getAminUser() {
     let res = await response.json();
     return res;
 }
+
+export async function getGalerie() {
+    let url = new Request("http://localhost:9010/galerie", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+
+
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}

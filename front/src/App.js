@@ -22,6 +22,7 @@ function App() {
 
     const state = useSelector(state => state)
     const dispatch = useDispatch()
+
     useEffect(() => {
         if (localStorage.getItem("jwt")) {
             getAuth()

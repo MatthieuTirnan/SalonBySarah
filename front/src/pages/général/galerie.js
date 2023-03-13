@@ -1,6 +1,17 @@
-export const Galerie = () => {
+import {useEffect} from "react";
+import {getGalerie} from "../../helper/fetch";
 
-    return(
+export const Galerie = () => {
+    useEffect(() => {
+        getGalerie()
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
+    return (
         <>
         </>
     )
