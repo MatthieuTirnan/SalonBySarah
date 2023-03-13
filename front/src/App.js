@@ -10,8 +10,37 @@ import {UserManagement} from "./pages/admin/user-management";
 import {Article} from "./pages/général/article";
 import {Galerie} from "./pages/général/galerie";
 import {Header} from "./components/header";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getAuth} from "./helper/fetch";
+import {user} from "./store/slices/userSlice";
 
 function App() {
+
+    const state = useSelector(state => state)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if (localStorage.getItem("jwt")) {
+            getAuth()
+                .then((res) => {
+                    console.log(res)
+                    dispatch(user({
+                        pseudo: res.user.pseudo,
+                        isAdmin: res.user.isAdmin,
+                        isMatch: res.isMatch,
+                        email: res.user.email,
+                        _id: res.user.id
+                    }))
+                })
+                .catch((err) => {
+                    console.log(err)
+                    localStorage.removeItem('jwt')
+
+                })
+        }
+
+    }, [])
+
     return (
         <>
             <BrowserRouter>

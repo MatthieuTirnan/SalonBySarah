@@ -1,18 +1,24 @@
+$vert-titre: green;
+$blanc: white;
+$vert-clair: #90EE90;
+$vert-fonce: #006400;
 
 
+$text-nav: 16px;
 $breakpoints: (
-    mobile: 780px,
-    desktop: 980px
+        mobile: 690px,
+        desktop: 980px
 );
 
 @mixin mobile {
-    @media screen and (min-width: map-get($breakpoints, mobile)){
-        @content;
-    }
-}
-@mixin desktop {
-    @media screen and (min-width: map-get($breakpoints, desktop)){
-        max-width: 1400px;
+  @media screen and (min-width: map-get($breakpoints, mobile)) {
     @content;
-    }
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: map-get($breakpoints, desktop)) {
+    max-width: 1400px;
+    @content;
+  }
 }

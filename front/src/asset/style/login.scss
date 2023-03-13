@@ -1,0 +1,52 @@
+@import "../Variable.scss";
+
+form {
+  background-color: $vert-clair;
+  display: flex;
+  justify-content: center;
+
+  margin: 30px auto;
+  border-radius: 15px;
+
+  fieldset {
+    border-radius: 0.5em;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid $vert-fonce;
+    padding: 20px;
+    margin: 10px;
+
+    legend {
+      margin: 0 auto;
+      color: $vert-fonce;
+    }
+
+    label {
+      color: $vert-fonce;
+      margin: 0 auto;
+    }
+
+    input {
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    button {
+      width: 70%;
+      padding: 8px;
+      margin: 5px auto;
+      font-weight: bold;
+      background-color: $vert-fonce;
+      border-radius: 15px;
+      border: 1px solid transparent;
+      overflow: hidden;
+      color: $blanc;
+
+      &:hover {
+        background-color: $blanc;
+        color: $vert-fonce;
+      }
+    }
+  }
+}

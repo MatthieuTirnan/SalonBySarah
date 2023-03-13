@@ -1,0 +1,119 @@
+@import "../Variable.scss";
+
+* {
+  transition: all 1s;
+}
+
+.nav-header {
+  width: 30%;
+}
+
+header {
+  margin: 0;
+  background: url("../images/160580499_206558134590109_903182190166692937_n.jpg") center center;
+  background-size: cover;
+
+  display: flex;
+  position: relative;
+  @include mobile {
+    height: 250px;
+  }
+
+  h1 {
+    margin: auto 30%;
+    color: $vert-titre;
+    text-shadow: 1px 1px 0 black;
+    padding: 10px;
+    @include mobile {
+      margin: auto auto;
+    }
+  }
+}
+
+/* ---------------- Navbar and burger menu ------------------ */
+
+
+.burger-menu {
+  position: absolute;
+  top: 25%;
+  left: 15px;
+  height: 50px;
+  width: 4em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  cursor: pointer;
+  @include mobile {
+    top: 40%
+  }
+}
+
+.burger-bar {
+  width: 3em;
+  height: 0.4em;
+  background-color: $blanc;
+  border-radius: 0.5em;
+}
+
+.menu {
+  position: sticky;
+  top: 100px;
+  z-index: 1;
+  width: 100%;
+}
+
+.lien {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $vert-clair;
+
+  a {
+    text-decoration: none;
+    color: $vert-fonce;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: $text-nav;
+
+    &:hover {
+      color: $vert-clair;
+      background-color: $vert-fonce;
+
+    }
+  }
+}
+
+/* ------------- sliding menu ------------------ */
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: inherit;
+}
+
+/* ----- animations--------- */
+/* clicked */
+.burger-bar.clicked:nth-child(1) {
+  transform: rotate(45deg) translate(1em, 1em);
+  transition: ease-out 0.5s;
+}
+
+.burger-bar.clicked:nth-child(2) {
+  transform: scale(0.1);
+  transition: ease-out 0.5s;
+}
+
+.burger-bar.clicked:nth-child(3) {
+  transform: rotate(135deg) translate(-0.9em, 1em);
+  transition: ease-out 0.5s;
+}
+
+/* unclicked */
+.burger-bar.unclicked {
+  transform: rotate(0) translate(0);
+  transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+
