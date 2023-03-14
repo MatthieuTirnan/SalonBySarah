@@ -16,7 +16,9 @@ export const Login = () => {
         console.log(state)
         postLogin(email, password)
             .then(res => {
+                if (res.message !== undefined){
                 alert(res.message)
+                }
                 dispatch(user({
                     isMatch: res.isMatch,
                     jwt: res.jwt,
@@ -28,7 +30,7 @@ export const Login = () => {
                 localStorage.setItem("jwt", res.jwt)
             })
             .catch(err => {
-                console.log(err);
+
 
             });
         navigate("/")
