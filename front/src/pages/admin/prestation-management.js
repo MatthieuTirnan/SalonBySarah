@@ -24,7 +24,7 @@ export const PrestationManagement = () => {
         console.log(currentPrestation)
     }, [currentPrestation])
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
 
         e.preventDefault()
 
@@ -47,10 +47,12 @@ export const PrestationManagement = () => {
                 console.log(err)
             })
     }
- function handleChange (e){
-         const { name, value } = e.target;
-         setCurrentPrestation(prevState => ({ ...prevState, [name]: value }));
- }
+
+    function handleChange(e) {
+        const {name, value} = e.target;
+        setCurrentPrestation(prevState => ({...prevState, [name]: value}));
+    }
+
     return (
         <main>
             {state.prestation.prestation === false &&
@@ -62,14 +64,17 @@ export const PrestationManagement = () => {
 
 
                         <label htmlFor="genre">genre</label>
-                        <input onChange={handleChange} defaultValue={currentPrestation.genre} type="text" id="genre" name="genre"/>
+                        <input onChange={handleChange} defaultValue={currentPrestation.genre} type="text" id="genre"
+                               name="genre"/>
 
                         <label htmlFor="prestation">prestation</label>
-                        <input onChange={handleChange} defaultValue={currentPrestation.prestation} type="text" id="prestation"
+                        <input onChange={handleChange} defaultValue={currentPrestation.prestation} type="text"
+                               id="prestation"
                                name="prestation"/>
 
                         <label htmlFor="price">price</label>
-                        <input onChange={handleChange} defaultValue={currentPrestation.price} type="text" id="price" name="price"/>
+                        <input onChange={handleChange} defaultValue={currentPrestation.price} type="text" id="price"
+                               name="price"/>
 
 
                         <button type="submit">ENVOYER</button>
@@ -127,8 +132,6 @@ export const PrestationManagement = () => {
                                         </button>
                                     </td>
                                 </tr>
-
-
                             )
                         })
                         }

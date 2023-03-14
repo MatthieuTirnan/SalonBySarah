@@ -167,3 +167,17 @@ export async function updatePrestation( currentPrestation) {
     let res = await response.json();
     return res;
 }
+export async function postImageGalerie(formData) {
+
+    let url = new Request("http://localhost:9010/admin/add-image-galerie", {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}

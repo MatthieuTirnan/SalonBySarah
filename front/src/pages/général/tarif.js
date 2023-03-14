@@ -10,13 +10,14 @@ export const Tarif = () => {
     useEffect(() => {
         getPrestation()
             .then((res) => {
-
+                console.log(res)
                 dispatch(prestation(res))
             })
             .catch((err) => {
                 console.log(err)
             })
     }, [])
+
     return (
         <main>
             {state.prestation.prestation === false &&
