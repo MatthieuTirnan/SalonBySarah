@@ -16,14 +16,14 @@ export const Login = () => {
         console.log(state)
         postLogin(email, password)
             .then(res => {
-                console.log(res)
+                alert(res.message)
                 dispatch(user({
-                    pseudo: res.pseudo,
-                    isAdmin: res.user.isAdmin,
                     isMatch: res.isMatch,
                     jwt: res.jwt,
+                    pseudo: res.user.pseudo,
+                    isAdmin: res.user.isAdmin,
                     email: res.user.email,
-                    _id: res.user.id
+                    _id: res.user._id
                 }))
                 localStorage.setItem("jwt", res.jwt)
             })
@@ -35,24 +35,26 @@ export const Login = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} method="POST">
-            <fieldset>
-                <legend> Se Connecter</legend>
-                <label>Email : </label>
-                <input
-                    type="email"
-                    placeholder="EMAIL"
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}>
-                </input>
-                <label>Mot de passe : </label>
-                <input type="password"
-                       placeholder="password"
-                       name="password"
-                       onChange={(e) => setPassword(e.target.value)}
-                       required></input>
-                <button type="submit" name="ENVOYE">ENVOYER</button>
-            </fieldset>
-        </form>
+        <main>
+            <form onSubmit={handleSubmit} method="POST">
+                <fieldset>
+                    <legend> Se Connecter</legend>
+                    <label>Email : </label>
+                    <input
+                        type="email"
+                        placeholder="EMAIL"
+                        name="email"
+                        onChange={(e) => setEmail(e.target.value)}>
+                    </input>
+                    <label>Mot de passe : </label>
+                    <input type="password"
+                           placeholder="password"
+                           name="password"
+                           onChange={(e) => setPassword(e.target.value)}
+                           required></input>
+                    <button type="submit" name="ENVOYE">ENVOYER</button>
+                </fieldset>
+            </form>
+        </main>
     )
 }

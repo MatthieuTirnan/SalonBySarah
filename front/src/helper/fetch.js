@@ -10,7 +10,6 @@ const findToken = () => {
 
 export const token = findToken()
 
-
 export async function postLogin(email, password) {
     let url = new Request("http://localhost:9010/login", {
         method: "POST",
@@ -22,7 +21,6 @@ export async function postLogin(email, password) {
             email,
             password
         }),
-
     });
     let response = await fetch(url);
     let res = await response.json();
@@ -41,7 +39,6 @@ export async function postRegister(pseudo, email, password) {
             email,
             password
         }),
-
     });
     let response = await fetch(url);
     let res = await response.json();
@@ -54,8 +51,6 @@ export async function getAuth() {
         headers: {
             'Authorization': `Bearer ${token}`
         },
-
-
     });
     let response = await fetch(url);
     let res = await response.json();
@@ -68,8 +63,6 @@ export async function getAminUser() {
         headers: {
             'Authorization': `Bearer ${token}`
         },
-
-
     });
     let response = await fetch(url);
     let res = await response.json();
@@ -82,7 +75,47 @@ export async function getGalerie() {
         headers: {
             'Authorization': `Bearer ${token}`
         },
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
 
+export async function getUser() {
+    let url = new Request("http://localhost:9010/admin/list-user", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+
+export async function deleteUser(id) {
+    let url = new Request("http://localhost:9010/admin/delete-user", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({id})
+
+    });
+    let response = await fetch(url);
+    let res = await response;
+    return res;
+}
+
+export async function updateUser(id) {
+    let url = new Request("http://localhost:9010/admin/putAdmin-user", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({id})
 
     });
     let response = await fetch(url);

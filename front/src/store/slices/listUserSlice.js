@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 export const listUsersSlice = createSlice({
     name: 'listUsersSlice',
     initialState: {
-        listAdmin: false
+        listUsers: false
     },
 
 

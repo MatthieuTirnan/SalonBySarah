@@ -12,11 +12,12 @@ import {Galerie} from "./pages/général/galerie";
 import {Header} from "./components/header";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getAminUser, getAuth} from "./helper/fetch";
+import {getAminUser, getAuth, getUser} from "./helper/fetch";
 import {user} from "./store/slices/userSlice";
 import {PrestationManagement} from "./pages/admin/prestation-management";
 import {Dashboard} from "./pages/général/dashbord";
 import {listAdmin} from "./store/slices/listAdminSlice";
+import {listUsers} from "./store/slices/listUserSlice";
 
 function App() {
 
@@ -51,6 +52,8 @@ function App() {
                     console.log(err)
                 })
         }
+
+
     }, [])
 
     return (<>
