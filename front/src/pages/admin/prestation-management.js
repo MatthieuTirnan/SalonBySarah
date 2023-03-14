@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {deletePrestation, deleteUser, getPrestation, getUser, updatePrestation, updateUser} from "../../helper/fetch";
+import {deletePrestation, getPrestation, updatePrestation} from "../../helper/fetch";
 import {prestation} from "../../store/slices/prestation";
-import {listUsers} from "../../store/slices/listUserSlice";
+
 
 export const PrestationManagement = () => {
 
