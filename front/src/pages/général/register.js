@@ -14,9 +14,9 @@ export const Register = () => {
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault()
+
         postRegister(pseudo, email, password)
             .then(res => {
-
                 localStorage.setItem("jwt", res.jwt)
                 dispatch(user({
                     isMatch: res.isMatch,

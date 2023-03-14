@@ -122,3 +122,48 @@ export async function updateUser(id) {
     let res = await response.json();
     return res;
 }
+
+export async function getPrestation() {
+    let url = new Request("http://localhost:9010/prestation", {
+        method: "GET",
+
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+
+export async function deletePrestation(id) {
+    let url = new Request("http://localhost:9010/admin/delete-prestation", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({id})
+
+    });
+    let response = await fetch(url);
+    let res = await response;
+    return res;
+}
+
+export async function updatePrestation( currentPrestation) {
+    let url = new Request("http://localhost:9010/admin/update-prestation", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            id: currentPrestation._id,
+            genre: currentPrestation.genre,
+            prestation: currentPrestation.prestation,
+            price: currentPrestation.price
+        })
+
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
