@@ -215,3 +215,24 @@ export async function postPrestation(addGenre, addprestation, addprice) {
     let res = await response.json();
     return res;
 }
+
+export async function getArticle() {
+    let url = new Request("http://localhost:9010/show-article", {
+        method: "GET",
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+export async function postArticle(formData) {
+    let url = new Request("http://localhost:9010/admin/add-Article", {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
