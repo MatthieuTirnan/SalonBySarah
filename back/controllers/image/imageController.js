@@ -63,21 +63,19 @@ export const addImageGalerie = async (req, res) => {
 }
 
 export const deleteImageGalerie = async (req, res) => {
-    const { id } = req.body
-    const data = await Image.find();
-    const result = data.find(element => element._id == id)
-    if (!result) {
-        return res.status(404).json({ message: "image introuvable." });
-    }
-
-    const imagePath = "./public/images/" + result.fileName;
-
-    fs.unlink(imagePath, (err) => {
-        if (err) {
-            if (err) return res.status(404).json({message:'échec de la suppression'});
-        } else {
-            console.log(`Le fichier ${imagePath} a été supprimé.`);
-            res.status(204).json({ message: "supprimé" })
+    const { id } = req.body;
+    try {
+        const imageToDelete = await Image.findById(id);
+        if (!imageToDelete) {
+            return res.status(404).json({ message: "Image introuvable." });
         }
-    })
-}
+        const imagePath = "./public/images/" + imageToDelete.fileName;
+        fs.unlinkSync(imagePath);
+        await Image.findByIdAndDelete(id);
+        console.log(`Le fichier ${imagePath} et l'image correspondante ont été supprimés.`);
+        res.status(204).json({ message: "Supprimé" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur s'est produite lors de la suppression de l'image." });
+    }
+};

@@ -148,7 +148,7 @@ export async function deletePrestation(id) {
     return res;
 }
 
-export async function updatePrestation( currentPrestation) {
+export async function updatePrestation(currentPrestation) {
     let url = new Request("http://localhost:9010/admin/update-prestation", {
         method: "PUT",
         headers: {
@@ -167,6 +167,7 @@ export async function updatePrestation( currentPrestation) {
     let res = await response.json();
     return res;
 }
+
 export async function postImageGalerie(formData) {
 
     let url = new Request("http://localhost:9010/admin/add-image-galerie", {
@@ -179,5 +180,20 @@ export async function postImageGalerie(formData) {
     });
     let response = await fetch(url);
     let res = await response.json();
+    return res;
+}
+
+export async function deleteImage(id) {
+    let url = new Request("http://localhost:9010/admin/delete-image-galerie", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({id})
+
+    });
+    let response = await fetch(url);
+    let res = await response;
     return res;
 }

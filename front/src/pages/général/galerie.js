@@ -1,17 +1,16 @@
 import {useEffect, useState} from "react";
-import {getGalerie, postImageGalerie} from "../../helper/fetch";
+import {deleteImage, getGalerie, postImageGalerie} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 
 export const Galerie = () => {
     const state = useSelector(state => state)
 
-    const [Galerie, setGalerie] = useState([])
+    const [galerie, setGalerie] = useState([])
     const [fichier, setFichier] = useState({})
 
     useEffect(() => {
         getGalerie()
             .then(res => {
-                console.log(res)
                 setGalerie(res.data)
             })
             .catch(err => {
@@ -20,17 +19,18 @@ export const Galerie = () => {
     }, [])
 
 
-    useEffect(() => {
-        console.log(Galerie)
-    }, [Galerie])
+/*    useEffect(() => {
+        console.log(galerie)
+    }, [galerie])*/
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(fichier)
         const formData = new FormData();
         formData.append("fichier", fichier);
+
         postImageGalerie(formData)
             .then((res) => {
-                console.log(res)
+
                 getGalerie()
                     .then(res => {
                         console.log(res)
@@ -42,7 +42,6 @@ export const Galerie = () => {
                 alert(res.message)
             })
             .catch((err) => {
-                console.log(err)
                 alert(err.message)
             })
     }
@@ -60,16 +59,36 @@ export const Galerie = () => {
             }
             <article className="galerie-container">
 
-            {Galerie.map((e,i)=>{
-                return(
-                    <>
+                {galerie.map((e, i) => {
+                    function handleDelete(){
+                        console.log(e)
+                        const id = e._id
+                        deleteImage(id)
+                            .then((res)=>{
+                                console.log(res)
+                                getGalerie()
+                                    .then(res => {
+                                        console.log(res)
+                                        setGalerie(res.data)
+                                    })
+                                    .catch(err => {
+                                        console.log(err)
+                                    })
+                            })
+                            .catch((err)=>{
+                                console.log(err)
+                            })
+                    }
+                    return (
                         <div key={i} className="image-container">
                             <img src={e.src} alt={e.alt}/>
+                            {state.user.isAdmin &&
+                            <button onClick={handleDelete}>supprimer</button>
+                            }
                         </div>
-                    </>
-                )
-            })
-            }
+                    )
+                })
+                }
             </article>
         </main>
     )
