@@ -9,6 +9,10 @@ export const Galerie = () => {
     const [fichier, setFichier] = useState({})
 
     useEffect(() => {
+        actualiseGalerie()
+    }, [])
+
+    function actualiseGalerie() {
         getGalerie()
             .then(res => {
                 setGalerie(res.data)
@@ -16,12 +20,9 @@ export const Galerie = () => {
             .catch(err => {
                 console.log(err)
             })
-    }, [])
+    }
 
 
-/*    useEffect(() => {
-        console.log(galerie)
-    }, [galerie])*/
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(fichier)
@@ -31,14 +32,7 @@ export const Galerie = () => {
         postImageGalerie(formData)
             .then((res) => {
 
-                getGalerie()
-                    .then(res => {
-                        console.log(res)
-                        setGalerie(res.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                actualiseGalerie()
                 alert(res.message)
             })
             .catch((err) => {
@@ -60,11 +54,11 @@ export const Galerie = () => {
             <article className="galerie-container">
 
                 {galerie.map((e, i) => {
-                    function handleDelete(){
+                    function handleDelete() {
                         console.log(e)
                         const id = e._id
                         deleteImage(id)
-                            .then((res)=>{
+                            .then((res) => {
                                 console.log(res)
                                 getGalerie()
                                     .then(res => {
@@ -75,15 +69,16 @@ export const Galerie = () => {
                                         console.log(err)
                                     })
                             })
-                            .catch((err)=>{
+                            .catch((err) => {
                                 console.log(err)
                             })
                     }
+
                     return (
                         <div key={i} className="image-container">
                             <img src={e.src} alt={e.alt}/>
                             {state.user.isAdmin &&
-                            <button onClick={handleDelete}>supprimer</button>
+                                <button onClick={handleDelete}>supprimer</button>
                             }
                         </div>
                     )

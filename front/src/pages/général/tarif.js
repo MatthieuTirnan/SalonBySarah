@@ -8,6 +8,10 @@ export const Tarif = () => {
     const dispatch = useDispatch()
     console.log(state.prestation)
     useEffect(() => {
+        actualisePrestation()
+    }, [])
+
+    function actualisePrestation() {
         getPrestation()
             .then((res) => {
                 console.log(res)
@@ -16,7 +20,7 @@ export const Tarif = () => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }
 
     return (
         <main>

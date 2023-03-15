@@ -197,3 +197,21 @@ export async function deleteImage(id) {
     let res = await response;
     return res;
 }
+
+export async function postPrestation(addGenre, addprestation, addprice) {
+    let url = new Request("http://localhost:9010/admin/create-prestation", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            genre:addGenre,
+            prestation:addprestation,
+            price:addprice
+        }),
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}

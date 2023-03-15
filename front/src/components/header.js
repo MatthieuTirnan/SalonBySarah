@@ -79,7 +79,7 @@ export const Header = () => {
 
                         <Link className="link-header" to="/galerie"> GALERIE </Link>
                         <Link className="link-header" to="/article"> ARTICLE </Link>
-                        <Link className="link-header" to="/tarif"> TARIF </Link>
+                        <Link className="link-header" to="/tarif"> PRESTATION </Link>
                     </div>
                 </div>
             </nav>

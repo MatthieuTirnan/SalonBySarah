@@ -16,8 +16,8 @@ export const Login = () => {
         console.log(state)
         postLogin(email, password)
             .then(res => {
-                if (res.message !== undefined){
-                alert(res.message)
+                if (res.message !== undefined) {
+                    alert(res.message)
                 }
                 dispatch(user({
                     isMatch: res.isMatch,
