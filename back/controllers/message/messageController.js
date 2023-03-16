@@ -47,7 +47,7 @@ export const addMessage = async (req, res) => {
             const titre = fields.titre;
             const description = fields.description;
             const newMessage = new Messages({
-                titre, description, image: newImage, src, from: req.userId,
+                titre, description, image: newImage, src, alt, from: req.userId,
             });
             newMessage.save()
                 .then((newMessage) => {
@@ -264,7 +264,7 @@ export const createAnswerMessage = async (req, res) => {
             const titre = `réponse à ${fields.titre}`;
             const description = fields.description;
             const newMessage = new Messages({
-                titre, description, image: newImage, src, from: req.userId,
+                titre, description, image: newImage, src, alt, from: req.userId,
             });
             newMessage.save();
 

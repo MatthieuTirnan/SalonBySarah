@@ -15,7 +15,7 @@ export const Article = () => {
         actualiseArticle()
     }, [])
     useEffect(() => {
-        console.log(articles.length)
+        console.log(articles)
     }, [articles])
 
     function actualiseArticle() {
@@ -65,7 +65,7 @@ export const Article = () => {
                     <button type="submit">ENVOYER</button>
                 </fieldset>
             </form>}
-        {articles.length === 0 ? (
+        {articles.length == 0 ? (
             <div>Aucun article</div>
         ) : (
             articles.map((e, i) => {
