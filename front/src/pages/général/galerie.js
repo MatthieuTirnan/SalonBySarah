@@ -12,6 +12,7 @@ export const Galerie = () => {
         actualiseGalerie()
     }, [])
 
+
     function actualiseGalerie() {
         getGalerie()
             .then(res => {

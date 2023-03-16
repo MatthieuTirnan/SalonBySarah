@@ -14,7 +14,9 @@ export const Article = () => {
     useEffect(() => {
         actualiseArticle()
     }, [])
-
+    useEffect(() => {
+        console.log(articles.length)
+    }, [articles])
 
     function actualiseArticle() {
         getArticle()
@@ -63,25 +65,30 @@ export const Article = () => {
                     <button type="submit">ENVOYER</button>
                 </fieldset>
             </form>}
-        {articles.map((e, i) => {
-            function handleClick() {
-                navigate(`/article-management`, {state: e});
-            }
-            
-            return (
-                <article key={i}>
-                    <h2>{e.titre}</h2>
-                    {e.imagepath &&
-                        <div className="image-article-container">
-                            <img src={e.imagepath} alt={e.image.alt}/>
-                        </div>
-                    }
-                    <p>{e.description}</p>
-                    {state.user.isAdmin &&
-                        <button onClick={handleClick}>MODIFIER</button>
-                    }
-                </article>
-            )
-        })}
+        {articles.length === 0 ? (
+            <div>Aucun article</div>
+        ) : (
+            articles.map((e, i) => {
+                function handleClick() {
+                    navigate(`/article-management`, {state: e});
+                }
+
+                return (
+                    <article key={i}>
+                        <h2>{e.titre}</h2>
+                        {e.imagepath &&
+                            <div className="image-article-container">
+                                <img src={e.imagepath} alt={e.image.alt}/>
+                            </div>
+                        }
+                        <p>{e.description}</p>
+                        {state.user.isAdmin &&
+                            <button onClick={handleClick}>MODIFIER</button>
+                        }
+                    </article>
+                )
+            })
+        )}
+
     </main>
 }

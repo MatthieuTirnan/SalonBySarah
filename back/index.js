@@ -3,7 +3,7 @@ import express from "express";
 import useRouter from "./routes/userRoute.js";
 import adminRouter from './routes/adminRouter.js';
 import cors from "cors";
-import { auth } from "./middleware/authMiddleware.js";
+import {auth} from "./middleware/authMiddleware.js";
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -13,7 +13,7 @@ const PORT = 9010;
 app.use(cors())
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({extended: true}))
 
 app.use('/public', express.static('public'));
 

@@ -2,7 +2,6 @@ import formidable from "formidable";
 import fs from "fs";
 
 import Image from "../../models/imagesSchema.js";
-import Article from "../../models/articleSchema.js";
 import Inbox from "../../models/inboxSchema.js";
 import Messages from "../../models/messagesSchema.js";
 
@@ -26,8 +25,7 @@ export const addMessage = async (req, res) => {
             let fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension);
 
-            const newpath =
-                "public/images/" + files.fichier.newFilename + currentExtension;
+            const newpath = "public/images/" + files.fichier.newFilename + currentExtension;
             const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp"];
 
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
@@ -39,31 +37,25 @@ export const addMessage = async (req, res) => {
             });
             const page = "Message";
             const alt = files.fichier.originalFilename;
-            const src =
-                "http://localhost:9010/public/images/" +
-                files.fichier.newFilename +
-                currentExtension;
+            const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
             const fileName = files.fichier.newFilename + currentExtension;
             const newImage = new Image({
-                page,
-                alt,
-                src,
-                fileName,
+                page, alt, src, fileName,
             });
             newImage.save();
 
             const titre = fields.titre;
             const description = fields.description;
             const newMessage = new Messages({
-                titre,
-                description,
-                image: newImage,
-                src,
-                from: req.userId,
+                titre, description, image: newImage, src, from: req.userId,
             });
             newMessage.save()
-                .then((data) => console.log(data))
-                .catch((rr) => console.log(rr))
+                .then((newMessage) => {
+                    console.log(newMessage)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
 
 
             Inbox.findOne({user: req.userId})
@@ -80,8 +72,7 @@ export const addMessage = async (req, res) => {
                             });
                     } else {
                         const newInbox = new Inbox({
-                            user: req.userId,
-                            message: [newMessage],
+                            user: req.userId, message: [newMessage],
                         });
                         newInbox
                             .save()
@@ -98,21 +89,25 @@ export const addMessage = async (req, res) => {
                     res.status(500).json({message: "Erreur serveur"});
                 });
         } else {
+
             const titre = fields.titre;
             const description = fields.description;
-            const newMessage = new Article({
-                titre,
-                description,
-                from: req.userId,
+            const newMessage = new Messages({
+                titre, description, from: req.userId,
             });
-            newMessage.save();
+            newMessage.save()
+                .then((newMessage) => {
+                    console.log(newMessage)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
 
             Inbox.findOne({user: req.userId})
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
-                        inbox
-                            .save()
+                        inbox.save()
                             .then(() => {
                                 res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
                             })
@@ -122,8 +117,7 @@ export const addMessage = async (req, res) => {
                             });
                     } else {
                         const newInbox = new Inbox({
-                            user: req.userId,
-                            message: [newMessage],
+                            user: req.userId, message: [newMessage],
                         });
                         newInbox
                             .save()
@@ -151,8 +145,7 @@ export const deleteMessage = async (req, res) => {
         const messageToDelete = data.find(element => element._id === messageId)
 
 
-        if (!messageToDelete)
-            return res.status(400).json({message: "message introuvable"});
+        if (!messageToDelete) return res.status(400).json({message: "message introuvable"});
         if (messageToDelete.from.toString() !== userId) {
             return res.status(401).json({message: "User not authorized"});
         }
@@ -177,8 +170,7 @@ export const deleteMessage = async (req, res) => {
         }
 
         const inboxToUpdate = await Inbox.findOne({
-            user: userId,
-            message: {$in: [messageToDelete._id]},
+            user: userId, message: {$in: [messageToDelete._id]},
         });
 
         if (inboxToUpdate) {
@@ -250,8 +242,7 @@ export const createAnswerMessage = async (req, res) => {
             let fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension);
 
-            const newpath =
-                "public/images/" + files.fichier.newFilename + currentExtension;
+            const newpath = "public/images/" + files.fichier.newFilename + currentExtension;
             const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp"];
 
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
@@ -263,27 +254,17 @@ export const createAnswerMessage = async (req, res) => {
             });
             const page = "Message";
             const alt = files.fichier.originalFilename;
-            const src =
-                "http:localhost:9010/public/images/" +
-                files.fichier.newFilename +
-                currentExtension;
+            const src = "http:localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
             const fileName = files.fichier.newFilename + currentExtension;
             const newImage = new Image({
-                page,
-                alt,
-                src,
-                fileName,
+                page, alt, src, fileName,
             });
             newImage.save();
 
             const titre = `réponse à ${fields.titre}`;
             const description = fields.description;
             const newMessage = new Messages({
-                titre,
-                description,
-                image: newImage,
-                src,
-                from: req.userId,
+                titre, description, image: newImage, src, from: req.userId,
             });
             newMessage.save();
 
@@ -307,10 +288,8 @@ export const createAnswerMessage = async (req, res) => {
         } else {
             const titre = `réponse à ${fields.titre}`;
             const description = fields.description;
-            const newMessage = new Article({
-                titre,
-                description,
-                from: req.userId,
+            const newMessage = new Messages({
+                titre, description, from: req.userId,
             });
             newMessage.save();
 
