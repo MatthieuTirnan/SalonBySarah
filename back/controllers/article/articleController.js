@@ -1,4 +1,3 @@
-
 import formidable from "formidable";
 import fs from "fs";
 
@@ -7,11 +6,11 @@ import Article from "../../models/articleSchema.js";
 
 
 export const showArticle = async (req, res) => {
-    const data = await Article.find();
+    const data = await Article.find().populate("image");
     if (!data) {
-        return res.status(404).json({ message: "article introuvable." });
+        return res.status(404).json({message: "article introuvable."});
     } else {
-        return res.status(200).json({ count: data.length, data });
+        return res.status(200).json({count: data.length, data});
     }
 };
 
@@ -23,9 +22,11 @@ export const addArticle = async (req, res) => {
         if (files.fichier) {
 
             const oldpath = files.fichier.filepath;
+
             function getExtension(fileExtension) {
                 return fileExtension.split("/")[1];
             }
+
             let fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension)
 
@@ -62,10 +63,10 @@ export const addArticle = async (req, res) => {
             })
             newArticle.save()
                 .then(() => {
-                    res.status(201).json({ message: `l'article a été ajouté`,article:newArticle })
+                    res.status(201).json({message: `l'article a été ajouté`, article: newArticle})
                 })
                 .catch((err) => {
-                    res.status(400).json({ message: `l'article n'a pas été ajouté`,err:err })
+                    res.status(400).json({message: `l'article n'a pas été ajouté`, err: err})
                 })
         } else {
             const titre = fields.titre
@@ -76,10 +77,10 @@ export const addArticle = async (req, res) => {
             })
             newArticle.save()
                 .then(() => {
-                    res.status(201).json({ message: `l'article a été ajouté`,article:newArticle })
+                    res.status(201).json({message: `l'article a été ajouté`, article: newArticle})
                 })
                 .catch((err) => {
-                    res.status(400).json({  message: `l'article n'a pas été ajouté`,err:err })
+                    res.status(400).json({message: `l'article n'a pas été ajouté`, err: err})
                 })
         }
 
@@ -88,14 +89,14 @@ export const addArticle = async (req, res) => {
 }
 
 export const deleteArticle = async (req, res) => {
-    const { id } = req.body
+    const {id} = req.body
     const data = await Article.find();
     const result = data.find(element => element._id == id)
     if (!result) {
-        return res.status(404).json({ message: "article introuvable." });
+        return res.status(404).json({message: "article introuvable."});
     }
     if (result.image) {
-        const images = await Image.findOne({ _id: result.image });
+        const images = await Image.findOne({_id: result.image});
         const imagePath = "./public/images/" + images.fileName;
         console.log(images)
         console.log(imagePath)
@@ -105,15 +106,15 @@ export const deleteArticle = async (req, res) => {
                 return
             } else {
                 console.log(`Le fichier ${imagePath} a été supprimé.`);
-                
+
             }
         })
     }
     Article.findByIdAndDelete(result._id)
-    .then(() => {
+        .then(() => {
             console.log(result)
             console.log("Successful deletion")
-            return res.status(204).json({message:"Successful deletion"})
+            return res.status(204).json({message: "Successful deletion"})
         })
         .catch((err) => {
             console.log(err)
@@ -135,7 +136,7 @@ export const updateArticle = async (req, res) => {
             const article = await Article.findById(id);
 
             if (!article) {
-                return res.status(404).json({ message: "article introuvable." });
+                return res.status(404).json({message: "article introuvable."});
             }
 
             const titre = fields.titre || article.titre;
@@ -160,7 +161,7 @@ export const updateArticle = async (req, res) => {
                 }
 
                 if (article.image) {
-                    const images = await Image.findOne({ _id: article.image });
+                    const images = await Image.findOne({_id: article.image});
                     const imagePath = "./public/images/" + images.fileName;
 
                     fs.unlink(imagePath, (err) => {
@@ -208,7 +209,7 @@ export const updateArticle = async (req, res) => {
 
         } catch (err) {
             console.log(err);
-            res.status(400).json({ message: err.message });
+            res.status(400).json({message: err.message});
         }
     });
 };

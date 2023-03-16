@@ -206,9 +206,9 @@ export async function postPrestation(addGenre, addprestation, addprice) {
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            genre:addGenre,
-            prestation:addprestation,
-            price:addprice
+            genre: addGenre,
+            prestation: addprestation,
+            price: addprice
         }),
     });
     let response = await fetch(url);
@@ -224,6 +224,7 @@ export async function getArticle() {
     let res = await response.json();
     return res;
 }
+
 export async function postArticle(formData) {
     let url = new Request("http://localhost:9010/admin/add-Article", {
         method: "POST",
@@ -234,5 +235,33 @@ export async function postArticle(formData) {
     });
     let response = await fetch(url);
     let res = await response.json();
+    return res;
+}
+
+export async function putArticle(formData) {
+    let url = new Request("http://localhost:9010/admin/update-article", {
+        method: "PUT",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+
+export async function deleteArticle(id) {
+    let url = new Request("http://localhost:9010/admin/delete-article", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({id})
+
+    });
+    let response = await fetch(url);
+    let res = await response;
     return res;
 }

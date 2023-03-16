@@ -12,12 +12,12 @@ import {Galerie} from "./pages/général/galerie";
 import {Header} from "./components/header";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getAminUser, getAuth, getUser} from "./helper/fetch";
+import {getAminUser, getAuth} from "./helper/fetch";
 import {user} from "./store/slices/userSlice";
 import {PrestationManagement} from "./pages/admin/prestation-management";
 import {Dashboard} from "./pages/général/dashbord";
 import {listAdmin} from "./store/slices/listAdminSlice";
-import {listUsers} from "./store/slices/listUserSlice";
+import {ArticleManagement} from "./pages/admin/article-admin";
 
 function App() {
 
@@ -71,6 +71,7 @@ function App() {
                 <Route path="/article" element={<Article/>}/>
                 <Route path="/galerie" element={<Galerie/>}/>
                 <Route path="/dashboard" element={<Dashboard/>}/>
+                <Route path="/article-management" element={<ArticleManagement/>}/>
             </Routes>
         </BrowserRouter>
     </>);
