@@ -4,13 +4,10 @@
   transition: all 1s;
 }
 
-.nav-header {
-  width: 30%;
-}
 
 header {
   margin: 0;
-  background: url("../images/160580499_206558134590109_903182190166692937_n.jpg") center center;
+  background: url("../images/banner.jpg") center center;
   background-size: cover;
 
   display: flex;
@@ -53,7 +50,7 @@ header {
 .burger-bar {
   width: 3em;
   height: 0.4em;
-  background-color: $blanc;
+  background-color: $vert-fonce;
   border-radius: 0.5em;
 }
 
@@ -62,9 +59,18 @@ header {
   top: 100px;
   z-index: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.nav-header {
+  background-color: $vert-clair;
 }
 
 .lien {
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,16 +93,17 @@ header {
 }
 
 /* ------------- sliding menu ------------------ */
+
+/* ----- animations--------- */
+/* clicked */
 .hidden {
   display: none;
 }
 
 .visible {
-  display: inherit;
+  display: flex;
 }
 
-/* ----- animations--------- */
-/* clicked */
 .burger-bar.clicked:nth-child(1) {
   transform: rotate(45deg) translate(1em, 1em);
   transition: ease-out 0.5s;

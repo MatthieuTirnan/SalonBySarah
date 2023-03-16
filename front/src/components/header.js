@@ -67,12 +67,16 @@ export const Header = () => {
                     ) : (
                         <div className="lien">
                             <Link className="link-header" to="/" onClick={handleclick}> DECONNECTER </Link>
+                            {!state.user.isAdmin &&
+                                <Link className="link-header" to="/message"> MESSAGE </Link>
+                            }
                         </div>
                     )
                     }
                     {state.user.isAdmin &&
                         <div className="lien">
                             <Link className="link-header" to="/dashboard"> DASHBOARD </Link>
+                            <Link className="link-header" to="/message-admin">MESSAGE ADMIN</Link>
                         </div>
                     }
                     <div className="lien">
