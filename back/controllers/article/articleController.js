@@ -34,7 +34,7 @@ export const addArticle = async (req, res) => {
             const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
 
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
-                throw new Error('Unsupported image file type');
+                return res.status(400).json({message: "Unsupported image file type"});
             }
             fs.copyFile(oldpath, newpath, function (err) {
                 if (err) throw err;

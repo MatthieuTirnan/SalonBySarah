@@ -265,3 +265,52 @@ export async function deleteArticle(id) {
     let res = await response;
     return res;
 }
+
+export async function postMessageUser(formData) {
+    let url = new Request("http://localhost:9010/add-message", {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+
+export async function getUserMessage() {
+    let url = new Request("http://localhost:9010/list-user-message", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+
+export async function getlistUser() {
+    let url = new Request("http://localhost:9010/admin/list-user", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+
+export async function getInboxAdmin() {
+    let url = new Request("http://localhost:9010/admin/list-inbox", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}

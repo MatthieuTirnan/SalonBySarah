@@ -76,7 +76,7 @@ export const Header = () => {
                     {state.user.isAdmin &&
                         <div className="lien">
                             <Link className="link-header" to="/dashboard"> DASHBOARD </Link>
-                            <Link className="link-header" to="/message-admin">MESSAGE ADMIN</Link>
+                            <Link className="link-header" to="/inbox-admin">MESSAGE ADMIN</Link>
                         </div>
                     }
                     <div className="lien">
