@@ -1,17 +1,23 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 export const ListMessageAdmin = () => {
     const location = useLocation();
     const currentInbox = location.state;
-    console.log(currentInbox)
     const messages = currentInbox.message
-    console.log(messages)
+    const navigate = useNavigate()
     const state = useSelector(state => state)
     return (
         <main>
             <article>
                 {messages.map((message, i) => {
+                    console.log(message.src)
+
+                    function handleClickReponse() {
+                        console.log(message)
+                        navigate(`/answer-message-admin`, {state: {message, currentInbox}});
+                    }
+
                     return (
                         <section key={i}>
                             <p>{message.titre}</p>
@@ -21,16 +27,21 @@ export const ListMessageAdmin = () => {
                                     <img src={message.src} alt={message.alt}/>
                                 </div>
                             }
-                            <p>message de :
+                            <div>
+                                <p>message de : </p>
                                 {message.from === state.user._id ? (
-                                    <> {state.user.pseudo}</>
+                                    <>
+                                        <p> {state.user.pseudo}</p>
+                                    </>
                                 ) : (
-
-                                    <> {currentInbox.user.pseudo}</>
+                                    <>
+                                        <p> {currentInbox.user.pseudo}</p>
+                                        <button onClick={handleClickReponse}>REPONDRE</button>
+                                    </>
                                 )
-
                                 }
-                            </p>
+
+                            </div>
                         </section>
                     )
                 })

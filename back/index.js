@@ -25,7 +25,7 @@ mongoose.connection.on("error", () => {
 })
 
 mongoose.connection.on("open", () => {
-    console.log("Connexion à la base de donénes établie");
+    console.log("Connexion à la base de données établie");
     app.use('/', useRouter);
     app.use('/admin', [auth.verifiedToken, auth.isAdmin], adminRouter);
 })

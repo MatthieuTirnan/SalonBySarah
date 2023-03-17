@@ -314,3 +314,17 @@ export async function getInboxAdmin() {
     let res = await response.json();
     return res;
 }
+
+export async function postAnswerMessage(formData) {
+    let url = new Request("http://localhost:9010/admin/create-answer-message", {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    });
+    let response = await fetch(url);
+    let res = await response.json();
+    return res;
+}
+

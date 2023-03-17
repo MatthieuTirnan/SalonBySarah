@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getUserMessage, postMessageUser} from "../../helper/fetch";
+import {deleteUser, getUserMessage, postMessageUser} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 
 export const Message = () => {
@@ -82,6 +82,17 @@ export const Message = () => {
                         return user.pseudo
                     }
 
+                    function handleDelete() {
+                        const id = message._id
+                        deleteUser(id)
+                            .then((res) => {
+                                alert(`${message.titre} supprimé`)
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
+
                     return (
                         <section key={i}>
                             <p>{message.titre}</p>
@@ -101,6 +112,7 @@ export const Message = () => {
 
                                 }
                             </p>
+                            <button onClick={handleDelete}>SUPPRIMER</button>
                         </section>
                     )
                 })
