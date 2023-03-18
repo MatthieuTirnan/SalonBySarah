@@ -20,7 +20,7 @@ export const Message = () => {
     function getMessages() {
         getUserMessage()
             .then((res) => {
-
+                console.log(res)
                 setUserMessages(res.inbox.message)
             })
             .catch((err) => {
@@ -75,47 +75,47 @@ export const Message = () => {
             </form>
 
             <article>
-                {userMessages.map((message, i) => {
-                    function displayUser(message) {
-                        const user = state.listAdmin.adminUser.find(u => u._id === message.from)
-                        console.log(user)
-                        return user.pseudo
-                    }
+                {userMessages.length === 0 ? (
+                    <div>Aucun Message</div>
+                ) : (
+                    userMessages.map((message, i) => {
+                        function displayUser(message) {
+                            const user = state.listAdmin.adminUser.find(u => u._id === message.from)
+                            console.log(user)
+                            return user.pseudo
+                        }
 
-                    function handleDelete() {
-                        const id = message._id
-                        deleteUser(id)
-                            .then((res) => {
-                                alert(`${message.titre} supprimé`)
-                            })
-                            .catch((err) => {
-                                console.log(err)
-                            })
-                    }
+                        function handleDelete() {
+                            const id = message._id
+                            deleteUser(id)
+                                .then((res) => {
+                                    alert(`${message.titre} supprimé`)
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
+                        }
 
-                    return (
-                        <section key={i}>
-                            <p>{message.titre}</p>
-                            <p>{message.description}</p>
-                            {message.src &&
-                                <div className="image-message-container">
-                                    <img src={message.src} alt={message.alt}/>
-                                </div>
-                            }
-                            <p>message de :
-                                {message.from === state.user._id ? (
-                                    <> {state.user.pseudo}</>
-                                ) : (
-
-                                    <> {displayUser(message)}</>
-                                )
-
+                        return (
+                            <section key={i}>
+                                <p>{message.titre}</p>
+                                <p>{message.description}</p>
+                                {message.src &&
+                                    <div className="image-message-container">
+                                        <img src={message.src} alt={message.alt}/>
+                                    </div>
                                 }
-                            </p>
-                            <button onClick={handleDelete}>SUPPRIMER</button>
-                        </section>
-                    )
-                })
+                                    {message.from === state.user._id ? (
+                                        <p>message de : {state.user.pseudo}</p>
+                                    ) : (
+                                        <p>message de : {displayUser(message)}</p>
+                                    )
+                                    }
+                                <button onClick={handleDelete}>SUPPRIMER</button>
+                            </section>
+                        )
+                    })
+                )
                 }
             </article>
         </main>

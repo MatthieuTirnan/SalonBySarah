@@ -13,7 +13,7 @@ export const ListMessageAdmin = () => {
                 {messages.map((message, i) => {
                     console.log(message.src)
 
-                    function handleClickReponse() {
+                    function handleClickResponse() {
                         console.log(message)
                         navigate(`/answer-message-admin`, {state: {message, currentInbox}});
                     }
@@ -28,15 +28,15 @@ export const ListMessageAdmin = () => {
                                 </div>
                             }
                             <div>
-                                <p>message de : </p>
+
                                 {message.from === state.user._id ? (
                                     <>
-                                        <p> {state.user.pseudo}</p>
+                                        <p>message de :  {state.user.pseudo}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <p> {currentInbox.user.pseudo}</p>
-                                        <button onClick={handleClickReponse}>REPONDRE</button>
+                                        <p>message de :  {currentInbox.user.pseudo}</p>
+                                        <button onClick={handleClickResponse}>REPONDRE</button>
                                     </>
                                 )
                                 }

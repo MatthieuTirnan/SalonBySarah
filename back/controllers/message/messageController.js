@@ -146,9 +146,7 @@ export const deleteMessage = async (req, res) => {
 
 
         if (!messageToDelete) return res.status(400).json({message: "message introuvable"});
-        if (messageToDelete.from.toString() !== userId) {
-            return res.status(401).json({message: "User not authorized"});
-        }
+
 
         if (messageToDelete.image) {
             const imageToDelete = await Image.findById(messageToDelete.image);

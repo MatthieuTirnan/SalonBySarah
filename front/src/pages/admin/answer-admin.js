@@ -11,7 +11,7 @@ export const AnswerMessageAdmin = () => {
     const titre = currentMessage.titre
     const user = currentMessage.from
     const navigate = useNavigate()
-
+    const inboxParam = location.state.currentInbox
     function handleSubmit(e) {
 
         e.preventDefault()
@@ -25,11 +25,11 @@ export const AnswerMessageAdmin = () => {
         postAnswerMessage(formData)
             .then((res) => {
                 console.log(res)
-                navigate(-1)
+                navigate(-2)
             })
             .catch((err) => {
                 console.log(err)
-                navigate(-1)
+                navigate(-2)
             })
     }
 
