@@ -327,4 +327,17 @@ export async function postAnswerMessage(formData) {
     let res = await response.json();
     return res;
 }
+export async function deleteMessage(id) {
+    let url = new Request("http://localhost:9010/delete-message", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({id})
 
+    });
+    let response = await fetch(url);
+    let res = await response;
+    return res;
+}

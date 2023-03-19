@@ -142,8 +142,8 @@ export const deleteMessage = async (req, res) => {
         const messageId = req.body.id;
         const userId = req.userId;
         const data = await Messages.find();
-        const messageToDelete = data.find(element => element._id === messageId)
-
+        const messageToDelete = data.find(element => element._id == messageId)
+        console.log(messageToDelete)
 
         if (!messageToDelete) return res.status(400).json({message: "message introuvable"});
 

@@ -21,7 +21,7 @@ export const verifiedToken = async (req, res, next) => {
             return
         }
         req.userId = decoded.id
-        console.log(req.userId)
+
         next()
     });
 }

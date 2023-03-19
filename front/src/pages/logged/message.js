@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {deleteUser, getUserMessage, postMessageUser} from "../../helper/fetch";
+import {deleteMessage, deleteUser, getUserMessage, postMessageUser} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 
 export const Message = () => {
@@ -81,15 +81,16 @@ export const Message = () => {
                     userMessages.map((message, i) => {
                         function displayUser(message) {
                             const user = state.listAdmin.adminUser.find(u => u._id === message.from)
-                            console.log(user)
+
                             return user.pseudo
                         }
 
                         function handleDelete() {
                             const id = message._id
-                            deleteUser(id)
+                            deleteMessage(id)
                                 .then((res) => {
-                                    alert(`${message.titre} supprimé`)
+                                    console.log(res)
+                                    getMessages()
                                 })
                                 .catch((err) => {
                                     console.log(err)

@@ -1,5 +1,6 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {deleteMessage} from "../../helper/fetch";
 
 export const ListMessageAdmin = () => {
     const location = useLocation();
@@ -17,7 +18,17 @@ export const ListMessageAdmin = () => {
                         console.log(message)
                         navigate(`/answer-message-admin`, {state: {message, currentInbox}});
                     }
+                    function handleDelete() {
+                        const id = message._id
+                        deleteMessage(id)
+                            .then((res) => {
+                                console.log(res)
 
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                            })
+                    }
                     return (
                         <section key={i}>
                             <p>{message.titre}</p>
@@ -31,12 +42,13 @@ export const ListMessageAdmin = () => {
 
                                 {message.from === state.user._id ? (
                                     <>
-                                        <p>message de :  {state.user.pseudo}</p>
+                                        <p>message de : {state.user.pseudo}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <p>message de :  {currentInbox.user.pseudo}</p>
+                                        <p>message de : {currentInbox.user.pseudo}</p>
                                         <button onClick={handleClickResponse}>REPONDRE</button>
+                                        <button onClick={handleDelete}>SUPPRIMER</button>
                                     </>
                                 )
                                 }
