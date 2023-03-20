@@ -14,8 +14,9 @@ header {
   display: flex;
   justify-content: center;
   position: sticky;
+  top: 0;
   @include tablette {
-    height: 200px;
+    height: 150px;
   }
 
 
@@ -48,7 +49,7 @@ header {
   justify-content: space-between;
   cursor: pointer;
   @include tablette {
-    top: 40%
+    top: 35%
   }
   @include desktop {
     display: none;
@@ -81,7 +82,9 @@ header {
 
 .nav-header {
   background-color: $vert-clair;
-
+  position: sticky;
+  top:0;
+  z-index:3;
 
 }
 

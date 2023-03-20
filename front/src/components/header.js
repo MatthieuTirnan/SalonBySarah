@@ -80,7 +80,7 @@ export const Header = () => {
                         </div>
                     }
                     <div className="lien">
-
+                        <Link className="link-header" to="/"> ACCUEIL </Link>
                         <Link className="link-header" to="/galerie"> GALERIE </Link>
                         <Link className="link-header" to="/article"> ARTICLE </Link>
                         <Link className="link-header" to="/tarif"> PRESTATION </Link>
