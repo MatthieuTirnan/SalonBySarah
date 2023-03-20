@@ -1,0 +1,63 @@
+@import "../Variable.scss";
+main{
+  @include tablette{
+  width: 90%;
+  margin:0 auto;
+  }
+  @include desktop{
+    width: 80%;
+  }
+}
+.galerie-container {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px auto;
+  @include tablette{
+    margin:5px;
+    padding:20px;
+    border:3px solid $vert-fonce;
+    border-radius: 10px;
+  }
+
+  .image-container {
+    position: relative;
+
+    width: 90%;
+    @include tablette {
+      width: 45%;
+      height: 250px;
+
+    }
+    @include desktop {
+      width: 28%;
+      height: 250px;
+
+    }
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+    button {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border: 10px;
+      padding: 5px;
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: $text-nav;
+
+      &:hover {
+        color: $blanc;
+        background-color: $vert-fonce;
+
+      }
+    }
+  }
+}

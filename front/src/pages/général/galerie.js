@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {deleteImage, getGalerie, postImageGalerie} from "../../helper/fetch";
 import {useSelector} from "react-redux";
-
+import"../../asset/style/galerie.scss"
 export const Galerie = () => {
     const state = useSelector(state => state)
 
@@ -77,7 +77,9 @@ export const Galerie = () => {
 
                     return (
                         <div key={i} className="image-container">
-                            <img src={e.src} alt={e.alt}/>
+
+                            <a href={e.src}><img src={e.src} alt={e.alt}/></a>
+
                             {state.user.isAdmin &&
                                 <button onClick={handleDelete}>supprimer</button>
                             }

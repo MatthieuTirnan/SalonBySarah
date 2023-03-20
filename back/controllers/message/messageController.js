@@ -252,7 +252,7 @@ export const createAnswerMessage = async (req, res) => {
             });
             const page = "Message";
             const alt = files.fichier.originalFilename;
-            const src = "http:localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
+            const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
             const fileName = files.fichier.newFilename + currentExtension;
             const newImage = new Image({
                 page, alt, src, fileName,

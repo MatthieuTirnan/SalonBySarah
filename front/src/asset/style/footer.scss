@@ -1,0 +1,13 @@
+@import "../Variable.scss";
+
+section{
+  margin:0;
+  background-color: $vert-clair;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p{
+    color:$noir;
+    font-weight: bold;
+  }
+}

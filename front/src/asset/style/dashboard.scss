@@ -1,0 +1,29 @@
+@import "../Variable.scss";
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $vert-fonce;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: $text-nav;
+    margin:15px;
+    @include desktop {
+      padding:0  20px;
+      margin:15px ;
+
+    }
+
+    &:hover {
+      color: $vert-clair;
+      background-color: $vert-fonce;
+
+    }
+  }
+}

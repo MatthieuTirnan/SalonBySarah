@@ -135,7 +135,6 @@ export const PrestationManagement = () => {
                         <tbody>
                         {state.prestation.data.map((e, i) => {
                             const id = e._id
-
                             function handleDeleteClick() {
                                 deletePrestation(id)
                                     .then((res) => {
@@ -146,8 +145,6 @@ export const PrestationManagement = () => {
                                         console.log(err)
                                     })
                             }
-
-
                             return (
 
                                 <tr key={i}>
@@ -164,7 +161,7 @@ export const PrestationManagement = () => {
                                     </td>
                                     <td>
                                         <button
-                                            onClick={handleDeleteClick}>supprimé
+                                            onClick={handleDeleteClick}>supprimer
                                         </button>
                                     </td>
                                 </tr>

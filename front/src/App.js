@@ -10,21 +10,22 @@ import {UserManagement} from "./pages/admin/user-management";
 import {Article} from "./pages/général/article";
 import {Galerie} from "./pages/général/galerie";
 import {Header} from "./components/header";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {getAminUser, getAuth} from "./helper/fetch";
+import {getAuth} from "./helper/fetch";
 import {user} from "./store/slices/userSlice";
 import {PrestationManagement} from "./pages/admin/prestation-management";
 import {Dashboard} from "./pages/général/dashbord";
-import {listAdmin} from "./store/slices/listAdminSlice";
+
 import {ArticleManagement} from "./pages/admin/article-admin";
 import {ListMessageAdmin} from "./pages/admin/message-admin";
 import {AnswerMessageAdmin} from "./pages/admin/answer-admin";
+import {Footer} from "./components/footer";
 
 
 function App() {
 
-    const state = useSelector(state => state)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -44,19 +45,6 @@ function App() {
                     localStorage.removeItem('jwt')
                 })
         }
-
-        if (!state.listAdmin) {
-
-            getAminUser()
-                .then((res) => {
-                    dispatch(listAdmin(res))
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
-
-
     }, [])
 
 
@@ -79,6 +67,7 @@ function App() {
                 <Route path="/message-admin" element={<ListMessageAdmin/>}/>
                 <Route path="/answer-message-admin" element={<AnswerMessageAdmin/>}/>
             </Routes>
+            <Footer/>
         </BrowserRouter>
     </>);
 }

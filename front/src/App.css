@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Athiti&family=Merienda+One&display=swap');
 .App {
   text-align: center;
 }
-
+*{
+  font-family: 'Athiti', sans-serif;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

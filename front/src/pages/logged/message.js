@@ -10,6 +10,7 @@ export const Message = () => {
     const state = useSelector(state => state)
 
     useEffect(() => {
+        console.log(state.user)
         getMessages()
     }, [])
 
@@ -79,11 +80,7 @@ export const Message = () => {
                     <div>Aucun Message</div>
                 ) : (
                     userMessages.map((message, i) => {
-                        function displayUser(message) {
-                            const user = state.listAdmin.adminUser.find(u => u._id === message.from)
 
-                            return user.pseudo
-                        }
 
                         function handleDelete() {
                             const id = message._id
@@ -109,7 +106,7 @@ export const Message = () => {
                                     {message.from === state.user._id ? (
                                         <p>message de : {state.user.pseudo}</p>
                                     ) : (
-                                        <p>message de : {displayUser(message)}</p>
+                                        <p>réponse d'un admin</p>
                                     )
                                     }
                                 <button onClick={handleDelete}>SUPPRIMER</button>

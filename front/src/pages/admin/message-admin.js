@@ -6,6 +6,7 @@ export const ListMessageAdmin = () => {
     const location = useLocation();
     const currentInbox = location.state;
     const messages = currentInbox.message
+    console.log(messages)
     const navigate = useNavigate()
     const state = useSelector(state => state)
     return (
@@ -13,7 +14,6 @@ export const ListMessageAdmin = () => {
             <article>
                 {messages.map((message, i) => {
                     console.log(message.src)
-
                     function handleClickResponse() {
                         console.log(message)
                         navigate(`/answer-message-admin`, {state: {message, currentInbox}});
@@ -23,7 +23,7 @@ export const ListMessageAdmin = () => {
                         deleteMessage(id)
                             .then((res) => {
                                 console.log(res)
-
+                                navigate(-1)
                             })
                             .catch((err) => {
                                 console.log(err)
@@ -39,7 +39,6 @@ export const ListMessageAdmin = () => {
                                 </div>
                             }
                             <div>
-
                                 {message.from === state.user._id ? (
                                     <>
                                         <p>message de : {state.user.pseudo}</p>
@@ -52,7 +51,6 @@ export const ListMessageAdmin = () => {
                                     </>
                                 )
                                 }
-
                             </div>
                         </section>
                     )

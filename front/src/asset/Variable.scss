@@ -1,19 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Athiti&family=Merienda+One&display=swap');
+
 $vert-titre: green;
 $blanc: white;
 $vert-clair: #90EE90;
 $vert-fonce: #006400;
+$noir:black;
+
+$athiti: 'Athiti', sans-serif;
+$Merianda: 'Merienda One', cursive;
 
 
 $text-nav: 25px;
-$text-h1: 50px;
+$text-h1: 40px;
 
 $breakpoints: (
-        mobile: 690px,
+        tablette: 690px,
         desktop: 980px
 );
 
-@mixin mobile {
-  @media screen and (min-width: map-get($breakpoints, mobile)) {
+@mixin tablette {
+  @media screen and (min-width: map-get($breakpoints, tablette)) {
     @content;
   }
 }

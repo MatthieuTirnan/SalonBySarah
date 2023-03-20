@@ -2,6 +2,7 @@
 
 * {
   transition: all 1s;
+  font-family: $athiti;
 }
 
 
@@ -11,19 +12,23 @@ header {
   background-size: cover;
 
   display: flex;
-  position: relative;
-  @include mobile {
-    height: 250px;
+  justify-content: center;
+  position: sticky;
+  @include tablette {
+    height: 200px;
   }
 
+
   h1 {
-    margin: auto 30%;
+
+    font-family: $Merianda;
     color: $vert-titre;
     text-shadow: 1px 1px 0 black;
     padding: 5px;
-    font-size: $text-h1;
-    @include mobile {
+    font-size: 20px;
+    @include tablette {
       margin: auto auto;
+      font-size: $text-h1;
     }
   }
 }
@@ -33,7 +38,7 @@ header {
 
 .burger-menu {
   position: absolute;
-  top: 25%;
+  top: 13%;
   left: 15px;
   height: 50px;
   width: 4em;
@@ -42,8 +47,11 @@ header {
   align-items: flex-start;
   justify-content: space-between;
   cursor: pointer;
-  @include mobile {
+  @include tablette {
     top: 40%
+  }
+  @include desktop {
+    display: none;
   }
 }
 
@@ -62,11 +70,19 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  @include tablette {
+    flex-direction: row;
+    justify-content: center;
+
+  }
+
 
 }
 
 .nav-header {
   background-color: $vert-clair;
+
+
 }
 
 .lien {
@@ -75,6 +91,10 @@ header {
   flex-direction: column;
   align-items: center;
   background-color: $vert-clair;
+  @include desktop {
+    flex-direction: row;
+
+  }
 
   a {
     text-decoration: none;
@@ -83,6 +103,10 @@ header {
     text-align: center;
     font-weight: bold;
     font-size: $text-nav;
+    @include desktop {
+    padding:0  20px;
+
+    }
 
     &:hover {
       color: $vert-clair;
@@ -98,6 +122,9 @@ header {
 /* clicked */
 .hidden {
   display: none;
+  @include desktop {
+    display: flex;
+  }
 }
 
 .visible {

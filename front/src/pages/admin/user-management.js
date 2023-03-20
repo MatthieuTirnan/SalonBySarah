@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {deleteUser, getUser, updateUser} from "../../helper/fetch";
 import {useDispatch, useSelector} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
-
+import "../../asset/style/user-management.scss"
 
 
 export const UserManagement = () => {
@@ -31,9 +31,8 @@ export const UserManagement = () => {
                     <tr>
                         <th>Pseudo</th>
                         <th>Email</th>
-                        <th> Crée le</th>
                         <th>Statut</th>
-                        <th>Changer de Statut</th>
+                        <th>Modifier</th>
                         <th>Supprimer</th>
                     </tr>
                     </thead>
@@ -80,11 +79,10 @@ export const UserManagement = () => {
                             <tr key={i}>
                                 <td>{e.pseudo}</td>
                                 <td>{e.email}</td>
-                                <td>{e.createdAt}</td>
                                 <td>{e.isAdmin ? "Admin" : "Pas Admin"}</td>
                                 <td>
                                     <button
-                                        onClick={handleupdateClick}>{e.isAdmin ? "Enlever statut Admin" : "Passer Admin"}</button>
+                                        onClick={handleupdateClick}>{e.isAdmin ? "Enlever Admin" : "Passer Admin"}</button>
                                 </td>
                                 <td>
                                     <button onClick={handleDeleteClick}>supprimer</button>
