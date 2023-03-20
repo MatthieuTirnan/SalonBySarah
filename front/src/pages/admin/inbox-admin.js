@@ -3,7 +3,7 @@ import {getInboxAdmin, getlistUser} from "../../helper/fetch";
 import {useDispatch, useSelector} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
 import {useNavigate} from "react-router-dom";
-
+import "../../asset/style/inbox.scss"
 export const InboxAdmin = () => {
 
     const navigate = useNavigate()

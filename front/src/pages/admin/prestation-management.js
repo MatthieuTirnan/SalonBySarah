@@ -150,7 +150,7 @@ export const PrestationManagement = () => {
                                 <tr key={i}>
                                     <td>{e.genre}</td>
                                     <td>{e.prestation}</td>
-                                    <td>{e.price}</td>
+                                    <td>{e.price} €</td>
                                     <td>
                                         <button onClick={(event) => {
                                             setFormDisplay("visible")
