@@ -27,6 +27,7 @@ main {
     position: relative;
 
     width: 90%;
+    box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
 
     @include tablette {
       width: 45%;
@@ -41,7 +42,7 @@ main {
     }
 
     img {
-      object-fit: contain;
+      object-fit: cover;
       width: 100%;
 
     }
@@ -49,7 +50,10 @@ main {
     a {
       padding: 0;
       margin: 0;
-
+      background-color: transparent;
+      &:hover{
+        background-color: transparent;
+      }
     }
 
     button {
