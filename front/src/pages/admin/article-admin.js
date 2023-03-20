@@ -1,7 +1,7 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {deleteArticle, putArticle} from "../../helper/fetch";
-
+import "../../asset/style/article-management.scss"
 export const ArticleManagement = () => {
 
     const navigate = useNavigate()
@@ -39,7 +39,7 @@ export const ArticleManagement = () => {
     function handleDeleteClick() {
         const id = article._id
         deleteArticle(id)
-            .then((res) => {
+            .then(() => {
 
                 navigate(-1)
             })
@@ -51,7 +51,7 @@ export const ArticleManagement = () => {
 
     return (
         <main>
-            <article>
+            <article className="modif-article">
                 <h2>{currentarticle.titre}</h2>
                 {currentarticle.imagepath &&
                     <div className="image-article-container">

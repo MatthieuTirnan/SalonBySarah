@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {getArticle, postArticle} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-
+import '../../asset/style/article.scss'
 export const Article = () => {
     const navigate = useNavigate()
     const state = useSelector(state => state)
@@ -68,7 +68,8 @@ export const Article = () => {
         {articles.length === 0 ? (
             <div>Aucun article</div>
         ) : (
-            articles.map((e, i) => {
+            <section className="section-article">
+                {articles.map((e, i) => {
                 function handleClick() {
                     navigate(`/article-management`, {state: e});
                 }
@@ -87,7 +88,8 @@ export const Article = () => {
                         }
                     </article>
                 )
-            })
+            })}
+            </section>
         )}
 
     </main>
