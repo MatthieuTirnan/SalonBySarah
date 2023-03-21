@@ -1,0 +1,35 @@
+@import "../Variable.scss";
+
+
+.categorie-prestation {
+  display: flex;
+  padding: 10px;
+  border: 3px solid $vert-fonce;
+  border-radius: 10px;
+  flex-direction: column;
+  width: 90%;
+  margin: 25px 0;
+  @include tablette {
+    width: 100%;
+  }
+
+  h2 {
+    text-align: center;
+    font-family: 'Merienda One', cursive;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $vert-fonce;
+  }
+
+  .prestation-wrapper {
+    padding-bottom: 15px;
+    border-bottom: 1px solid grey;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin: 5px;
+    }
+  }
+}

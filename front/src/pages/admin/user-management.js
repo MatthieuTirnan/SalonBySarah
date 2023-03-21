@@ -2,7 +2,7 @@ import {useEffect} from "react";
 import {deleteUser, getUser, updateUser} from "../../helper/fetch";
 import {useDispatch, useSelector} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
-import "../../asset/style/user-management.scss"
+import "../../asset/style/management.scss"
 
 
 export const UserManagement = () => {
@@ -22,7 +22,6 @@ export const UserManagement = () => {
     }, [])
 
 
-
     return (
         <main>
             {state.listUsers.user ? (
@@ -39,6 +38,7 @@ export const UserManagement = () => {
                     <tbody>
                     {state.listUsers.user.map((e, i) => {
                         const id = e._id
+
                         function handleDeleteClick() {
                             deleteUser(id)
                                 .then((res) => {

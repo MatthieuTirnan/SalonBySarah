@@ -26,7 +26,7 @@ $breakpoints: (
 
 @mixin desktop {
   @media screen and (min-width: map-get($breakpoints, desktop)) {
-    max-width: 1400px;
+    
     @content;
   }
 }

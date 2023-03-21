@@ -2,13 +2,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {deletePrestation, getPrestation, postPrestation, updatePrestation} from "../../helper/fetch";
 import {prestation} from "../../store/slices/prestation";
-
+import '../../asset/style/management.scss'
 
 export const PrestationManagement = () => {
 
     const state = useSelector(state => state)
     const dispatch = useDispatch()
-    const [formDisplay, setFormDisplay] = useState("hidden")
+    const [formDisplay, setFormDisplay] = useState("hiddenform")
     const [currentPrestation, setCurrentPrestation] = useState({})
 
     const [addGenre, setAddGenre] = useState("Homme")
@@ -37,7 +37,7 @@ export const PrestationManagement = () => {
 
         e.preventDefault()
 
-        setFormDisplay("hidden")
+        setFormDisplay("hiddenform")
         console.log(currentPrestation)
 
         updatePrestation(currentPrestation)
@@ -70,6 +70,7 @@ export const PrestationManagement = () => {
     return (
         <main>
             <form method="POST" onSubmit={handleSubmit}>
+
                 <fieldset>
                     <legend>Ajouter une prestation</legend>
                     <label htmlFor="genre">genre</label>
@@ -103,6 +104,8 @@ export const PrestationManagement = () => {
             {state.prestation.data &&
                 <>
                     <form method="put" onSubmit={handleSubmitPut} className={formDisplay}>
+                        <i className="fa-solid fa-circle-xmark  buttonred"
+                           onClick={() => setFormDisplay("hiddenform")}></i>
                         <fieldset>
                             <legend>modifier la prestation</legend>
                             <label htmlFor="genre">genre</label>
@@ -135,6 +138,7 @@ export const PrestationManagement = () => {
                         <tbody>
                         {state.prestation.data.map((e, i) => {
                             const id = e._id
+
                             function handleDeleteClick() {
                                 deletePrestation(id)
                                     .then((res) => {
@@ -145,6 +149,7 @@ export const PrestationManagement = () => {
                                         console.log(err)
                                     })
                             }
+
                             return (
 
                                 <tr key={i}>
@@ -153,7 +158,7 @@ export const PrestationManagement = () => {
                                     <td>{e.price} €</td>
                                     <td>
                                         <button onClick={(event) => {
-                                            setFormDisplay("visible")
+                                            setFormDisplay("visibleform")
                                             setCurrentPrestation(e)
                                         }}>modifier
                                         </button>
