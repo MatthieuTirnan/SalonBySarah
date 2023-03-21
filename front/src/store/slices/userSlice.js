@@ -3,11 +3,9 @@ import {createSlice} from '@reduxjs/toolkit'
 export const userSlice = createSlice({
     name: 'userSlice',
     initialState: {
-        pseudo: "",
-        email: "",
+
         isAdmin: false,
-        _id: "",
-        jwt: "",
+
         isMatch: false
     },
 

@@ -1,6 +1,7 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {postAnswerMessage} from "../../helper/fetch";
+import '../../asset/style/message-admin.scss'
 
 export const AnswerMessageAdmin = () => {
     const location = useLocation();
@@ -12,6 +13,7 @@ export const AnswerMessageAdmin = () => {
     const user = currentMessage.from
     const navigate = useNavigate()
     const inboxParam = location.state.currentInbox
+
     function handleSubmit(e) {
 
         e.preventDefault()
@@ -35,11 +37,11 @@ export const AnswerMessageAdmin = () => {
 
     return (
         <main>
-            <section>
+            <section className="previous-message">
                 <p>{currentMessage.titre}</p>
                 <p>{currentMessage.description}</p>
                 {currentMessage.src &&
-                    <div className="image-message-container">
+                    <div className="image-message-container-answer">
                         <img src={currentMessage.src} alt={currentMessage.alt}/>
                     </div>
                 }

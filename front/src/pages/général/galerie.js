@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import {deleteImage, getGalerie, postImageGalerie} from "../../helper/fetch";
 import {useSelector} from "react-redux";
-import"../../asset/style/galerie.scss"
+import "../../asset/style/galerie.scss"
+
 export const Galerie = () => {
     const state = useSelector(state => state)
 
@@ -54,7 +55,7 @@ export const Galerie = () => {
             }
             <article className="galerie-container">
 
-                {galerie.map((e, i) => {
+                {galerie.slice(0).reverse().map((e, i) => {
                     function handleDelete() {
                         console.log(e)
                         const id = e._id

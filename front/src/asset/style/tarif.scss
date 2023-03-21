@@ -33,3 +33,27 @@
     }
   }
 }
+
+.select-tarif {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  margin: 20px auto;
+  width: 60%;
+  @include tablette {
+    flex-direction: row;
+  }
+}
+
+.hidden-tarif {
+  display: none;
+}
+
+.homme-tarif {
+  display: flex;
+}
+
+.femme-tarif {
+  display: flex;
+}

@@ -3,6 +3,7 @@ import {getArticle, postArticle} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import '../../asset/style/article.scss'
+
 export const Article = () => {
     const navigate = useNavigate()
     const state = useSelector(state => state)
@@ -69,26 +70,26 @@ export const Article = () => {
             <div>Aucun article</div>
         ) : (
             <section className="section-article">
-                {articles.map((e, i) => {
-                function handleClick() {
-                    navigate(`/article-management`, {state: e});
-                }
+                {articles.slice(0).reverse().map((e, i) => {
+                    function handleClick() {
+                        navigate(`/article-management`, {state: e});
+                    }
 
-                return (
-                    <article key={i}>
-                        <h2>{e.titre}</h2>
-                        {e.imagepath &&
-                            <div className="image-article-container">
-                                <img src={e.imagepath} alt={e.image.alt}/>
-                            </div>
-                        }
-                        <p>{e.description}</p>
-                        {state.user.isAdmin &&
-                            <button onClick={handleClick}>MODIFIER</button>
-                        }
-                    </article>
-                )
-            })}
+                    return (
+                        <article key={i}>
+                            <h2>{e.titre}</h2>
+                            {e.imagepath &&
+                                <div className="image-article-container">
+                                    <img src={e.imagepath} alt={e.image.alt}/>
+                                </div>
+                            }
+                            <p>{e.description}</p>
+                            {state.user.isAdmin &&
+                                <button onClick={handleClick}>MODIFIER</button>
+                            }
+                        </article>
+                    )
+                })}
             </section>
         )}
 
