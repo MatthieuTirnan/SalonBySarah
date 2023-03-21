@@ -27,15 +27,38 @@ export const Tarif = () => {
             {state.prestation.prestation === false ? (
                 <div>aucune prestation</div>
             ) : (
-                state.prestation.data.map((e, i) => {
-                    return (
-                        <div key={i}>
-                            <p>{e.prestation}</p>
-                            <p>{e.price} €</p>
-                            <p></p>
-                        </div>
-                    )
-                })
+                <>
+                    <section className="catégorie-prestation">
+                        <h2>catégorie Femme</h2>
+                        {state.prestation.data.map((e, i) => {
+                            if (e.genre === "Femme") {
+                                return (
+                                    <div key={i} className="prestation-wrapper">
+                                        <p>{e.prestation}</p>
+                                        <p>{e.price} €</p>
+                                        <p></p>
+                                    </div>
+                                )
+                            }
+                        })}
+                    </section>
+
+                    <section className="catégorie-prestation">
+                        <h2>catégorie Homme</h2>
+                        {state.prestation.data.map((e, i) => {
+                            if (e.genre === "Homme") {
+                                return (
+                                    <div key={i} className="prestation-wrapper">
+                                        <p>{e.prestation}</p>
+                                        <p>{e.price} €</p>
+                                        <p></p>
+                                    </div>
+                                )
+                            }
+                        })}
+                    </section>
+                </>
+
             )}
 
         </main>

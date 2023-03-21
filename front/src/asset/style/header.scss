@@ -19,6 +19,9 @@ header {
   @include tablette {
     height: 150px;
   }
+  @include desktop {
+    position: relative;
+  }
 
 
   h1 {
@@ -84,8 +87,8 @@ header {
 .nav-header {
   background-color: $vert-clair;
   position: sticky;
-  top:0;
-  z-index:3;
+  top: 0;
+  z-index: 3;
 
 }
 
@@ -108,7 +111,7 @@ header {
     font-weight: bold;
     font-size: $text-nav;
     @include desktop {
-    padding:0  20px;
+      padding: 0 20px;
 
     }
 
