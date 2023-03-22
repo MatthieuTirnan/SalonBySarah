@@ -1,0 +1,48 @@
+@import "../Variable.scss";
+
+.slick-slider {
+  width: 90%;
+  height: 400px;
+
+}
+
+
+.slick-track {
+  width: 90%;
+  height: 400px;
+}
+
+.img-carousel-wrapper {
+  width: 100%;
+  height: 400px;
+}
+
+.img-carousel {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+h2 {
+  text-align: center;
+  font-family: 'Merienda One', cursive;
+  margin-bottom: 0;
+  &:before{
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f0c4";
+    color:$vert-fonce;
+    font-size: 1em;
+    margin:auto 10px;
+    vertical-align: middle;
+  }
+  &:after{
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f0c4";
+    color:$vert-fonce;
+    font-size: 1em;
+    margin:auto 10px;
+    vertical-align: middle;
+    transform: rotate(180deg);
+  }
+}

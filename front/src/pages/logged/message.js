@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import {deleteMessage, deleteUser, getUserMessage, postMessageUser} from "../../helper/fetch";
+import {deleteMessage, getUserMessage, postMessageUser} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 
 export const Message = () => {
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
     const [fichier, setFichier] = useState({})
-    const [userMessages, setUserMessages] = useState([])
+    const [userMessages, setUserMessages] = useState(["en chargement"])
     const state = useSelector(state => state)
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export const Message = () => {
             </form>
 
             <article>
-                {userMessages.length === 0 ? (
+                {userMessages[0] === "en chargement" ? (
                     <div>Aucun Message</div>
                 ) : (
                     userMessages.map((message, i) => {

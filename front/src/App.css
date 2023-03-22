@@ -6,6 +6,13 @@
   font-family: 'Athiti', sans-serif;
   font-size: 20px;
 }
+body{
+  background: rgb(249,249,249);
+  background: -moz-radial-gradient(circle, rgba(249,249,249,1) 10%, rgba(195,191,198,1) 70%, rgba(213,236,166,1) 100%);
+  background: -webkit-radial-gradient(circle, rgba(249,249,249,1) 10%, rgba(195,191,198,1) 70%, rgba(213,236,166,1) 100%);
+  background: radial-gradient(circle, rgba(249,249,249,1) 10%, rgba(195,191,198,1) 70%, rgba(213,236,166,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f9f9f9",endColorstr="#d5eca6",GradientType=1);
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

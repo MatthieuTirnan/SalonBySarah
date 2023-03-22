@@ -1,3 +1,34 @@
 @import "../Variable.scss";
 
+.contact-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+@include tablette{
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+}
+  p{
+    margin:5px;
+    text-align: center;
+    line-height: 25px;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+    @include desktop{
+    padding-right: 200px;
+    }
+  }
+  a{
+    margin:5px;
+    color: $noir;
+    font-size: 20px;
+    @include tablette{
+      text-align: start;
+      padding: 0;
+    }
+  }
+}
+
 
