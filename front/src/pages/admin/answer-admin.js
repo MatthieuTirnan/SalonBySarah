@@ -2,6 +2,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {postAnswerMessage} from "../../helper/fetch";
 import '../../asset/style/message-admin.scss'
+import {toastError, toastSuccess} from "../../components/toast/toast";
+import {ToastContainer} from "react-toastify";
 
 export const AnswerMessageAdmin = () => {
     const location = useLocation();
@@ -27,6 +29,13 @@ export const AnswerMessageAdmin = () => {
         postAnswerMessage(formData)
             .then((res) => {
                 console.log(res)
+                if (res.message === "champ manquant") {
+                    toastError("champ manquant")
+                } else if (res.message === 'Unsupported image file type') {
+                    toastError("Unsupported image file type")
+                } else {
+                    toastSuccess(`le message ${res.message.titre} a bien été ajouté`)
+                }
                 navigate(-2)
             })
             .catch((err) => {

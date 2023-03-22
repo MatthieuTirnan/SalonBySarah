@@ -21,6 +21,7 @@ import {ArticleManagement} from "./pages/admin/article-admin";
 import {ListMessageAdmin} from "./pages/admin/message-admin";
 import {AnswerMessageAdmin} from "./pages/admin/answer-admin";
 import {Footer} from "./components/footer";
+import {Toast} from "./components/toast/toast";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
     return (<>
         <BrowserRouter>
             <Header/>
+            <Toast/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>

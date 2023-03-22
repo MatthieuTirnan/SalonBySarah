@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {deletePrestation, getPrestation, postPrestation, updatePrestation} from "../../helper/fetch";
 import {prestation} from "../../store/slices/prestation";
 import '../../asset/style/management.scss'
+import {toastError} from "../../components/toast/toast";
 
 export const PrestationManagement = () => {
 
@@ -60,6 +61,9 @@ export const PrestationManagement = () => {
         postPrestation(addGenre, addprestation, addprice)
             .then((res) => {
                 console.log(res)
+                if(res.message ==="un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre"){
+                    toastError("un champ est manquant ou le genre est mal renseigné")
+                }
                 actualiseDisplay()
             })
             .catch((err) => {

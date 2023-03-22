@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {postLogin} from "../../helper/fetch";
 import {user} from "../../store/slices/userSlice";
+import {toastError} from "../../components/toast/toast";
 
 export const Login = () => {
     const state = useSelector(state => state.user)
@@ -17,7 +18,7 @@ export const Login = () => {
         postLogin(email, password)
             .then(res => {
                 if (res.message !== undefined) {
-                    alert(res.message)
+                    toastError(res.message)
                 }
                 dispatch(user({
                     isMatch: res.isMatch,
@@ -30,8 +31,6 @@ export const Login = () => {
                 localStorage.setItem("jwt", res.jwt)
             })
             .catch(err => {
-
-
             });
         navigate("/")
     }

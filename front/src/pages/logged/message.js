@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 import {deleteMessage, getUserMessage, postMessageUser} from "../../helper/fetch";
 import {useSelector} from "react-redux";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {toastSuccess} from "../../components/toast/toast";
 export const Message = () => {
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
@@ -11,12 +13,10 @@ export const Message = () => {
 
     useEffect(() => {
         console.log(state.user)
+
         getMessages()
     }, [])
 
-    useEffect(() => {
-        console.log(userMessages)
-    }, [userMessages])
 
     function getMessages() {
         getUserMessage()
@@ -42,13 +42,16 @@ export const Message = () => {
             .then((res) => {
                 console.log(res)
                 if (res.message === "champ manquant") {
-                    alert("champ manquant")
+                    toastSuccess("champ manquant")
+                    return <ToastContainer />
                 } else if (res.message === 'Unsupported image file type') {
-                    alert("Unsupported image file type")
+                    toastSuccess("Unsupported image file type")
+                    return <ToastContainer />
                 } else {
-                    alert(`le message ${res.message.titre} a bien été ajouté`)
-                }
+                    toastSuccess(`le message ${res.message.titre} a bien été ajouté`)
                 getMessages()
+
+                }
             })
             .catch((err) => {
                 alert(err.message)

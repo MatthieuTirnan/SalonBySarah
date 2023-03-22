@@ -4,6 +4,7 @@ import '../../asset/style/login.scss'
 import {useState} from 'react';
 import {postRegister} from "../../helper/fetch";
 import {user} from "../../store/slices/userSlice";
+import {toastError} from "../../components/toast/toast";
 
 export const Register = () => {
 
@@ -28,7 +29,7 @@ export const Register = () => {
                 }))
             })
             .catch((err) => {
-                alert("un champ et manquant ou mal renseigner")
+                toastError("un champ et manquant ou mal renseigner")
                 console.log(err)
             })
         navigate("/")
