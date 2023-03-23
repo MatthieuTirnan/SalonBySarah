@@ -3,6 +3,7 @@ import User from "../../models/usersShema.js";
 
 export const listUser = async (req, res) => {
     const user = await User.find()
+
     console.log(user.length)
     if (!user) {
         res.status(400).json({message: "aucun utilisateur"})

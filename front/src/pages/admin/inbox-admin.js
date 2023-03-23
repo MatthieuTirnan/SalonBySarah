@@ -14,16 +14,10 @@ export const InboxAdmin = () => {
 
     useEffect(() => {
         inboxDisplay()
-        if (state.user.isAdmin) {
-            getlistUser()
-                .then((res) => {
-                    dispatch(listUsers(res.user))
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
 
-        }
+
+
+
     }, [])
 
 
@@ -32,7 +26,13 @@ export const InboxAdmin = () => {
         getInboxAdmin()
             .then((res) => {
                 setInboxs(res.inbox)
-
+                getlistUser()
+                    .then((res) => {
+                        dispatch(listUsers(res.user))
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
             })
             .catch((err) => {
                 console.log(err)
@@ -41,7 +41,7 @@ export const InboxAdmin = () => {
 
     return (<main>
         <article className="inbox-container">
-            {inboxs.length === 0 ? (
+            {!inboxs  ? (
                 <div>Aucun Messages</div>
             ) : (
                 inboxs.slice(0).reverse().map((inbox, i) => {

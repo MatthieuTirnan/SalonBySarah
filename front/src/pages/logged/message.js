@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
-import {deleteMessage, getUserMessage, postMessageUser} from "../../helper/fetch";
-import {useSelector} from "react-redux";
-import { ToastContainer, toast } from 'react-toastify';
+import {deleteMessage, getAuth, getUserMessage, postMessageUser} from "../../helper/fetch";
+import {useDispatch, useSelector} from "react-redux";
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {toastError, toastSuccess} from "../../components/toast/toast";
+
 export const Message = () => {
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
@@ -12,8 +13,6 @@ export const Message = () => {
     const state = useSelector(state => state)
 
     useEffect(() => {
-
-
         getMessages()
     }, [])
 
@@ -21,7 +20,6 @@ export const Message = () => {
     function getMessages() {
         getUserMessage()
             .then((res) => {
-
                 setUserMessages(res.inbox.message)
             })
             .catch((err) => {
@@ -36,20 +34,20 @@ export const Message = () => {
         formData.append("titre", titre);
         formData.append("description", description);
         formData.append("fichier", fichier);
-        console.log("ok")
+
 
         postMessageUser(formData)
             .then((res) => {
 
                 if (res.message === "champ manquant") {
                     toastSuccess("champ manquant")
-                    return <ToastContainer />
+                    return <ToastContainer/>
                 } else if (res.message === 'Unsupported image file type') {
                     toastSuccess("Unsupported image file type")
-                    return <ToastContainer />
+                    return <ToastContainer/>
                 } else {
-                    toastSuccess(`le message ${res.message.titre} a bien été ajouté`)
-                getMessages()
+                    toastSuccess(`le message  a bien été ajouté`)
+                    getMessages()
 
                 }
             })
@@ -105,12 +103,12 @@ export const Message = () => {
                                         <img src={message.src} alt={message.alt}/>
                                     </div>
                                 }
-                                    {message.from === state.user._id ? (
-                                        <p>message de : {state.user.pseudo}</p>
-                                    ) : (
-                                        <p>réponse d'un admin</p>
-                                    )
-                                    }
+                                {message.from === state.user._id ? (
+                                    <p>message de : {state.user.pseudo}</p>
+                                ) : (
+                                    <p>réponse d'un admin</p>
+                                )
+                                }
                                 <button onClick={handleDelete}>SUPPRIMER</button>
                             </section>
                         )
