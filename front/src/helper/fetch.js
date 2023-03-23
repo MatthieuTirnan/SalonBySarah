@@ -272,7 +272,7 @@ export async function getUserMessage() {
     let url = new Request("http://localhost:9010/list-user-message", {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
     });
     let response = await fetch(url);
@@ -297,7 +297,7 @@ export async function getInboxAdmin() {
     let url = new Request("http://localhost:9010/admin/list-inbox", {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
     });
     let response = await fetch(url);

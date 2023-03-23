@@ -14,13 +14,7 @@ export const InboxAdmin = () => {
 
     useEffect(() => {
         inboxDisplay()
-
-
-
-
     }, [])
-
-
 
     function inboxDisplay() {
         getInboxAdmin()
