@@ -8,7 +8,7 @@ import "../../asset/style/inbox.scss"
 export const InboxAdmin = () => {
 
     const navigate = useNavigate()
-    const state = useSelector(state => state)
+
     const dispatch = useDispatch()
     const [inboxs, setInboxs] = useState([])
 

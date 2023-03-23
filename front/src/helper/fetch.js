@@ -1,4 +1,4 @@
-const findToken = () => {
+function findToken() {
 
     const token = localStorage.getItem("jwt")
     if (token) {
@@ -8,7 +8,7 @@ const findToken = () => {
     }
 }
 
-export const token = findToken()
+const token = findToken()
 
 export async function postLogin(email, password) {
     let url = new Request("http://localhost:9010/login", {
@@ -57,17 +57,6 @@ export async function getAuth() {
     return res;
 }
 
-export async function getAminUser() {
-    let url = new Request("http://localhost:9010/list-user-admin", {
-        method: "GET",
-        headers: {
-            'Authorization': `Bearer ${token}`
-        },
-    });
-    let response = await fetch(url);
-    let res = await response.json();
-    return res;
-}
 
 export async function getGalerie() {
     let url = new Request("http://localhost:9010/galerie", {
@@ -304,6 +293,7 @@ export async function getlistUser() {
 }
 
 export async function getInboxAdmin() {
+    console.log(token)
     let url = new Request("http://localhost:9010/admin/list-inbox", {
         method: "GET",
         headers: {
@@ -312,6 +302,7 @@ export async function getInboxAdmin() {
     });
     let response = await fetch(url);
     let res = await response.json();
+    console.log(res)
     return res;
 }
 
@@ -327,6 +318,7 @@ export async function postAnswerMessage(formData) {
     let res = await response.json();
     return res;
 }
+
 export async function deleteMessage(id) {
     let url = new Request("http://localhost:9010/delete-message", {
         method: "DELETE",
