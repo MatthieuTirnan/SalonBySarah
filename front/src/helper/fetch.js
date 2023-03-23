@@ -15,7 +15,7 @@ export async function postLogin(email, password) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({
             email,
@@ -32,7 +32,7 @@ export async function postRegister(pseudo, email, password) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({
             pseudo,
@@ -49,7 +49,7 @@ export async function getAuth() {
     let url = new Request("http://localhost:9010/userprovider", {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
     });
     let response = await fetch(url);
@@ -62,7 +62,7 @@ export async function getGalerie() {
     let url = new Request("http://localhost:9010/galerie", {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
     });
     let response = await fetch(url);
@@ -74,7 +74,7 @@ export async function getUser() {
     let url = new Request("http://localhost:9010/admin/list-user", {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
     });
     let response = await fetch(url);
@@ -87,7 +87,7 @@ export async function deleteUser(id) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({id})
 
@@ -102,7 +102,7 @@ export async function updateUser(id) {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({id})
 
@@ -127,7 +127,7 @@ export async function deletePrestation(id) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({id})
 
@@ -142,7 +142,7 @@ export async function updatePrestation(currentPrestation) {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({
             id: currentPrestation._id,
@@ -162,7 +162,7 @@ export async function postImageGalerie(formData) {
     let url = new Request("http://localhost:9010/admin/add-image-galerie", {
         method: "POST",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: formData
 
@@ -177,7 +177,7 @@ export async function deleteImage(id) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({id})
 
@@ -192,7 +192,7 @@ export async function postPrestation(addGenre, addprestation, addprice) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({
             genre: addGenre,
@@ -218,7 +218,7 @@ export async function postArticle(formData) {
     let url = new Request("http://localhost:9010/admin/add-Article", {
         method: "POST",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: formData
     });
@@ -231,7 +231,7 @@ export async function putArticle(formData) {
     let url = new Request("http://localhost:9010/admin/update-article", {
         method: "PUT",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: formData
     });
@@ -245,7 +245,7 @@ export async function deleteArticle(id) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({id})
 
@@ -259,7 +259,7 @@ export async function postMessageUser(formData) {
     let url = new Request("http://localhost:9010/add-message", {
         method: "POST",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: formData
     });
@@ -284,7 +284,7 @@ export async function getlistUser() {
     let url = new Request("http://localhost:9010/admin/list-user", {
         method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
     });
     let response = await fetch(url);
@@ -293,7 +293,7 @@ export async function getlistUser() {
 }
 
 export async function getInboxAdmin() {
-    console.log(token)
+
     let url = new Request("http://localhost:9010/admin/list-inbox", {
         method: "GET",
         headers: {
@@ -302,7 +302,7 @@ export async function getInboxAdmin() {
     });
     let response = await fetch(url);
     let res = await response.json();
-    console.log(res)
+
     return res;
 }
 
@@ -310,7 +310,7 @@ export async function postAnswerMessage(formData) {
     let url = new Request("http://localhost:9010/admin/create-answer-message", {
         method: "POST",
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: formData
     });
@@ -324,7 +324,7 @@ export async function deleteMessage(id) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${findToken()}`
         },
         body: JSON.stringify({id})
 
