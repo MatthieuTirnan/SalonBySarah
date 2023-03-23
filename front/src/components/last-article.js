@@ -6,10 +6,7 @@ const currentArticle = articles[articles.length -1];
 useEffect(() => {
     actualiseArticle()
 }, [])
-useEffect(()=>{
-    console.log(articles)
-    console.log(currentArticle)
-},[articles])
+
 function actualiseArticle() {
     getArticle()
         .then((res) => {

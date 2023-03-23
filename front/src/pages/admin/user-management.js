@@ -3,6 +3,7 @@ import {deleteUser, getUser, updateUser} from "../../helper/fetch";
 import {useDispatch, useSelector} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
 import "../../asset/style/management.scss"
+import {toastSuccess} from "../../components/toast/toast";
 
 
 export const UserManagement = () => {
@@ -42,7 +43,7 @@ export const UserManagement = () => {
                         function handleDeleteClick() {
                             deleteUser(id)
                                 .then((res) => {
-                                    console.log(res)
+toastSuccess("utilisateur supprimé")
                                     getUser()
                                         .then((res) => {
                                             dispatch(listUsers(res))
@@ -60,8 +61,7 @@ export const UserManagement = () => {
 
                             updateUser(id)
                                 .then((res) => {
-                                    console.log(res)
-                                    alert(res.message)
+                                    toastSuccess(res.message)
                                     getUser()
                                         .then((res) => {
                                             dispatch(listUsers(res))

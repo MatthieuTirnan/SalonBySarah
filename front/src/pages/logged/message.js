@@ -3,7 +3,7 @@ import {deleteMessage, getUserMessage, postMessageUser} from "../../helper/fetch
 import {useSelector} from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {toastSuccess} from "../../components/toast/toast";
+import {toastError, toastSuccess} from "../../components/toast/toast";
 export const Message = () => {
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
@@ -12,7 +12,7 @@ export const Message = () => {
     const state = useSelector(state => state)
 
     useEffect(() => {
-        console.log(state.user)
+
 
         getMessages()
     }, [])
@@ -21,7 +21,7 @@ export const Message = () => {
     function getMessages() {
         getUserMessage()
             .then((res) => {
-                console.log(res)
+
                 setUserMessages(res.inbox.message)
             })
             .catch((err) => {
@@ -40,7 +40,7 @@ export const Message = () => {
 
         postMessageUser(formData)
             .then((res) => {
-                console.log(res)
+
                 if (res.message === "champ manquant") {
                     toastSuccess("champ manquant")
                     return <ToastContainer />
@@ -54,8 +54,7 @@ export const Message = () => {
                 }
             })
             .catch((err) => {
-                alert(err.message)
-                console.log(err)
+                toastError(err.message)
             })
     }
 
@@ -89,7 +88,7 @@ export const Message = () => {
                             const id = message._id
                             deleteMessage(id)
                                 .then((res) => {
-                                    console.log(res)
+                                    toastSuccess("message supprimé")
                                     getMessages()
                                 })
                                 .catch((err) => {

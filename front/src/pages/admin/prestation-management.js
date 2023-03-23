@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {deletePrestation, getPrestation, postPrestation, updatePrestation} from "../../helper/fetch";
 import {prestation} from "../../store/slices/prestation";
 import '../../asset/style/management.scss'
-import {toastError} from "../../components/toast/toast";
+import {toastError, toastSuccess} from "../../components/toast/toast";
 
 export const PrestationManagement = () => {
 
@@ -22,7 +22,7 @@ export const PrestationManagement = () => {
     function actualiseDisplay() {
         getPrestation()
             .then((res) => {
-                console.log(res)
+
                 dispatch(prestation(res))
             })
             .catch((err) => {
@@ -30,24 +30,23 @@ export const PrestationManagement = () => {
             })
     }
 
-    useEffect(() => {
-        console.log(addGenre, addprestation, addprice)
-    }, [addGenre, addprestation, addprice])
+
 
     function handleSubmitPut(e) {
 
         e.preventDefault()
 
         setFormDisplay("hiddenform")
-        console.log(currentPrestation)
+
 
         updatePrestation(currentPrestation)
             .then((res) => {
-                console.log(res)
+                toastSuccess(res.message)
+
                 actualiseDisplay()
             })
             .catch((err) => {
-                console.log(err)
+                toastError("erreur dans le changement")
             })
     }
 
@@ -60,14 +59,14 @@ export const PrestationManagement = () => {
         e.preventDefault()
         postPrestation(addGenre, addprestation, addprice)
             .then((res) => {
-                console.log(res)
+
                 if(res.message ==="un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre"){
                     toastError("un champ est manquant ou le genre est mal renseigné")
                 }
                 actualiseDisplay()
             })
             .catch((err) => {
-                console.log(err)
+                toastError("erreur dans l'ajout de la prestation")
             })
     }
 
@@ -146,11 +145,11 @@ export const PrestationManagement = () => {
                             function handleDeleteClick() {
                                 deletePrestation(id)
                                     .then((res) => {
-                                        console.log(res)
+                                        toastSuccess("prestation supprimée")
                                         actualiseDisplay()
                                     })
                                     .catch((err) => {
-                                        console.log(err)
+
                                     })
                             }
 

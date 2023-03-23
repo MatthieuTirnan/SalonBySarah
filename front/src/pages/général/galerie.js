@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {deleteImage, getGalerie, postImageGalerie} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 import "../../asset/style/galerie.scss"
+import {toastError, toastSuccess} from "../../components/toast/toast";
 
 export const Galerie = () => {
     const state = useSelector(state => state)
@@ -33,9 +34,15 @@ export const Galerie = () => {
 
         postImageGalerie(formData)
             .then((res) => {
-
+                if(res.message ==='fichier manquant'){
+                    toastError(res.message)
+                }else if (res.message ==='Unsupported image file type'){
+                    toastError(res.message)
+                }else {
+                    toastSuccess(res.message)
+                }
                 actualiseGalerie()
-                alert(res.message)
+
             })
             .catch((err) => {
                 alert(err.message)
@@ -57,14 +64,14 @@ export const Galerie = () => {
 
                 {galerie.slice(0).reverse().map((e, i) => {
                     function handleDelete() {
-                        console.log(e)
+
                         const id = e._id
                         deleteImage(id)
                             .then((res) => {
-                                console.log(res)
+                                toastSuccess("image supprimée")
                                 getGalerie()
                                     .then(res => {
-                                        console.log(res)
+
                                         setGalerie(res.data)
                                     })
                                     .catch(err => {

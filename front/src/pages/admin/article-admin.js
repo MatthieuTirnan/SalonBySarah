@@ -2,6 +2,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {deleteArticle, putArticle} from "../../helper/fetch";
 import "../../asset/style/article-management.scss"
+import {toastSuccess} from "../../components/toast/toast";
+
 export const ArticleManagement = () => {
 
     const navigate = useNavigate()
@@ -28,7 +30,7 @@ export const ArticleManagement = () => {
         }
         putArticle(formData)
             .then((res) => {
-                alert(res.message)
+                toastSuccess(res.message)
                 navigate(-1)
             })
             .catch((err) => {
@@ -40,7 +42,7 @@ export const ArticleManagement = () => {
         const id = article._id
         deleteArticle(id)
             .then(() => {
-
+                toastSuccess("article supprimé")
                 navigate(-1)
             })
             .catch((err) => {

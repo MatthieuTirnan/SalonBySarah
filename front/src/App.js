@@ -5,8 +5,7 @@ import {Login} from "./pages/général/login";
 import {Register} from "./pages/général/register";
 import {Tarif} from "./pages/général/tarif";
 import {Message} from "./pages/logged/message";
-import {InboxAdmin} from "./pages/admin/inbox-admin";
-import {UserManagement} from "./pages/admin/user-management";
+
 import {Article} from "./pages/général/article";
 import {Galerie} from "./pages/général/galerie";
 import {Header} from "./components/header";
@@ -14,14 +13,13 @@ import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {getAuth} from "./helper/fetch";
 import {user} from "./store/slices/userSlice";
-import {PrestationManagement} from "./pages/admin/prestation-management";
-import {Dashboard} from "./pages/général/dashbord";
 
-import {ArticleManagement} from "./pages/admin/article-admin";
-import {ListMessageAdmin} from "./pages/admin/message-admin";
-import {AnswerMessageAdmin} from "./pages/admin/answer-admin";
+
 import {Footer} from "./components/footer";
 import {Toast} from "./components/toast/toast";
+import {AuthMiddleware} from "./middleware/authmiddleware";
+import {adminRoutes,publicRoutes,privateRoutes} from "./middleware/route";
+import {AdminMiddleware} from "./middleware/adminmiddleware";
 
 
 function App() {
@@ -54,20 +52,28 @@ function App() {
             <Header/>
             <Toast/>
             <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path="/tarif" element={<Tarif/>}/>
-                <Route path="/message" element={<Message/>}/>
-                <Route path="/inbox-admin" element={<InboxAdmin/>}/>
-                <Route path="/user-management" element={<UserManagement/>}/>
-                <Route path="/prestation-management" element={<PrestationManagement/>}/>
-                <Route path="/article" element={<Article/>}/>
-                <Route path="/galerie" element={<Galerie/>}/>
-                <Route path="/dashboard" element={<Dashboard/>}/>
-                <Route path="/article-management" element={<ArticleManagement/>}/>
-                <Route path="/message-admin" element={<ListMessageAdmin/>}/>
-                <Route path="/answer-message-admin" element={<AnswerMessageAdmin/>}/>
+                {publicRoutes.map((route, i) => (
+                    <Route path={route.path} element={route.component} key={i} exact={true}/>
+                ))}
+
+                {privateRoutes.map((route, idx) => (
+                    <Route path={route.path} element={
+                        <AuthMiddleware>
+                            {route.component}
+                        </AuthMiddleware>}
+                           key={idx}
+                           exact={true}
+                    />
+                ))}
+                {adminRoutes.map((route, i) => (
+                    <Route path={route.path} element={
+                        <AdminMiddleware>
+                            {route.component}
+                        </AdminMiddleware>}
+                           key={i}
+                           exact={true}
+                    />
+                ))}
             </Routes>
             <Footer/>
         </BrowserRouter>

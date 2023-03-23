@@ -25,16 +25,14 @@ export const InboxAdmin = () => {
 
         }
     }, [])
-    useEffect(() => {
-        console.log(inboxs)
-    }, [inboxs])
+
 
 
     function inboxDisplay() {
         getInboxAdmin()
             .then((res) => {
                 setInboxs(res.inbox)
-                console.log(res)
+
             })
             .catch((err) => {
                 console.log(err)

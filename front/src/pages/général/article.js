@@ -3,6 +3,7 @@ import {getArticle, postArticle} from "../../helper/fetch";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import '../../asset/style/article.scss'
+import {toastError, toastSuccess} from "../../components/toast/toast";
 
 export const Article = () => {
     const navigate = useNavigate()
@@ -15,9 +16,7 @@ export const Article = () => {
     useEffect(() => {
         actualiseArticle()
     }, [])
-    useEffect(() => {
-        console.log(articles)
-    }, [articles])
+
 
     function actualiseArticle() {
         getArticle()
@@ -38,8 +37,14 @@ export const Article = () => {
 
         postArticle(formData)
             .then((res) => {
+                if(res.message==="Unsupported image file type"){
+                    toastError(res.message)
+                }else if(res.message===`l'article a été ajouté`){
+                    toastSuccess(res.message)
+                }else if(res.message===`l'article n'a pas été ajouté`){
+                    toastError(res.message)
+                }
 
-                alert(res.message)
                 actualiseArticle()
             })
             .catch((err) => {

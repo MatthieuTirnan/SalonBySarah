@@ -24,11 +24,10 @@ export const AnswerMessageAdmin = () => {
         formData.append("description", description);
         formData.append("fichier", fichier);
         formData.append("user", user);
-        console.log("ok")
 
         postAnswerMessage(formData)
             .then((res) => {
-                console.log(res)
+
                 if (res.message === "champ manquant") {
                     toastError("champ manquant")
                 } else if (res.message === 'Unsupported image file type') {

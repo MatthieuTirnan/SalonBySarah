@@ -14,7 +14,6 @@ export const Login = () => {
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(state)
         postLogin(email, password)
             .then(res => {
                 if (res.message !== undefined) {

@@ -17,7 +17,7 @@ export const Tarif = () => {
     function actualisePrestation() {
         getPrestation()
             .then((res) => {
-                console.log(res)
+
                 dispatch(prestation(res))
             })
             .catch((err) => {
