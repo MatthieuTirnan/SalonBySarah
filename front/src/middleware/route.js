@@ -2,16 +2,16 @@
 import {InboxAdmin} from "../pages/admin/inbox-admin";
 import {UserManagement} from "../pages/admin/user-management";
 import {PrestationManagement} from "../pages/admin/prestation-management";
-import {Dashboard} from "../pages/général/dashbord";
+import {Dashboard} from "../pages/general/dashbord";
 import {ArticleManagement} from "../pages/admin/article-admin";
 import {ListMessageAdmin} from "../pages/admin/message-admin";
 import {AnswerMessageAdmin} from "../pages/admin/answer-admin";
-import {Login} from "../pages/général/login";
-import {Register} from "../pages/général/register";
-import {Home} from "../pages/général/home";
-import {Article} from "../pages/général/article";
-import {Galerie} from "../pages/général/galerie";
-import {Tarif} from "../pages/général/tarif";
+import {Login} from "../pages/general/login";
+import {Register} from "../pages/general/register";
+import {Home} from "../pages/general/home";
+import {Article} from "../pages/general/article";
+import {Galerie} from "../pages/general/galerie";
+import {Tarif} from "../pages/general/tarif";
 import {Message} from "../pages/logged/message";
 
 export const adminRoutes = [
