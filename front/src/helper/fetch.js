@@ -10,9 +10,10 @@ function findToken() {
 }
 
 const token = findToken()
+const lien =process.env.REACT_APP_LINK_BACK
 
 export async function postLogin(email, password) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/login", {
+    let url = new Request(lien+"login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -29,7 +30,7 @@ export async function postLogin(email, password) {
 }
 
 export async function postRegister(pseudo, email, password) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/register", {
+    let url = new Request(lien+"register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -47,7 +48,7 @@ export async function postRegister(pseudo, email, password) {
 }
 
 export async function getAuth() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/userprovider", {
+    let url = new Request(lien+"userprovider", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -60,7 +61,7 @@ export async function getAuth() {
 
 
 export async function getGalerie() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/galerie", {
+    let url = new Request(lien+"galerie", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -72,7 +73,7 @@ export async function getGalerie() {
 }
 
 export async function getUser() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/list-user", {
+    let url = new Request(lien+"admin/list-user", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -84,7 +85,7 @@ export async function getUser() {
 }
 
 export async function deleteUser(id) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/delete-user", {
+    let url = new Request(lien+"admin/delete-user", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -99,7 +100,7 @@ export async function deleteUser(id) {
 }
 
 export async function updateUser(id) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/putAdmin-user", {
+    let url = new Request(lien+"admin/putAdmin-user", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -114,7 +115,7 @@ export async function updateUser(id) {
 }
 
 export async function getPrestation() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/prestation", {
+    let url = new Request(lien+"prestation", {
         method: "GET",
 
     });
@@ -124,7 +125,7 @@ export async function getPrestation() {
 }
 
 export async function deletePrestation(id) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/delete-prestation", {
+    let url = new Request(lien+"admin/delete-prestation", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -139,7 +140,7 @@ export async function deletePrestation(id) {
 }
 
 export async function updatePrestation(currentPrestation) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/update-prestation", {
+    let url = new Request(lien+"admin/update-prestation", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -160,7 +161,7 @@ export async function updatePrestation(currentPrestation) {
 
 export async function postImageGalerie(formData) {
 
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/add-image-galerie", {
+    let url = new Request(lien+"admin/add-image-galerie", {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -174,7 +175,7 @@ export async function postImageGalerie(formData) {
 }
 
 export async function deleteImage(id) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/delete-image-galerie", {
+    let url = new Request(lien+"admin/delete-image-galerie", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -189,7 +190,7 @@ export async function deleteImage(id) {
 }
 
 export async function postPrestation(addGenre, addprestation, addprice) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/create-prestation", {
+    let url = new Request(lien+"admin/create-prestation", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -207,7 +208,7 @@ export async function postPrestation(addGenre, addprestation, addprice) {
 }
 
 export async function getArticle() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/show-article", {
+    let url = new Request(lien+"show-article", {
         method: "GET",
     });
     let response = await fetch(url);
@@ -216,7 +217,7 @@ export async function getArticle() {
 }
 
 export async function postArticle(formData) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/add-Article", {
+    let url = new Request(lien+"admin/add-Article", {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -229,7 +230,7 @@ export async function postArticle(formData) {
 }
 
 export async function putArticle(formData) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/update-article", {
+    let url = new Request(lien+"admin/update-article", {
         method: "PUT",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -242,7 +243,7 @@ export async function putArticle(formData) {
 }
 
 export async function deleteArticle(id) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/delete-article", {
+    let url = new Request(lien+"admin/delete-article", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -257,7 +258,7 @@ export async function deleteArticle(id) {
 }
 
 export async function postMessageUser(formData) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/add-message", {
+    let url = new Request(lien+"add-message", {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -270,7 +271,7 @@ export async function postMessageUser(formData) {
 }
 
 export async function getUserMessage() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/list-user-message", {
+    let url = new Request(lien+"list-user-message", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -282,7 +283,7 @@ export async function getUserMessage() {
 }
 
 export async function getlistUser() {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/list-user", {
+    let url = new Request(lien+"admin/list-user", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -295,7 +296,7 @@ export async function getlistUser() {
 
 export async function getInboxAdmin() {
 
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/list-inbox", {
+    let url = new Request(lien+"admin/list-inbox", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -308,7 +309,7 @@ export async function getInboxAdmin() {
 }
 
 export async function postAnswerMessage(formData) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/admin/create-answer-message", {
+    let url = new Request(lien+"admin/create-answer-message", {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${findToken()}`
@@ -321,7 +322,7 @@ export async function postAnswerMessage(formData) {
 }
 
 export async function deleteMessage(id) {
-    let url = new Request("http://matthieutirnan.ide.3wa.io:9010/delete-message", {
+    let url = new Request(lien+"delete-message", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
