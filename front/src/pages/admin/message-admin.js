@@ -8,7 +8,7 @@ export const ListMessageAdmin = () => {
     const location = useLocation();
     const currentInbox = location.state;
     const messages = currentInbox.message
-
+    const lien =process.env.REACT_APP_LINK_BACK
     const navigate = useNavigate()
     const state = useSelector(state => state)
     return (
@@ -40,7 +40,7 @@ export const ListMessageAdmin = () => {
                             <p>{message.description}</p>
                             {message.src &&
                                 <div className="image-message-container">
-                                    <img src={message.src} alt={message.alt}/>
+                                    <img src={lien+message.src} alt={message.alt}/>
                                 </div>
                             }
                             <div>

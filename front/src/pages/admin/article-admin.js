@@ -11,6 +11,7 @@ export const ArticleManagement = () => {
     const currentarticle = location.state;
     const [article, setArticle] = useState(currentarticle)
     const [fichier, setFichier] = useState({})
+    const lien =process.env.REACT_APP_LINK_BACK
 
 
     function handleChange(e) {
@@ -57,7 +58,7 @@ export const ArticleManagement = () => {
                 <h2>{currentarticle.titre}</h2>
                 {currentarticle.imagepath &&
                     <div className="image-article-container">
-                        <img src={currentarticle.imagepath} alt={currentarticle.image.alt}/>
+                        <img src={lien+currentarticle.imagepath} alt={currentarticle.image.alt}/>
                     </div>
                 }
                 <p>{currentarticle.description}</p>

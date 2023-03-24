@@ -6,14 +6,14 @@ import Inbox from "../../models/inboxSchema.js";
 import Messages from "../../models/messagesSchema.js";
 
 
-export const addMessage = async (req, res) => {
+export const addMessage = async(req, res) => {
 
 
     const form = formidable();
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function(err, fields, files) {
 
         if (!fields.titre || !fields.description) {
-            return res.status(400).json({message: "champ manquant"});
+            return res.status(400).json({ message: "champ manquant" });
         }
         if (files.fichier) {
             const oldpath = files.fichier.filepath;
@@ -29,25 +29,33 @@ export const addMessage = async (req, res) => {
             const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp"];
 
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
-                return res.status(400).json({message: "Unsupported image file type"});
+                return res.status(400).json({ message: "Unsupported image file type" });
             }
-            fs.copyFile(oldpath, newpath, function (err) {
+            fs.copyFile(oldpath, newpath, function(err) {
                 if (err) throw err;
                 console.log("fichier ajouter");
             });
             const page = "Message";
             const alt = files.fichier.originalFilename;
-            const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
+            const src = newpath
             const fileName = files.fichier.newFilename + currentExtension;
             const newImage = new Image({
-                page, alt, src, fileName,
+                page,
+                alt,
+                src,
+                fileName,
             });
             newImage.save();
 
             const titre = fields.titre;
             const description = fields.description;
             const newMessage = new Messages({
-                titre, description, image: newImage, src, alt, from: req.userId,
+                titre,
+                description,
+                image: newImage,
+                src,
+                alt,
+                from: req.userId,
             });
             newMessage.save()
                 .then((newMessage) => {
@@ -58,42 +66,47 @@ export const addMessage = async (req, res) => {
                 })
 
 
-            Inbox.findOne({user: req.userId})
+            Inbox.findOne({ user: req.userId })
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
                         inbox.save()
                             .then(() => {
-                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
                                 console.log(err)
-                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
-                    } else {
+                    }
+                    else {
                         const newInbox = new Inbox({
-                            user: req.userId, message: [newMessage],
+                            user: req.userId,
+                            message: [newMessage],
                         });
                         newInbox
                             .save()
                             .then(() => {
-                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
-                                res.status(400).json({message: err});
+                                res.status(400).json({ message: err });
                             });
                     }
                 })
                 .catch((err) => {
                     console.error(err);
-                    res.status(500).json({message: "Erreur serveur"});
+                    res.status(500).json({ message: "Erreur serveur" });
                 });
-        } else {
+        }
+        else {
 
             const titre = fields.titre;
             const description = fields.description;
             const newMessage = new Messages({
-                titre, description, from: req.userId,
+                titre,
+                description,
+                from: req.userId,
             });
             newMessage.save()
                 .then((newMessage) => {
@@ -103,41 +116,43 @@ export const addMessage = async (req, res) => {
                     console.log(err)
                 })
 
-            Inbox.findOne({user: req.userId})
+            Inbox.findOne({ user: req.userId })
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
                         inbox.save()
                             .then(() => {
-                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
                                 console.log(err)
-                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
-                    } else {
+                    }
+                    else {
                         const newInbox = new Inbox({
-                            user: req.userId, message: [newMessage],
+                            user: req.userId,
+                            message: [newMessage],
                         });
                         newInbox
                             .save()
                             .then(() => {
-                                res.status(201).json({message: `message ${newMessage.titre}  ajouté`});
+                                res.status(201).json({ message: `message ${newMessage.titre}  ajouté` });
                             })
                             .catch((err) => {
                                 console.log(err)
-                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
                     }
                 })
                 .catch((err) => {
                     console.error(err);
-                    res.status(500).json({message: "Erreur serveur"});
+                    res.status(500).json({ message: "Erreur serveur" });
                 });
         }
     });
 };
-export const deleteMessage = async (req, res) => {
+export const deleteMessage = async(req, res) => {
     try {
         const messageId = req.body.id;
         const userId = req.userId;
@@ -145,20 +160,20 @@ export const deleteMessage = async (req, res) => {
         const messageToDelete = data.find(element => element._id == messageId)
         console.log(messageToDelete)
 
-        if (!messageToDelete) return res.status(400).json({message: "message introuvable"});
+        if (!messageToDelete) return res.status(400).json({ message: "message introuvable" });
 
 
         if (messageToDelete.image) {
             const imageToDelete = await Image.findById(messageToDelete.image);
 
             if (!imageToDelete) {
-                return res.status(400).json({message: "image absente"});
+                return res.status(400).json({ message: "image absente" });
             }
 
             const imagePath = `public/images/${imageToDelete.fileName}`;
             fs.unlink(imagePath, (err) => {
                 if (err) {
-                    return res.status(400).json({message: "image absente"});
+                    return res.status(400).json({ message: "image absente" });
                 }
 
                 console.log(`Image supprimée : ${imagePath}`);
@@ -168,7 +183,8 @@ export const deleteMessage = async (req, res) => {
         }
 
         const inboxToUpdate = await Inbox.findOne({
-            user: userId, message: {$in: [messageToDelete._id]},
+            user: userId,
+            message: { $in: [messageToDelete._id] },
         });
 
         if (inboxToUpdate) {
@@ -181,54 +197,56 @@ export const deleteMessage = async (req, res) => {
         Messages.findByIdAndRemove(messageToDelete._id)
             .then(() => {
                 console.log("message remove")
-                return res.status(204).json({message: "204"})
+                return res.status(204).json({ message: "204" })
             })
             .catch((err) => {
                 console.log(err)
             })
 
-    } catch (error) {
+    }
+    catch (error) {
         console.error(error);
-        return res.status(500).json({message: "Erreur lors de la suppression du message"});
+        return res.status(500).json({ message: "Erreur lors de la suppression du message" });
     }
 
 };
 
-export const listUserMessage = async (req, res) => {
+export const listUserMessage = async(req, res) => {
     try {
         const id = req.userId;
-        const inbox = await Inbox.findOne({user: id}).populate("message user");
+        const inbox = await Inbox.findOne({ user: id }).populate("message user");
         if (!inbox) {
-            return res.status(400).json({message: "Boîte de réception introuvable"});
+            return res.status(400).json({ message: "Boîte de réception introuvable" });
         }
         console.log(inbox)
 
-        res.status(200).json({inbox});
-    } catch (error) {
+        res.status(200).json({ inbox });
+    }
+    catch (error) {
         console.error(error);
-        res.status(500).json({message: "Erreur serveur"});
+        res.status(500).json({ message: "Erreur serveur" });
     }
 };
-export const listInbox = async (req, res) => {
+export const listInbox = async(req, res) => {
     const inbox = await Inbox.find().populate("user message")
     if (!inbox) {
-        return res.status(400).json({message: "Boîte de réception introuvable"});
+        return res.status(400).json({ message: "Boîte de réception introuvable" });
     }
 
     console.log(inbox)
-    res.status(200).json({inbox: inbox})
+    res.status(200).json({ inbox: inbox })
 };
 
-export const createAnswerMessage = async (req, res) => {
+export const createAnswerMessage = async(req, res) => {
 
     const form = formidable();
 
 
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function(err, fields, files) {
         const Userbox = fields.user
         console.log(fields)
         if (!fields.description) {
-            return res.status(400).json({message: "corps du message manquant"});
+            return res.status(400).json({ message: "corps du message manquant" });
         }
         if (files.fichier) {
             const oldpath = files.fichier.filepath;
@@ -244,71 +262,82 @@ export const createAnswerMessage = async (req, res) => {
             const allowedExtensions = [".png", ".jpg", ".jpeg", ".gif", ".bmp"];
 
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
-                return res.status(400).json({message: "Unsupported image file type"});
+                return res.status(400).json({ message: "Unsupported image file type" });
             }
-            fs.copyFile(oldpath, newpath, function (err) {
+            fs.copyFile(oldpath, newpath, function(err) {
                 if (err) throw err;
                 console.log("fichier ajouter");
             });
             const page = "Message";
             const alt = files.fichier.originalFilename;
-            const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
+            const src = newpath
             const fileName = files.fichier.newFilename + currentExtension;
             const newImage = new Image({
-                page, alt, src, fileName,
+                page,
+                alt,
+                src,
+                fileName,
             });
             newImage.save();
 
             const titre = `réponse à ${fields.titre}`;
             const description = fields.description;
             const newMessage = new Messages({
-                titre, description, image: newImage, src, alt, from: req.userId,
+                titre,
+                description,
+                image: newImage,
+                src,
+                alt,
+                from: req.userId,
             });
             newMessage.save();
 
-            Inbox.findOne({user: Userbox}).populate("user message")
+            Inbox.findOne({ user: Userbox }).populate("user message")
                 .then((inbox) => {
                     inbox.message.push(newMessage);
                     inbox.save()
                         .then(() => {
-                            res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                            res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                         })
                         .catch((err) => {
-                            log(err)
-                            res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                            console.log(err)
+                            res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                         });
 
                 })
                 .catch((err) => {
                     console.error(err);
-                    res.status(500).json({message: "Erreur serveur"});
+                    res.status(500).json({ message: "Erreur serveur" });
                 });
-        } else {
+        }
+        else {
             const titre = `réponse à ${fields.titre}`;
             const description = fields.description;
             const newMessage = new Messages({
-                titre, description, from: req.userId,
+                titre,
+                description,
+                from: req.userId,
             });
             newMessage.save();
 
-            Inbox.findOne({user: Userbox}).populate("user message")
+            Inbox.findOne({ user: Userbox }).populate("user message")
                 .then((inbox) => {
                     if (inbox) {
                         inbox.message.push(newMessage);
                         inbox
                             .save()
                             .then(() => {
-                                res.status(201).json({message: `message ajouté`, message: newMessage, inbox: inbox});
+                                res.status(201).json({ message: `message ajouté`, message: newMessage, inbox: inbox });
                             })
                             .catch((err) => {
                                 console.log(err)
-                                res.status(400).json({message: `message ${newMessage.titre} non ajouté`});
+                                res.status(400).json({ message: `message ${newMessage.titre} non ajouté` });
                             });
                     }
                 })
                 .catch((err) => {
                     console.error(err);
-                    res.status(500).json({message: "Erreur serveur"});
+                    res.status(500).json({ message: "Erreur serveur" });
                 });
         }
     });

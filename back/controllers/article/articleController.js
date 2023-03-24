@@ -42,7 +42,7 @@ export const addArticle = async (req, res) => {
             })
             const page = 'Article'
             const alt = files.fichier.originalFilename
-            const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension
+            const src = newpath
             const fileName = files.fichier.newFilename + currentExtension
             const newImage = new Image({
                 page,
@@ -174,7 +174,7 @@ export const updateArticle = async (req, res) => {
 
                 const page = 'Article';
                 const alt = files.fichier.originalFilename;
-                const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension;
+                const src = newpath;
                 const fileName = files.fichier.newFilename + currentExtension
                 fs.copyFile(oldpath, newpath, function (err) {
                     if (err) throw err;

@@ -15,6 +15,7 @@ export const AnswerMessageAdmin = () => {
     const user = currentMessage.from
     const navigate = useNavigate()
     const inboxParam = location.state.currentInbox
+    const lien =process.env.REACT_APP_LINK_BACK
 
     function handleSubmit(e) {
 
@@ -50,7 +51,7 @@ export const AnswerMessageAdmin = () => {
                 <p>{currentMessage.description}</p>
                 {currentMessage.src &&
                     <div className="image-message-container-answer">
-                        <img src={currentMessage.src} alt={currentMessage.alt}/>
+                        <img src={lien+currentMessage.src} alt={currentMessage.alt}/>
                     </div>
                 }
                 <div>

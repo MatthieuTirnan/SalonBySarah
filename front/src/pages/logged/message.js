@@ -11,6 +11,7 @@ export const Message = () => {
     const [fichier, setFichier] = useState({})
     const [userMessages, setUserMessages] = useState(["en chargement"])
     const state = useSelector(state => state)
+    const lien =process.env.REACT_APP_LINK_BACK
 
     useEffect(() => {
         getMessages()
@@ -100,7 +101,7 @@ export const Message = () => {
                                 <p>{message.description}</p>
                                 {message.src &&
                                     <div className="image-message-container">
-                                        <img src={message.src} alt={message.alt}/>
+                                        <img src={lien+message.src} alt={message.alt}/>
                                     </div>
                                 }
                                 {message.from === state.user._id ? (

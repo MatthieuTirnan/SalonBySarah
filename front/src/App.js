@@ -14,7 +14,6 @@ import {AdminMiddleware} from "./middleware/adminmiddleware";
 
 function App() {
 
-
     const dispatch = useDispatch()
 
     useEffect(() => {

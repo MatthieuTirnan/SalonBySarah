@@ -12,6 +12,7 @@ export const Article = () => {
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
     const [fichier, setFichier] = useState({})
+    const lien =process.env.REACT_APP_LINK_BACK
 
     useEffect(() => {
         actualiseArticle()
@@ -85,7 +86,7 @@ export const Article = () => {
                             <h2>{e.titre}</h2>
                             {e.imagepath &&
                                 <div className="image-article-container">
-                                    <img src={e.imagepath} alt={e.image.alt}/>
+                                    <img src={lien+e.imagepath} alt={e.image.alt}/>
                                 </div>
                             }
                             <p>{e.description}</p>

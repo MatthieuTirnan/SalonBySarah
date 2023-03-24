@@ -8,7 +8,7 @@ import "../asset/style/carousel.scss"
 
 export const Carousel = () => {
     const [galerie, setGalerie] = useState([])
-
+    const lien =process.env.REACT_APP_LINK_BACK
     useEffect(() => {
         actualiseGalerie()
 
@@ -73,7 +73,7 @@ export const Carousel = () => {
                     {galerie.map((e, i) => {
                         return (
                             <div className="img-carousel-wrapper" key={i} >
-                                <img className="img-carousel" src={e.src} alt={e.alt}/>
+                                <img className="img-carousel" src={lien+e.src} alt={e.alt}/>
                             </div>
                         )
                     })

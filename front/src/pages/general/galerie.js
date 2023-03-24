@@ -6,7 +6,7 @@ import {toastError, toastSuccess} from "../../components/toast/toast";
 
 export const Galerie = () => {
     const state = useSelector(state => state)
-
+    const lien =process.env.REACT_APP_LINK_BACK
     const [galerie, setGalerie] = useState([])
     const [fichier, setFichier] = useState({})
 
@@ -86,7 +86,7 @@ export const Galerie = () => {
                     return (
                         <div key={i} className="image-container">
 
-                            <a href={e.src}><img src={e.src} alt={e.alt}/></a>
+                            <a href={lien+e.src}><img src={lien+e.src} alt={e.alt}/></a>
 
                             {state.user.isAdmin &&
                                 <button onClick={handleDelete}>supprimer</button>

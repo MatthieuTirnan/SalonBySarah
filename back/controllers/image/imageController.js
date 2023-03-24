@@ -43,7 +43,7 @@ export const addImageGalerie = async (req, res) => {
         })
         const page = 'Galerie'
         const alt = files.fichier.originalFilename
-        const src = "http://localhost:9010/public/images/" + files.fichier.newFilename + currentExtension
+        const src = newpath
         const fileName = files.fichier.newFilename + currentExtension
         const newImage = new Image({
             page,

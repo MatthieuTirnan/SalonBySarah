@@ -3,6 +3,9 @@ import {getArticle} from "../helper/fetch";
 export const LastArticle = () => {
 const [articles, setArticles] = useState([])
 const currentArticle = articles[articles.length -1];
+const lien =process.env.REACT_APP_LINK_BACK
+
+
 useEffect(() => {
     actualiseArticle()
 }, [])
@@ -25,7 +28,7 @@ return(
                 <p>{currentArticle.titre}</p>
                 {currentArticle.imagepath &&
                     <div className="image-article-container">
-                        <img src={currentArticle.imagepath} alt={currentArticle.image.alt}/>
+                        <img src={lien+currentArticle.imagepath} alt={currentArticle.image.alt}/>
                     </div>
                 }
                 <p>{currentArticle.description}</p>
