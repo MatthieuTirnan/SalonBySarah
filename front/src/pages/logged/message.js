@@ -4,6 +4,7 @@ import { useSelector} from "react-redux";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {toastError, toastSuccess} from "../../components/toast/toast";
+import {useNavigate} from "react-router-dom";
 
 export const Message = () => {
     const [titre, setTitre] = useState("")
@@ -13,7 +14,7 @@ export const Message = () => {
     const [user,setUser]=useState("")
     const state = useSelector(state => state)
     const lien =process.env.REACT_APP_LINK_BACK
-
+    const navigate = useNavigate()
     useEffect(() => {
         getMessages()
     }, [])
@@ -26,9 +27,7 @@ export const Message = () => {
                 setUser(res.inbox.user._id)
                 setUserMessages(res.inbox.message)
             })
-            .catch((err) => {
-
-            })
+            .catch((err) => {})
     }
 
     function handleSubmit(e) {
@@ -91,6 +90,7 @@ export const Message = () => {
                                 .then((res) => {
                                     toastSuccess("message supprimé")
                                     getMessages()
+                                    navigate('/')
                                 })
                                 .catch((err) => {
                                     console.log(err)

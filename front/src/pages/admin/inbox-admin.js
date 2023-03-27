@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {getInboxAdmin, getlistUser} from "../../helper/fetch";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
 import {useNavigate} from "react-router-dom";
 import "../../asset/style/inbox.scss"

@@ -24,11 +24,9 @@ export const addArticle = async (req, res) => {
 
             const oldpath = files.fichier.filepath;
 
-            function getExtension(fileExtension) {
-                return fileExtension.split("/")[1];
-            }
 
-            let fileExtension = files.fichier.mimetype;
+
+            const fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension)
             const newpath = 'public/images/' + files.fichier.newFilename + currentExtension;
             const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
@@ -148,11 +146,9 @@ export const updateArticle = async (req, res) => {
             if (files.fichier) {
                 const oldpath = files.fichier.filepath;
 
-                function getExtension(fileExtension) {
-                    return fileExtension.split("/")[1];
-                }
 
-                let fileExtension = files.fichier.mimetype;
+
+                const fileExtension = files.fichier.mimetype;
                 const currentExtension = "." + getExtension(fileExtension)
                 const newpath = 'public/images/' + files.fichier.newFilename + currentExtension;
                 const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
@@ -214,3 +210,6 @@ export const updateArticle = async (req, res) => {
         }
     });
 };
+function getExtension(fileExtension) {
+    return fileExtension.split("/")[1];
+}
