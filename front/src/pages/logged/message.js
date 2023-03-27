@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {deleteMessage, getAuth, getUserMessage, postMessageUser} from "../../helper/fetch";
-import {useDispatch, useSelector} from "react-redux";
+import {deleteMessage, getUserMessage, postMessageUser} from "../../helper/fetch";
+import { useSelector} from "react-redux";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {toastError, toastSuccess} from "../../components/toast/toast";
@@ -10,6 +10,7 @@ export const Message = () => {
     const [description, setDescription] = useState("")
     const [fichier, setFichier] = useState({})
     const [userMessages, setUserMessages] = useState(["en chargement"])
+    const [user,setUser]=useState("")
     const state = useSelector(state => state)
     const lien =process.env.REACT_APP_LINK_BACK
 
@@ -21,10 +22,12 @@ export const Message = () => {
     function getMessages() {
         getUserMessage()
             .then((res) => {
+
+                setUser(res.inbox.user._id)
                 setUserMessages(res.inbox.message)
             })
             .catch((err) => {
-                console.log(err)
+
             })
     }
 
@@ -81,11 +84,10 @@ export const Message = () => {
                     <div>Aucun Message</div>
                 ) : (
                     userMessages.map((message, i) => {
-
-
                         function handleDelete() {
                             const id = message._id
-                            deleteMessage(id)
+                            console.log(id,user)
+                            deleteMessage(id,user)
                                 .then((res) => {
                                     toastSuccess("message supprimé")
                                     getMessages()

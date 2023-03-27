@@ -16,7 +16,7 @@ export const addMessage = async(req, res) => {
         if (!fields.titre || !fields.description) {
             return res.status(400).json({ message: "champ manquant" });
         }
-        //traitement du cas ou on a une images
+        //traitement du cas où on a une image
         if (files.fichier) {
             const oldpath = files.fichier.filepath;
             let fileExtension = files.fichier.mimetype;
@@ -27,7 +27,7 @@ export const addMessage = async(req, res) => {
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
                 return res.status(400).json({ message: "Unsupported image file type" });
             }
-            //ajout de l'images
+            //ajout de l'image
             fs.copyFile(oldpath, newpath, function(err) {
                 if (err) throw err;
                 console.log("fichier ajouter");
@@ -90,7 +90,8 @@ export const deleteMessage = async(req, res) => {
     
     try {
         const messageId = req.body.id;
-        const userId = req.userId;
+        const userId = req.body.user;
+
         const data = await Messages.find();
         const messageToDelete = data.find(element => element._id == messageId)
 
@@ -121,7 +122,7 @@ export const deleteMessage = async(req, res) => {
             user: userId,
             message: { $in: [messageToDelete._id] },
         });
-        console.log(inboxToUpdate)
+
         if (inboxToUpdate) {
             inboxToUpdate.message.pull(messageToDelete._id);
             inboxToUpdate.save()
@@ -131,7 +132,6 @@ export const deleteMessage = async(req, res) => {
 
         Messages.findByIdAndRemove(messageToDelete._id)
             .then(() => {
-                console.log("message remove")
                 return res.status(204).json({ message: "204" })
             })
             .catch((err) => {
@@ -140,7 +140,6 @@ export const deleteMessage = async(req, res) => {
 
     }
     catch (error) {
-        console.error(error);
         return res.status(500).json({ message: "Erreur lors de la suppression du message" });
     }
 

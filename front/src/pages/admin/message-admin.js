@@ -11,20 +11,19 @@ export const ListMessageAdmin = () => {
     const lien =process.env.REACT_APP_LINK_BACK
     const navigate = useNavigate()
     const state = useSelector(state => state)
+    console.log(currentInbox)
     return (
         <main>
             <article className="message-container">
                 {messages.map((message, i) => {
-
-
                     function handleClickResponse() {
-
                         navigate(`/answer-message-admin`, {state: {message, currentInbox}});
                     }
 
                     function handleDelete() {
                         const id = message._id
-                        deleteMessage(id)
+                        const user = currentInbox.user._id
+                        deleteMessage(id,user)
                             .then((res) => {
                                 toastSuccess("message supprimé")
                                 navigate(-1)

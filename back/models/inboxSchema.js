@@ -16,4 +16,11 @@ let inboxSchema = mongoose.Schema({
     }
 );
 
+inboxSchema.post('save', async function(doc, next) {
+    if (doc.message.length === 0) {
+        await doc.deleteOne()
+    }
+    next();
+});
+
 export default mongoose.model("Inbox", inboxSchema);

@@ -104,7 +104,7 @@ export const deleteArticle = async (req, res) => {
     //traitement du cas ou il y a une image et la supprime
     if (result.image) {
         const images = await Image.findOne({_id: result.image});
-        const imagePath = "./public/images/" + images.fileName;
+        const imagePath = "public/images/" + images.fileName;
         fs.unlink(imagePath, (err) => {
             if (err) {
                 return
@@ -112,6 +112,7 @@ export const deleteArticle = async (req, res) => {
                 console.log(`Le fichier ${imagePath} a été supprimé.`);
             }
         })
+        await Image.findByIdAndRemove(images._id);
     }
     //supprime l'article
     Article.findByIdAndDelete(result._id)

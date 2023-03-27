@@ -321,14 +321,14 @@ export async function postAnswerMessage(formData) {
     return res;
 }
 
-export async function deleteMessage(id) {
+export async function deleteMessage(id,user) {
     let url = new Request(lien+"delete-message", {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             'Authorization': `Bearer ${findToken()}`
         },
-        body: JSON.stringify({ id })
+        body: JSON.stringify({ id,user })
 
     });
     let response = await fetch(url);
