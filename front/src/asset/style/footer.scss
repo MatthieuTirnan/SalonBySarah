@@ -1,15 +1,16 @@
 @import "../Variable.scss";
 
 footer {
+  
   margin: 15px 0 0 0;
 
-  background-color: $vert-clair;
+  background-color: $vert-fonce;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   p {
-    color: $noir;
+    color: $blanc;
     font-weight: bold;
     text-align: center;
   }
