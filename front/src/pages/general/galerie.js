@@ -28,7 +28,7 @@ export const Galerie = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(fichier)
+
         const formData = new FormData();
         formData.append("fichier", fichier);
 
