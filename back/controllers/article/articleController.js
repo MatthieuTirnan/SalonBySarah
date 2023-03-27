@@ -189,7 +189,7 @@ export const updateArticle = async (req, res) => {
                 });
 
                 await newImage.save();
-                //misa à jour de l'article
+                //mise à jour de l'article
                 article.titre = titre;
                 article.description = description;
                 article.image = newImage;
