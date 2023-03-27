@@ -7,7 +7,6 @@ import Image from "../../models/imagesSchema.js";
 
 export const listImageGalerie = async (req, res) => {
     const data = await Image.find({page:"Galerie"});
-
     if (!data) {
         return res.status(404).json({ message: "images introuvable." });
     } else {
@@ -16,27 +15,30 @@ export const listImageGalerie = async (req, res) => {
 };
 
 export const addImageGalerie = async (req, res) => {
+    
     const form = formidable();
     form.parse(req, function (err, fields, files) {
-        console.log(fields, files)
+        
+        //traitement du cas ou il n'y a pas d'images
         if (!files.fichier) {
             return res.status(400).json({ message: 'fichier manquant' })
         }
+        
         let oldpath = files.fichier.filepath;
 
         function getExtension(fileExtension) {
             return fileExtension.split("/")[1];
         }
+        
         let fileExtension = files.fichier.mimetype;
         let currentExtension = "." + getExtension(fileExtension)
-
         let newpath = 'public/images/' + files.fichier.newFilename + currentExtension;
         const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
-
+        //traitement du cas on le type de l'image n'est pas bon
         if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
             return res.status(404).json({message:'Unsupported image file type'});
         }
-        
+        //ajout de l'image
         fs.copyFile(oldpath, newpath, function (err) {
             if (err) return res.status(404).json({message:'échec de l\'ajout'});
             console.log("fichier ajouter")
@@ -63,6 +65,7 @@ export const addImageGalerie = async (req, res) => {
 }
 
 export const deleteImageGalerie = async (req, res) => {
+    
     const { id } = req.body;
     try {
         const imageToDelete = await Image.findById(id);

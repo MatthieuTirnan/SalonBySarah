@@ -18,7 +18,8 @@ export const showArticle = async (req, res) => {
 export const addArticle = async (req, res) => {
     const form = formidable();
     form.parse(req, function (err, fields, files) {
-        console.log(fields, files)
+        
+        //vérification si image
         if (files.fichier) {
 
             const oldpath = files.fichier.filepath;
@@ -29,21 +30,22 @@ export const addArticle = async (req, res) => {
 
             let fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension)
-
             const newpath = 'public/images/' + files.fichier.newFilename + currentExtension;
             const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
-
+            
+            //vérification type de l'image
             if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
                 return res.status(400).json({message: "Unsupported image file type"});
             }
             fs.copyFile(oldpath, newpath, function (err) {
                 if (err) throw err;
-                console.log("fichier ajouter")
             })
             const page = 'Article'
             const alt = files.fichier.originalFilename
             const src = newpath
             const fileName = files.fichier.newFilename + currentExtension
+            
+            //création de l'image
             const newImage = new Image({
                 page,
                 alt,
@@ -52,7 +54,7 @@ export const addArticle = async (req, res) => {
             })
             newImage.save()
 
-
+            //création de l'article
             const titre = fields.titre
             const description = fields.description
             const newArticle = new Article({
@@ -69,6 +71,8 @@ export const addArticle = async (req, res) => {
                     res.status(400).json({message: `l'article n'a pas été ajouté`, err: err})
                 })
         } else {
+            
+            //traitement du cas ou il n'y a pas d'images
             const titre = fields.titre
             const description = fields.description
             const newArticle = new Article({
@@ -89,52 +93,49 @@ export const addArticle = async (req, res) => {
 }
 
 export const deleteArticle = async (req, res) => {
+    
     const {id} = req.body
     const data = await Article.find();
     const result = data.find(element => element._id == id)
+    //traitement du cas ou il n'y a pas d'élément correspondant 
     if (!result) {
         return res.status(404).json({message: "article introuvable."});
     }
+    //traitement du cas ou il y a une image et la supprime
     if (result.image) {
         const images = await Image.findOne({_id: result.image});
         const imagePath = "./public/images/" + images.fileName;
-        console.log(images)
-        console.log(imagePath)
         fs.unlink(imagePath, (err) => {
             if (err) {
-                console.error(err);
                 return
             } else {
                 console.log(`Le fichier ${imagePath} a été supprimé.`);
-
             }
         })
     }
+    //supprime l'article
     Article.findByIdAndDelete(result._id)
         .then(() => {
-            console.log(result)
-            console.log("Successful deletion")
             return res.status(204).json({message: "Successful deletion"})
         })
         .catch((err) => {
-            console.log(err)
             return res.status(400).json(err)
         })
 }
+
 export const updateArticle = async (req, res) => {
     let form = new formidable.IncomingForm();
 
     form.parse(req, async function (err, fields, files) {
-        console.log(files)
+        
         if (err) {
-            console.log(err);
             throw err;
         }
 
         try {
             const id = fields.id;
             const article = await Article.findById(id);
-
+            //traitement du cas où on ne trouve pas l'article correspondant
             if (!article) {
                 return res.status(404).json({message: "article introuvable."});
             }
@@ -142,7 +143,7 @@ export const updateArticle = async (req, res) => {
             const titre = fields.titre || article.titre;
             const description = fields.description || article.description;
 
-
+            //traitement du cas ou il y a une images
             if (files.fichier) {
                 const oldpath = files.fichier.filepath;
 
@@ -152,14 +153,13 @@ export const updateArticle = async (req, res) => {
 
                 let fileExtension = files.fichier.mimetype;
                 const currentExtension = "." + getExtension(fileExtension)
-
                 const newpath = 'public/images/' + files.fichier.newFilename + currentExtension;
                 const allowedExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp'];
-
+                //traitement du cas où le type d'image n'est pas valide
                 if (!allowedExtensions.includes(`.${getExtension(fileExtension)}`)) {
                     throw new Error('Unsupported image file type');
                 }
-
+                //mise à jour de l'image
                 if (article.image) {
                     const images = await Image.findOne({_id: article.image});
                     const imagePath = "./public/images/" + images.fileName;
@@ -188,7 +188,7 @@ export const updateArticle = async (req, res) => {
                 });
 
                 await newImage.save();
-
+                //misa à jour de l'article
                 article.titre = titre;
                 article.description = description;
                 article.image = newImage;

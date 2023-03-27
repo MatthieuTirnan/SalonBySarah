@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import User from "../../models/usersShema.js";
 
 export const register = async(req, res) => {
+    
     const { pseudo, email, password } = req.body;
-
     const newUser = new User({
         pseudo,
         email,
@@ -12,6 +12,7 @@ export const register = async(req, res) => {
         isAdmin: email === process.env.ADMIN_PASSWORD,
     });
     const jwt = newUser.createJWT();
+    
     newUser.save()
         .then((newUser) => {
             console.log(newUser);
@@ -23,11 +24,10 @@ export const register = async(req, res) => {
 };
 
 export const login = async(req, res) => {
-    console.log("ok")
+
     const { email, password } = req.body;
-    console.log(req.body)
     const user = await User.findOne({ email });
-    console.log(user);
+
     if (user == null) {
         res.status(400).json({ message: "identifiant incorrect" });
     }
@@ -48,7 +48,6 @@ export const userprovider = async(req, res) => {
     let token;
     if (req.headers["authorization"] !== undefined) {
         token = req.headers["authorization"].split(" ")[1];
-        console.log(token);
     }
     if (!token) {
         res.status(403).send({ message: "No token provided!" });
@@ -61,7 +60,7 @@ export const userprovider = async(req, res) => {
             return;
         }
         const user = await User.findOne({ _id: decoded.id });
-        console.log(user);
+
         res.status(200).json({
             user: {
                 id: user._id,
