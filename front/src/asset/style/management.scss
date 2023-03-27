@@ -52,7 +52,7 @@ table {
   tbody {
     tr {
       &:nth-child(even) {
-        background-color: $vert-clair;
+        background-color: $gris-clair;
       }
 
       td {
@@ -66,7 +66,7 @@ table {
           border: 1px solid transparent;
           text-transform: uppercase;
 
-          background-color: $vert-clair;
+          background-color: $gris-clair;
           color: $vert-fonce;
 
           &:hover {

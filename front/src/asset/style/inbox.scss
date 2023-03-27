@@ -28,7 +28,7 @@
     border:1px solid $vert-fonce;
 
     &:hover {
-      background-color: $vert-clair;
+      background-color: $gris-clair;
       @include tablette {
         transform: scale(1.15);
       }
