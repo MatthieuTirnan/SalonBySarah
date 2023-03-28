@@ -8,7 +8,6 @@ import "../../asset/style/inbox.scss"
 export const InboxAdmin = () => {
 
     const navigate = useNavigate()
-
     const dispatch = useDispatch()
     const [inboxs, setInboxs] = useState([])
 
@@ -33,24 +32,24 @@ export const InboxAdmin = () => {
             })
     }
 
-    return (<main>
-        <article className="inbox-container">
-            {!inboxs  ? (
-                <div>Aucun Messages</div>
-            ) : (
-                inboxs.slice(0).reverse().map((inbox, i) => {
+    return (
+        <main>
+            <article className="inbox-container">
+                {!inboxs ? (
+                    <div>Aucun Messages</div>
+                ) : (
+                    inboxs.slice(0).reverse().map((inbox, i) => {
+                        function handleClick() {
+                            navigate(`/message-admin`, {state: inbox});
+                        }
 
-                    function handleClick() {
-                        navigate(`/message-admin`, {state: inbox});
-                    }
-
-                    return (<section key={i}>
-                        <p>{inbox.user.pseudo}</p>
-                        <button onClick={handleClick}>VOIR MESSAGES</button>
-                    </section>)
-                })
-
-            )}
-        </article>
-    </main>)
+                        return (<section key={i}>
+                            <p>{inbox.user.pseudo}</p>
+                            <button onClick={handleClick}>VOIR MESSAGES</button>
+                        </section>)
+                    })
+                )}
+            </article>
+        </main>
+    )
 }

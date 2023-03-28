@@ -12,7 +12,7 @@ export const Article = () => {
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
     const [fichier, setFichier] = useState({})
-    const lien =process.env.REACT_APP_LINK_BACK
+    const lien = process.env.REACT_APP_LINK_BACK
 
     useEffect(() => {
         actualiseArticle()
@@ -38,11 +38,11 @@ export const Article = () => {
 
         postArticle(formData)
             .then((res) => {
-                if(res.message==="Unsupported image file type"){
+                if (res.message === "Unsupported image file type") {
                     toastError(res.message)
-                }else if(res.message===`l'article a été ajouté`){
+                } else if (res.message === `l'article a été ajouté`) {
                     toastSuccess(res.message)
-                }else if(res.message===`l'article n'a pas été ajouté`){
+                } else if (res.message === `l'article n'a pas été ajouté`) {
                     toastError(res.message)
                 }
 
@@ -54,50 +54,52 @@ export const Article = () => {
 
     }
 
-    return <main>
-        {state.user.isAdmin &&
-            <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
-                <fieldset>
-                    <legend>Ajouter un article</legend>
-                    <label htmlFor="titre">TITRE</label>
-                    <input onChange={(e) => setTitre(e.target.value)} type="text" id="titre" name="titre"/>
+    return (
+        <main>
+            {state.user.isAdmin &&
+                <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
+                    <fieldset>
+                        <legend>Ajouter un article</legend>
+                        <label htmlFor="titre">TITRE</label>
+                        <input onChange={(e) => setTitre(e.target.value)} type="text" id="titre" name="titre"/>
 
-                    <label>Contenu de votre article </label>
-                    <textarea onChange={(e) => setDescription(e.target.value)} name="description"></textarea>
+                        <label>Contenu de votre article </label>
+                        <textarea onChange={(e) => setDescription(e.target.value)} name="description"></textarea>
 
-                    <label htmlFor="fichier">ajouter une image</label>
-                    <input onChange={(e) => setFichier(e.target.files[0])} type="file" name="fichier"/>
+                        <label htmlFor="fichier">ajouter une image</label>
+                        <input onChange={(e) => setFichier(e.target.files[0])} type="file" name="fichier"/>
 
 
-                    <button type="submit">ENVOYER</button>
-                </fieldset>
-            </form>}
-        {articles.length === 0 ? (
-            <div>Aucun article</div>
-        ) : (
-            <section className="section-article">
-                {articles.slice(0).reverse().map((e, i) => {
-                    function handleClick() {
-                        navigate(`/article-management`, {state: e});
-                    }
+                        <button type="submit">ENVOYER</button>
+                    </fieldset>
+                </form>}
+            {articles.length === 0 ? (
+                <div>Aucun article</div>
+            ) : (
+                <section className="section-article">
+                    {articles.slice(0).reverse().map((e, i) => {
+                        function handleClick() {
+                            navigate(`/article-management`, {state: e});
+                        }
 
-                    return (
-                        <article key={i}>
-                            <h2>{e.titre}</h2>
-                            {e.imagepath &&
-                                <div className="image-article-container">
-                                    <img src={lien+e.imagepath} alt={e.image.alt}/>
-                                </div>
-                            }
-                            <p>{e.description}</p>
-                            {state.user.isAdmin &&
-                                <button onClick={handleClick}>MODIFIER</button>
-                            }
-                        </article>
-                    )
-                })}
-            </section>
-        )}
+                        return (
+                            <article key={i}>
+                                <h2>{e.titre}</h2>
+                                {e.imagepath &&
+                                    <div className="image-article-container">
+                                        <img src={lien + e.imagepath} alt={e.image.alt}/>
+                                    </div>
+                                }
+                                <p>{e.description}</p>
+                                {state.user.isAdmin &&
+                                    <button onClick={handleClick}>MODIFIER</button>
+                                }
+                            </article>
+                        )
+                    })}
+                </section>
+            )}
 
-    </main>
+        </main>
+    )
 }

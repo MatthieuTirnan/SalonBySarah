@@ -4,7 +4,6 @@ import {postAnswerMessage} from "../../helper/fetch";
 import '../../asset/style/message-admin.scss'
 import {toastError, toastSuccess} from "../../components/toast/toast";
 
-
 export const AnswerMessageAdmin = () => {
     const location = useLocation();
     const currentMessage = location.state.message;
@@ -15,10 +14,9 @@ export const AnswerMessageAdmin = () => {
     const user = currentMessage.from
     const navigate = useNavigate()
     const inboxParam = location.state.currentInbox
-    const lien =process.env.REACT_APP_LINK_BACK
+    const lien = process.env.REACT_APP_LINK_BACK
 
     function handleSubmit(e) {
-
         e.preventDefault()
         const formData = new FormData();
         formData.append("titre", titre);
@@ -28,7 +26,6 @@ export const AnswerMessageAdmin = () => {
 
         postAnswerMessage(formData)
             .then((res) => {
-
                 if (res.message === "champ manquant") {
                     toastError("champ manquant")
                 } else if (res.message === 'Unsupported image file type') {
@@ -51,13 +48,11 @@ export const AnswerMessageAdmin = () => {
                 <p>{currentMessage.description}</p>
                 {currentMessage.src &&
                     <div className="image-message-container-answer">
-                        <img src={lien+currentMessage.src} alt={currentMessage.alt}/>
+                        <img src={lien + currentMessage.src} alt={currentMessage.alt}/>
                     </div>
                 }
                 <div>
                     <p>message de : {currentInbox.pseudo}</p>
-
-
                 </div>
             </section>
             <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>

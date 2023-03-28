@@ -7,15 +7,14 @@ import {toastError, toastSuccess} from "../../components/toast/toast";
 
 export const PrestationManagement = () => {
 
-    
     const state = useSelector(state => state)
     const dispatch = useDispatch()
     const [formDisplay, setFormDisplay] = useState("hiddenform")
     const [currentPrestation, setCurrentPrestation] = useState({})
-
     const [addGenre, setAddGenre] = useState("Homme")
     const [addprestation, setAddPrestation] = useState("")
     const [addprice, setAddPrice] = useState("")
+
     useEffect(() => {
         actualiseDisplay()
     }, [])
@@ -23,7 +22,6 @@ export const PrestationManagement = () => {
     function actualiseDisplay() {
         getPrestation()
             .then((res) => {
-
                 dispatch(prestation(res))
             })
             .catch((err) => {
@@ -31,19 +29,12 @@ export const PrestationManagement = () => {
             })
     }
 
-
-
     function handleSubmitPut(e) {
-
         e.preventDefault()
-
         setFormDisplay("hiddenform")
-
-
         updatePrestation(currentPrestation)
             .then((res) => {
                 toastSuccess(res.message)
-
                 actualiseDisplay()
             })
             .catch((err) => {
@@ -60,8 +51,7 @@ export const PrestationManagement = () => {
         e.preventDefault()
         postPrestation(addGenre, addprestation, addprice)
             .then((res) => {
-
-                if(res.message ==="un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre"){
+                if (res.message === "un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre") {
                     toastError("un champ est manquant ou le genre est mal renseigné")
                 }
                 actualiseDisplay()
@@ -74,30 +64,26 @@ export const PrestationManagement = () => {
     return (
         <main>
             <form method="POST" onSubmit={handleSubmit}>
-
                 <fieldset>
                     <legend>Ajouter une prestation</legend>
+
                     <label htmlFor="genre">genre</label>
                     <select name="genre" id="genre" onChange={(e) => {
                         setAddGenre(e.target.value)
                     }}>
                         <option value="Homme">Homme</option>
                         <option value="Femme">Femme</option>
-
                     </select>
 
                     <label htmlFor="prestation">prestation</label>
                     <input onChange={(e) => {
                         setAddPrestation(e.target.value)
-                    }} placeholder="prestation" type="text"
-                           id="prestation"
-                           name="prestation"/>
+                    }} placeholder="prestation" type="text" id="prestation" name="prestation"/>
 
                     <label htmlFor="price">price</label>
                     <input onChange={(e) => {
                         setAddPrice(e.target.value)
-                    }} placeholder="price" type="number" id="price"
-                           name="price"/>
+                    }} placeholder="price" type="number" id="price" name="price"/>
 
                     <button type="submit">ENVOYER</button>
                 </fieldset>
@@ -112,19 +98,18 @@ export const PrestationManagement = () => {
                            onClick={() => setFormDisplay("hiddenform")}></i>
                         <fieldset>
                             <legend>modifier la prestation</legend>
+
                             <label htmlFor="genre">genre</label>
                             <input onChange={handleChange} defaultValue={currentPrestation.genre} type="text" id="genre"
                                    name="genre"/>
 
                             <label htmlFor="prestation">prestation</label>
                             <input onChange={handleChange} defaultValue={currentPrestation.prestation} type="text"
-                                   id="prestation"
-                                   name="prestation"/>
+                                   id="prestation" name="prestation"/>
 
                             <label htmlFor="price">price</label>
                             <input onChange={handleChange} defaultValue={currentPrestation.price} type="text" id="price"
                                    name="price"/>
-
 
                             <button type="submit">ENVOYER</button>
                         </fieldset>
@@ -150,12 +135,10 @@ export const PrestationManagement = () => {
                                         actualiseDisplay()
                                     })
                                     .catch((err) => {
-
                                     })
                             }
 
                             return (
-
                                 <tr key={i}>
                                     <td>{e.genre}</td>
                                     <td>{e.prestation}</td>
@@ -166,7 +149,6 @@ export const PrestationManagement = () => {
                                             setCurrentPrestation(e)
                                         }}>modifier
                                         </button>
-
                                     </td>
                                     <td>
                                         <button

@@ -6,12 +6,9 @@ import {useState} from "react";
 
 export const Header = () => {
 
-
     const [burger_class, setBurgerClass] = useState("burger-bar unclicked")
     const [menu_class, setMenuClass] = useState("menu hidden")
     const [isMenuClicked, setIsMenuClicked] = useState(false)
-
-
     const updateMenu = () => {
         if (!isMenuClicked) {
             setBurgerClass("burger-bar clicked")
@@ -22,7 +19,6 @@ export const Header = () => {
         }
         setIsMenuClicked(!isMenuClicked)
     }
-
 
     const state = useSelector(state => state)
     const dispatch = useDispatch()
@@ -42,28 +38,23 @@ export const Header = () => {
         }))
     }
 
-
     return (
         <>
             <header>
                 <h1>Le Salon By Sarah</h1>
-
                 <div className="burger-menu" onClick={updateMenu}>
                     <div className={burger_class}></div>
                     <div className={burger_class}></div>
                     <div className={burger_class}></div>
                 </div>
-
             </header>
             <nav className="nav-header">
                 <div className={menu_class}>
-
                     {!state.user.isMatch ? (
                         < div className="lien">
                             <Link className="link-header" to="/login"> SIGN IN </Link>
                             <Link className="link-header" to="/register"> SIGN UP </Link>
                         </div>
-
                     ) : (
                         <div className="lien">
                             <Link className="link-header" to="/" onClick={handleclick}> DECONNECTER </Link>

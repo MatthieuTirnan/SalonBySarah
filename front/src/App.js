@@ -8,7 +8,7 @@ import {user} from "./store/slices/userSlice";
 import {Footer} from "./components/footer";
 import {Toast} from "./components/toast/toast";
 import {AuthMiddleware} from "./middleware/authmiddleware";
-import {adminRoutes,publicRoutes,privateRoutes} from "./middleware/route";
+import {adminRoutes, publicRoutes, privateRoutes} from "./middleware/route";
 import {AdminMiddleware} from "./middleware/adminmiddleware";
 
 
@@ -36,37 +36,40 @@ function App() {
     }, [])
 
 
-    return (<>
-        <BrowserRouter>
-            <Header/>
-            <Toast/>
-            <Routes>
-                {publicRoutes.map((route, i) => (
-                    <Route path={route.path} element={route.component} key={i} exact={true}/>
-                ))}
+    return (
+        <>
+            <BrowserRouter>
+                <Header/>
+                <Toast/>
+                <Routes>
+                    {publicRoutes.map((route, i) => (
+                        <Route path={route.path} element={route.component} key={i} exact={true}/>
+                    ))}
 
-                {privateRoutes.map((route, idx) => (
-                    <Route path={route.path} element={
-                        <AuthMiddleware>
-                            {route.component}
-                        </AuthMiddleware>}
-                           key={idx}
-                           exact={true}
-                    />
-                ))}
-                {adminRoutes.map((route, i) => (
-                    <Route path={route.path} element={
-                        <AdminMiddleware>
-                            {route.component}
-                        </AdminMiddleware>}
-                           key={i}
-                           exact={true}
-                    />
-                ))}
-            </Routes>
-            <Footer/>
-        </BrowserRouter>
-    </>);
+                    {privateRoutes.map((route, idx) => (
+                        <Route path={route.path} element={
+                            <AuthMiddleware>
+                                {route.component}
+                            </AuthMiddleware>}
+                               key={idx}
+                               exact={true}
+                        />
+                    ))}
+
+                    {adminRoutes.map((route, i) => (
+                        <Route path={route.path} element={
+                            <AdminMiddleware>
+                                {route.component}
+                            </AdminMiddleware>}
+                               key={i}
+                               exact={true}
+                        />
+                    ))}
+                </Routes>
+                <Footer/>
+            </BrowserRouter>
+        </>
+    );
 }
 
 export default App;

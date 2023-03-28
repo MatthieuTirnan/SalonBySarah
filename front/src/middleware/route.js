@@ -32,9 +32,7 @@ export const publicRoutes =[
     {path:"/article", component:<Article/>},
     {path:"/galerie", component:<Galerie/>},
     {path:"/tarif", component:<Tarif/>}
-
 ]
 export const privateRoutes =[
     {path:"/message", component:<Message/>},
-
 ]

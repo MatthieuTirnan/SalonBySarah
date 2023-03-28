@@ -11,7 +11,6 @@ export const UserManagement = () => {
     const dispatch = useDispatch()
     const state = useSelector(state => state)
 
-
     useEffect(() => {
         getUser()
             .then((res) => {
@@ -43,7 +42,7 @@ export const UserManagement = () => {
                         function handleDeleteClick() {
                             deleteUser(id)
                                 .then((res) => {
-toastSuccess("utilisateur supprimé")
+                                    toastSuccess("utilisateur supprimé")
                                     getUser()
                                         .then((res) => {
                                             dispatch(listUsers(res))
@@ -81,8 +80,7 @@ toastSuccess("utilisateur supprimé")
                                 <td>{e.email}</td>
                                 <td>{e.isAdmin ? "Admin" : "Pas Admin"}</td>
                                 <td>
-                                    <button
-                                        onClick={handleupdateClick}>{e.isAdmin ? "Enlever Admin" : "Passer Admin"}</button>
+                                    <button onClick={handleupdateClick}>{e.isAdmin ? "Enlever Admin" : "Passer Admin"}</button>
                                 </td>
                                 <td>
                                     <button onClick={handleDeleteClick}>supprimer</button>

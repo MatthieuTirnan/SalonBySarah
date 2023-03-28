@@ -1,20 +1,22 @@
 import {useEffect, useState} from "react";
 import {deleteMessage, getUserMessage, postMessageUser} from "../../helper/fetch";
-import { useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {toastError, toastSuccess} from "../../components/toast/toast";
 import {useNavigate} from "react-router-dom";
 
 export const Message = () => {
+
     const [titre, setTitre] = useState("")
     const [description, setDescription] = useState("")
     const [fichier, setFichier] = useState({})
     const [userMessages, setUserMessages] = useState(["en chargement"])
-    const [user,setUser]=useState("")
+    const [user, setUser] = useState("")
     const state = useSelector(state => state)
-    const lien =process.env.REACT_APP_LINK_BACK
+    const lien = process.env.REACT_APP_LINK_BACK
     const navigate = useNavigate()
+
     useEffect(() => {
         getMessages()
     }, [])
@@ -23,15 +25,14 @@ export const Message = () => {
     function getMessages() {
         getUserMessage()
             .then((res) => {
-
                 setUser(res.inbox.user._id)
                 setUserMessages(res.inbox.message)
             })
-            .catch((err) => {})
+            .catch((err) => {
+            })
     }
 
     function handleSubmit(e) {
-
         e.preventDefault()
         const formData = new FormData();
         formData.append("titre", titre);
@@ -41,7 +42,6 @@ export const Message = () => {
 
         postMessageUser(formData)
             .then((res) => {
-
                 if (res.message === "champ manquant") {
                     toastSuccess("champ manquant")
                     return <ToastContainer/>
@@ -51,7 +51,6 @@ export const Message = () => {
                 } else {
                     toastSuccess(`le message  a bien été ajouté`)
                     getMessages()
-
                 }
             })
             .catch((err) => {
@@ -73,7 +72,6 @@ export const Message = () => {
                     <label htmlFor="fichier">ajouter une image</label>
                     <input onChange={(e) => setFichier(e.target.files[0])} type="file" name="fichier"/>
 
-
                     <button type="submit">ENVOYER</button>
                 </fieldset>
             </form>
@@ -85,8 +83,8 @@ export const Message = () => {
                     userMessages.map((message, i) => {
                         function handleDelete() {
                             const id = message._id
-                            console.log(id,user)
-                            deleteMessage(id,user)
+                            console.log(id, user)
+                            deleteMessage(id, user)
                                 .then((res) => {
                                     toastSuccess("message supprimé")
                                     getMessages()
@@ -103,7 +101,7 @@ export const Message = () => {
                                 <p>{message.description}</p>
                                 {message.src &&
                                     <div className="image-message-container">
-                                        <img src={lien+message.src} alt={message.alt}/>
+                                        <img src={lien + message.src} alt={message.alt}/>
                                     </div>
                                 }
                                 {message.from === state.user._id ? (

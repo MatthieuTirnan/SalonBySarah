@@ -8,7 +8,6 @@ export const AdminMiddleware = (props) => {
     const [loaded, setLoaded] = useState(false)
     const user = useSelector(state => state.user)
 
-
     useEffect(() => {
         if (!user.isMatch) {
             setLoaded(false)
@@ -18,9 +17,7 @@ export const AdminMiddleware = (props) => {
     }, [user])
 
     if (!localStorage.getItem("jwt")) {
-        return (
-            <Navigate to={"/login"}/>
-        );
+        return (<Navigate to={"/login"}/>);
     }
     switch (loaded) {
         case true: {
@@ -32,7 +29,7 @@ export const AdminMiddleware = (props) => {
         case false: {
             return <h1>Loading</h1>
         }
-        default: return <h1>Loading</h1>
+        default:
+            return <h1>Loading</h1>
     }
-
 };

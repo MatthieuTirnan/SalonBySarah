@@ -5,15 +5,15 @@ import "../../asset/style/galerie.scss"
 import {toastError, toastSuccess} from "../../components/toast/toast";
 
 export const Galerie = () => {
+
     const state = useSelector(state => state)
-    const lien =process.env.REACT_APP_LINK_BACK
+    const lien = process.env.REACT_APP_LINK_BACK
     const [galerie, setGalerie] = useState([])
     const [fichier, setFichier] = useState({})
 
     useEffect(() => {
         actualiseGalerie()
     }, [])
-
 
     function actualiseGalerie() {
         getGalerie()
@@ -28,21 +28,19 @@ export const Galerie = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
         const formData = new FormData();
         formData.append("fichier", fichier);
 
         postImageGalerie(formData)
             .then((res) => {
-                if(res.message ==='fichier manquant'){
+                if (res.message === 'fichier manquant') {
                     toastError(res.message)
-                }else if (res.message ==='Unsupported image file type'){
+                } else if (res.message === 'Unsupported image file type') {
                     toastError(res.message)
-                }else {
+                } else {
                     toastSuccess(res.message)
                 }
                 actualiseGalerie()
-
             })
             .catch((err) => {
                 alert(err.message)
@@ -64,14 +62,12 @@ export const Galerie = () => {
 
                 {galerie.slice(0).reverse().map((e, i) => {
                     function handleDelete() {
-
                         const id = e._id
                         deleteImage(id)
                             .then((res) => {
                                 toastSuccess("image supprimée")
                                 getGalerie()
                                     .then(res => {
-
                                         setGalerie(res.data)
                                     })
                                     .catch(err => {
@@ -85,9 +81,7 @@ export const Galerie = () => {
 
                     return (
                         <div key={i} className="image-container">
-
-                            <a href={lien+e.src}><img src={lien+e.src} alt={e.alt}/></a>
-
+                            <a href={lien + e.src}><img src={lien + e.src} alt={e.alt}/></a>
                             {state.user.isAdmin &&
                                 <button onClick={handleDelete}>supprimer</button>
                             }
