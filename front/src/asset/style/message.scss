@@ -13,7 +13,7 @@
     width: 80%;
   }
 
-  .message-admin-wrapper {
+  .message-user-wrapper {
     width: 90%;
     margin: 10px auto;
     padding: 10px;
@@ -44,7 +44,7 @@
       padding-bottom:10px;
 
     }
-
+    
 
     button {
       width: 70%;
@@ -62,35 +62,6 @@
         color: $vert-fonce;
         border: 1px solid $vert-fonce;
       }
-    }
-  }
-}
-
-.previous-message {
-  width: 90%;
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid $vert-fonce;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .image-message-container-answer {
-    width: 70%;
-    height: 300px;
-    margin: 0 auto;
-    @include tablette {
-      height: 400px;
-    }
-    @include desktop {
-      height: 500px;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
   }
 }

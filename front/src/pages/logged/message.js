@@ -5,6 +5,7 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {toastError, toastSuccess} from "../../components/toast/toast";
 import {useNavigate} from "react-router-dom";
+import '../../asset/style/message.scss'
 
 export const Message = () => {
 
@@ -76,7 +77,7 @@ export const Message = () => {
                 </fieldset>
             </form>
 
-            <article>
+            <article className="message-container">
                 {userMessages[0] === "en chargement" ? (
                     <div>Aucun Message</div>
                 ) : (
@@ -96,8 +97,8 @@ export const Message = () => {
                         }
 
                         return (
-                            <section key={i}>
-                                <p>{message.titre}</p>
+                            <section key={i} className='message-user-wrapper'>
+                                <h2>{message.titre}</h2>
                                 <p>{message.description}</p>
                                 {message.src &&
                                     <div className="image-message-container">
@@ -105,7 +106,7 @@ export const Message = () => {
                                     </div>
                                 }
                                 {message.from === state.user._id ? (
-                                    <p>message de : {state.user.pseudo}</p>
+                                    <p >message de : {state.user.pseudo}</p>
                                 ) : (
                                     <p>réponse d'un admin</p>
                                 )
