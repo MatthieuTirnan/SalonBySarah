@@ -51,8 +51,11 @@ export const PrestationManagement = () => {
         e.preventDefault()
         postPrestation(addGenre, addprestation, addprice)
             .then((res) => {
+                console.log(res)
                 if (res.message === "un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre") {
                     toastError("un champ est manquant ou le genre est mal renseigné")
+                }else if (res.message ==="Price n'est pas un nombre"){
+                    toastError("le prix n'est pas un nombre")
                 }
                 actualiseDisplay()
             })

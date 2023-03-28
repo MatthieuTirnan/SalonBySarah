@@ -62,6 +62,9 @@ export const updatePrestation = async (req, res) => {
     const prestation = req.body.prestation || result.prestation
     const price = req.body.price || result.price
 
+    if(!Number(req.body.price) ){
+        return res.status(400).json({ message: "Price n'est pas un nombre" })
+    }
     //ajout de la prestation modifié
     result.genre = genre
     result.prestation = prestation

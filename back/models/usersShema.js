@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 
 
 
+
 let userSchema = mongoose.Schema({
     pseudo: {
         type: String,
@@ -33,6 +34,8 @@ userSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt)
 })
+
+
 
 userSchema.methods.comparePassword = function (candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
