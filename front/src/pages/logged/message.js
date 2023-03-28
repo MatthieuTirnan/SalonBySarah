@@ -50,6 +50,7 @@ export const Message = () => {
                 } else {
                     toastSuccess("le message a bien été ajouté")
                 }
+                getMessages()
             })
             .catch((err) => {
                 toastError(err.message)
