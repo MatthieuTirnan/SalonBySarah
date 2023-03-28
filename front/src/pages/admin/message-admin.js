@@ -36,7 +36,7 @@ export const ListMessageAdmin = () => {
 
                     return (
                         <section key={i} className='message-admin-wrapper'>
-                            <p>{message.titre}</p>
+                            <h2>{message.titre}</h2>
                             <p>{message.description}</p>
                             {message.src &&
                                 <div className="image-message-container">
@@ -46,12 +46,12 @@ export const ListMessageAdmin = () => {
                             <div>
                                 {message.from === state.user._id ? (
                                     <>
-                                        <p>message de : {state.user.pseudo}</p>
+                                        <p >message de : {state.user.pseudo}</p>
                                         <button onClick={handleDelete}>SUPPRIMER</button>
                                     </>
                                 ) : (
                                     <>
-                                        <p>message de : {currentInbox.user.pseudo}</p>
+                                        <p >message de : {currentInbox.user.pseudo}</p>
                                         <button onClick={handleClickResponse}>REPONDRE</button>
                                         <button onClick={handleDelete}>SUPPRIMER</button>
                                     </>
