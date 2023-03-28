@@ -82,7 +82,7 @@ header {
 }
 
 .nav-header {
-  background-color: $gris-clair;
+  background-color: $vert-fonce;
   position: sticky;
   top: 0;
   z-index: 3;
@@ -94,7 +94,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $gris-clair;
+  background-color: $vert-fonce;
   @include desktop {
     flex-direction: row;
 
@@ -102,7 +102,7 @@ header {
 
   a {
     text-decoration: none;
-    color: $vert-fonce;
+    color: $blanc;
     width: 100%;
     text-align: center;
     font-weight: bold;
@@ -113,8 +113,8 @@ header {
     }
 
     &:hover {
-      color: $gris-clair;
-      background-color: $vert-fonce;
+      color: $vert-fonce;
+      background-color: $blanc;
 
     }
   }

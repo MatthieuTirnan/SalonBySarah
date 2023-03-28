@@ -8,7 +8,7 @@ import Image from "../../models/imagesSchema.js";
 export const listImageGalerie = async (req, res) => {
     const data = await Image.find({page:"Galerie"});
     if (!data) {
-        return res.status(404).json({ message: "images introuvable." });
+        return res.status(204).json({ message: "images introuvable." });
     } else {
         return res.status(200).json({ count: data.length, data });
     }

@@ -151,7 +151,7 @@ export const listUserMessage = async(req, res) => {
         const id = req.userId;
         const inbox = await Inbox.findOne({ user: id }).populate("message user");
         if (!inbox) {
-            return res.status(400).json({ message: "Boîte de réception introuvable" });
+            return res.status(204).json({ message: "Boîte de réception introuvable" });
         }
 
 
@@ -166,7 +166,7 @@ export const listInbox = async(req, res) => {
     const inbox = await Inbox.find().populate("user message")
     
     if (!inbox) {
-        return res.status(400).json({ message: "Boîte de réception introuvable" });
+        return res.status(204).json({ message: "Boîte de réception introuvable" });
     }
 
     res.status(200).json({ inbox: inbox })
