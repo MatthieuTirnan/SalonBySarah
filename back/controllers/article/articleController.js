@@ -23,9 +23,6 @@ export const addArticle = async (req, res) => {
         if (files.fichier) {
 
             const oldpath = files.fichier.filepath;
-
-
-
             const fileExtension = files.fichier.mimetype;
             const currentExtension = "." + getExtension(fileExtension)
             const newpath = 'public/images/' + files.fichier.newFilename + currentExtension;
