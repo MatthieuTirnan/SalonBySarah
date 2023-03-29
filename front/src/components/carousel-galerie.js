@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
 import {getGalerie} from "../helper/fetch";
 import Slider from "react-slick";
+import "../asset/style/carousel.scss"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "../asset/style/carousel.scss"
+
 export const Carousel = () => {
     const [galerie, setGalerie] = useState([])
     const lien =process.env.REACT_APP_LINK_BACK
