@@ -147,15 +147,15 @@ export const PrestationManagement = () => {
                                     <td>{e.prestation}</td>
                                     <td>{e.price} €</td>
                                     <td>
-                                        <button onClick={(event) => {
+                                        <button className="modified" onClick={(event) => {
                                             setFormDisplay("visibleform")
                                             setCurrentPrestation(e)
-                                        }}>modifier
+                                        }}><i class="fa-solid fa-gear"></i>
                                         </button>
                                     </td>
                                     <td>
                                         <button
-                                            onClick={handleDeleteClick}>supprimer
+                                            onClick={handleDeleteClick}>❌
                                         </button>
                                     </td>
                                 </tr>
