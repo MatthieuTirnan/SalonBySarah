@@ -95,7 +95,8 @@ export const Message = () => {
                         }
 
                         return (
-                            <section key={i} className='message-user-wrapper'>
+                            <section key={i}
+                                     className={message.from === state.user._id ? "border-user message-user-wrapper" : "border-admin message-user-wrapper"}>
                                 <h2>{message.titre}</h2>
                                 <p>{message.description}</p>
                                 {message.src &&
@@ -104,12 +105,12 @@ export const Message = () => {
                                     </div>
                                 }
                                 {message.from === state.user._id ? (
-                                    <p >message de : {state.user.pseudo}</p>
+                                    <p>message de : {state.user.pseudo}</p>
                                 ) : (
                                     <p>réponse d'un admin</p>
                                 )
                                 }
-                                <button onClick={handleDelete}>SUPPRIMER</button>
+                                <button className={message.from === state.user._id ? "user-button" : "admin-button"} onClick={handleDelete}>SUPPRIMER</button>
                             </section>
                         )
                     })

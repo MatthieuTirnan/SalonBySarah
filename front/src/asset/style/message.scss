@@ -16,13 +16,11 @@
   .message-user-wrapper {
     width: 90%;
     margin: 10px auto;
-    padding: 10px;
-    border: 3px solid $vert-fonce;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
-
     align-items: center;
+    padding: 10px;
+    border-radius: 10px;
 
     .image-message-container {
       width: 70%;
@@ -44,24 +42,44 @@
       padding-bottom:10px;
 
     }
-    
 
-    button {
-      width: 70%;
-      padding: 8px;
-      margin: 5px auto;
-      font-weight: bold;
-      background-color: $vert-fonce;
-      border-radius: 15px;
-      border: 1px solid transparent;
-      overflow: hidden;
-      color: $blanc;
-
-      &:hover {
-        background-color: $blanc;
-        color: $vert-fonce;
-        border: 1px solid $vert-fonce;
-      }
-    }
+  }
+}
+.border-user{
+  border: 3px solid $color-user;
+}
+.border-admin{
+  border: 3px solid $color-admin;
+}
+.admin-button{
+  width: 70%;
+  padding: 8px;
+  margin: 5px auto;
+  font-weight: bold;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color:$color-admin !important;
+  border: 1px solid transparent;
+  color: $blanc;
+  &:hover {
+    background-color: $noir !important;
+    color: $color-user;
+    border: 1px solid $color-user;
+  }
+}
+.user-button{
+  width: 70%;
+  padding: 8px;
+  margin: 5px auto;
+  font-weight: bold;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: $color-user !important;
+  border: 1px solid transparent;
+  color: $blanc;
+  &:hover {
+    background-color: $blanc !important;
+    color: $color-user;
+    border: 1px solid $color-user;
   }
 }
