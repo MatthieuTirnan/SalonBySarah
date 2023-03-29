@@ -11,22 +11,24 @@ export const Tarif = () => {
     const [hidden, setHidden] = useState("")
     const [hommeDisplay, setHommeDisplay] = useState("")
     const [femmeDisplay, setFemmeDisplay] = useState("")
-    const data = state.prestation.data
+
 
     useEffect(() => {
         actualisePrestation()
     }, [])
 
     useEffect(() => {
-        const homme = data.some(e => e.genre === "Homme")
-        const femme = data.some(e => e.genre === "Femme")
+        if(state.prestation.data){
+        const homme = state.prestation.data.some(e => e.genre === "Homme")
+        const femme = state.prestation.data.some(e => e.genre === "Femme")
         if (!femme) {
             setFemmeDisplay("hidden-tarif")
         }
         if (!homme) {
             setHommeDisplay("hidden-tarif")
         }
-    }, [data, hommeDisplay, femmeDisplay])
+        }
+    }, [state.prestation.data, hommeDisplay, femmeDisplay])
 
     function actualisePrestation() {
         getPrestation()
@@ -40,7 +42,7 @@ export const Tarif = () => {
 
     return (
         <main>
-            {state.prestation.prestation === false ? (<div>aucune prestation</div>) : (
+            {state.prestation.count === 0 ? (<div>aucune prestation</div>) : (
                 <>
                     <section className="select-tarif">
                         <button onClick={(e) => {
