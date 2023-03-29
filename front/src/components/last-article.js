@@ -24,7 +24,7 @@ export const LastArticle = () => {
         <section className="section-article">
             {articles.length === 0 &&
                 <article>
-                    <p>Aucun article</p>
+                    <p className="no-article">Aucun article</p>
                 </article>
             }
             {articles.length !== 0 &&
