@@ -9,6 +9,7 @@ export const LastArticle = () => {
     useEffect(() => {
         actualiseArticle()
     }, [])
+
     function actualiseArticle() {
         getArticle()
             .then((res) => {
@@ -21,6 +22,11 @@ export const LastArticle = () => {
 
     return (
         <section className="section-article">
+            {articles.length === 0 &&
+                <article>
+                    <p>Aucun article</p>
+                </article>
+            }
             {articles.length !== 0 &&
                 <article>
                     <h2>ACTUALITE</h2>

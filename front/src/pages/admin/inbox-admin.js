@@ -35,7 +35,7 @@ export const InboxAdmin = () => {
     return (
         <main>
             <article className="inbox-container">
-                {!inboxs ? (
+                {inboxs.length == 0 ? (
                     <div>Aucun Messages</div>
                 ) : (
                     inboxs.slice(0).reverse().map((inbox, i) => {

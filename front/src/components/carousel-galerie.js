@@ -63,7 +63,7 @@ export const Carousel = () => {
     return (
         <>
             <h2>Réalisation</h2>
-            {galerie.length !== 0 &&
+            {galerie.length !== 0 ?(
                 <Slider {...settings}>
                     {galerie.map((e, i) => {
                         return (
@@ -74,6 +74,9 @@ export const Carousel = () => {
                     })
                     }
                 </Slider>
+            ):(
+                <div>aucune réalisation à afficher</div>
+            )
             }
         </>
     )

@@ -59,7 +59,9 @@ export const Galerie = () => {
                 </form>
             }
             <article className="galerie-container">
-
+                {galerie.length === 0 &&
+                    <p>aucune image</p>
+                }
                 {galerie.slice(0).reverse().map((e, i) => {
                     function handleDelete() {
                         const id = e._id

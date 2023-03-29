@@ -11,10 +11,22 @@ export const Tarif = () => {
     const [hidden, setHidden] = useState("")
     const [hommeDisplay, setHommeDisplay] = useState("")
     const [femmeDisplay, setFemmeDisplay] = useState("")
+    const data = state.prestation.data
 
     useEffect(() => {
         actualisePrestation()
     }, [])
+
+    useEffect(() => {
+        const homme = data.some(e => e.genre === "Homme")
+        const femme = data.some(e => e.genre === "Femme")
+        if (!femme) {
+            setFemmeDisplay("hidden-tarif")
+        }
+        if (!homme) {
+            setHommeDisplay("hidden-tarif")
+        }
+    }, [data, hommeDisplay, femmeDisplay])
 
     function actualisePrestation() {
         getPrestation()
@@ -50,8 +62,7 @@ export const Tarif = () => {
                         }}>HOMME
                         </button>
                     </section>
-                    <section className={"categorie-prestation " + hidden + " " + femmeDisplay
-                    }>
+                    <section className={"categorie-prestation " + hidden + " " + femmeDisplay}>
                         <h2>catégorie : Femme</h2>
                         {state.prestation.data.map((e, i) => {
                             if (e.genre === "Femme") {
@@ -62,16 +73,16 @@ export const Tarif = () => {
                             }
                         })}
                     </section>
-
-                    <section className={"categorie-prestation " + hidden + " " + hommeDisplay
-                    }>
+                    <section className={"categorie-prestation " + hidden + " " + hommeDisplay}>
                         <h2>catégorie : Homme</h2>
                         {state.prestation.data.map((e, i) => {
                             if (e.genre === "Homme") {
-                                return (<div key={i} className="prestation-wrapper">
-                                    <p>{e.prestation}</p>
-                                    <p>{e.price} €</p>
-                                </div>)
+                                return (
+                                    <div key={i} className="prestation-wrapper">
+                                        <p>{e.prestation}</p>
+                                        <p>{e.price} €</p>
+                                    </div>
+                                )
                             }
                         })}
                     </section>
