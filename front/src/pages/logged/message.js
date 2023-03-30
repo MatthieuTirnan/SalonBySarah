@@ -43,9 +43,12 @@ export const Message = () => {
 
         postMessageUser(formData)
             .then((res) => {
+                console.log(res)
                 if (res.message === 'fichier manquant') {
                     toastError(res.message)
                 } else if (res.message === 'Unsupported image file type') {
+                    toastError(res.message)
+                }else if (res.message === 'champ manquant') {
                     toastError(res.message)
                 } else {
                     toastSuccess("le message a bien été ajouté")
