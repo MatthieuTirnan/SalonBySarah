@@ -3,7 +3,7 @@ import {deleteUser, getUser, updateUser} from "../../helper/fetch";
 import {useDispatch, useSelector} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
 import "../../asset/style/management.scss"
-import {toastSuccess} from "../../components/toast/toast";
+import {toastError, toastSuccess} from "../../components/toast/toast";
 
 
 export const UserManagement = () => {
@@ -60,9 +60,15 @@ export const UserManagement = () => {
 
                             updateUser(id)
                                 .then((res) => {
-                                    toastSuccess(res.message)
+                                    console.log(res)
+                                    if (res.message == 'Something went wrong') {
+                                        toastError('Something went wrong')
+                                    } else {
+                                        toastSuccess(res.message)
+                                    }
                                     getUser()
                                         .then((res) => {
+                                            console.log(res)
                                             dispatch(listUsers(res))
                                         })
                                         .catch((err) => {
@@ -80,7 +86,8 @@ export const UserManagement = () => {
                                 <td>{e.email}</td>
                                 <td>{e.isAdmin ? "Admin" : "Pas Admin"}</td>
                                 <td>
-                                    <button onClick={handleupdateClick}>{e.isAdmin ? "Enlever Admin" : "Passer Admin"}</button>
+                                    <button
+                                        onClick={handleupdateClick}>{e.isAdmin ? "Enlever Admin" : "Passer Admin"}</button>
                                 </td>
                                 <td>
                                     <button onClick={handleDeleteClick}>supprimer</button>

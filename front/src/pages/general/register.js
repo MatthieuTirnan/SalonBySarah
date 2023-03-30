@@ -18,6 +18,7 @@ export const Register = () => {
 
         postRegister(pseudo, email, password)
             .then(res => {
+                console.log(res)
                 localStorage.setItem("jwt", res.jwt)
                 dispatch(user({
                     isMatch: res.isMatch,

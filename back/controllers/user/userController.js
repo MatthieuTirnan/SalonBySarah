@@ -18,18 +18,22 @@ export const listUser = async (req, res) => {
 
 
 export const PassRemoveAdmin = async (req, res) => {
-
     try {
+        //recherche l'utilisateur
         const {id} = req.body;
         const user = await User.findById(id);
+        console.log(user)
         if (!user) {
             return res.status(404).json({message: 'User not found'});
         }
 
+        // toggle en booléen de la propriété admin
         user.isAdmin = !user.isAdmin;
-        await user.save();
-
-        res.json({message: `user updated successfully`, user});
+        //update de l'utilisateur et non en save pour ne pas repasser par bcrypt qui marche de manière unidirectionnelle
+        await User.updateOne({_id: id}, {isAdmin: user.isAdmin});
+        const updatedUser = await User.findById(id);
+        console.log(updatedUser)
+        res.json({message: `user updated successfully`, user: updatedUser});
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Something went wrong'});
