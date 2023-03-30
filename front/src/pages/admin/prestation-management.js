@@ -54,7 +54,7 @@ export const PrestationManagement = () => {
                 console.log(res)
                 if (res.message === "un champ est manquant ou le genre est mal renseigné, uniquement Homme ou Femme acceptés pour le genre") {
                     toastError("un champ est manquant ou le genre est mal renseigné")
-                }else if (res.message ==="Price n'est pas un nombre"){
+                } else if (res.message === "Price n'est pas un nombre") {
                     toastError("le prix n'est pas un nombre")
                 }
                 actualiseDisplay()
@@ -150,7 +150,7 @@ export const PrestationManagement = () => {
                                         <button className="modified" onClick={(event) => {
                                             setFormDisplay("visibleform")
                                             setCurrentPrestation(e)
-                                        }}><i class="fa-solid fa-gear"></i>
+                                        }}><i className="fa-solid fa-gear"></i>
                                         </button>
                                     </td>
                                     <td>
