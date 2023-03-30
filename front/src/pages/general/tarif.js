@@ -18,15 +18,16 @@ export const Tarif = () => {
     }, [])
 
     useEffect(() => {
-        if(state.prestation.data){
-        const homme = state.prestation.data.some(e => e.genre === "Homme")
-        const femme = state.prestation.data.some(e => e.genre === "Femme")
-        if (!femme) {
-            setFemmeDisplay("hidden-tarif")
-        }
-        if (!homme) {
-            setHommeDisplay("hidden-tarif")
-        }
+        if (state.prestation.data) {
+            const homme = state.prestation.data.some(e => e.genre === "Homme")
+            const femme = state.prestation.data.some(e => e.genre === "Femme")
+
+            if (!femme) {
+                setFemmeDisplay("hidden-tarif")
+            }
+            if (!homme) {
+                setHommeDisplay("hidden-tarif")
+            }
         }
     }, [state.prestation.data, hommeDisplay, femmeDisplay])
 
@@ -40,56 +41,52 @@ export const Tarif = () => {
             })
     }
 
-    return (
-        <main>
-            {state.prestation.count === 0 ? (<div>aucune prestation</div>) : (
-                <>
-                    <section className="select-tarif">
-                        <button onClick={(e) => {
-                            setHidden()
-                            setHommeDisplay()
-                            setFemmeDisplay()
-                        }}>ALL
-                        </button>
-                        <button onClick={(e) => {
-                            setHidden("hidden-tarif")
-                            setFemmeDisplay("femme-tarif")
-                            setHommeDisplay()
-                        }}>FEMME
-                        </button>
-                        <button onClick={(e) => {
-                            setHidden("hidden-tarif")
-                            setHommeDisplay("homme-tarif")
-                            setFemmeDisplay()
-                        }}>HOMME
-                        </button>
-                    </section>
-                    <section className={"categorie-prestation " + hidden + " " + femmeDisplay}>
-                        <h2>catégorie : Femme</h2>
-                        {state.prestation.data.map((e, i) => {
-                            if (e.genre === "Femme") {
-                                return (<div key={i} className="prestation-wrapper">
-                                    <p>{e.prestation}</p>
-                                    <p>{e.price} €</p>
-                                </div>)
-                            }
-                        })}
-                    </section>
-                    <section className={"categorie-prestation " + hidden + " " + hommeDisplay}>
-                        <h2>catégorie : Homme</h2>
-                        {state.prestation.data.map((e, i) => {
-                            if (e.genre === "Homme") {
-                                return (
-                                    <div key={i} className="prestation-wrapper">
-                                        <p>{e.prestation}</p>
-                                        <p>{e.price} €</p>
-                                    </div>
-                                )
-                            }
-                        })}
-                    </section>
-                </>
-            )}
-        </main>
-    )
+    return (<main>
+        {state.prestation.count === 0 ? (<div>aucune prestation</div>) : (<>
+            <section className="select-tarif">
+                <button onClick={(e) => {
+                    setHidden()
+                    setHommeDisplay()
+                    setFemmeDisplay()
+                }}>ALL
+                </button>
+                <button onClick={(e) => {
+                    setHidden("hidden-tarif")
+                    setFemmeDisplay("femme-tarif")
+                    setHommeDisplay()
+                }}>FEMME
+                </button>
+                <button onClick={(e) => {
+                    setHidden("hidden-tarif")
+                    setHommeDisplay("homme-tarif")
+                    setFemmeDisplay()
+                }}>HOMME
+                </button>
+            </section>
+            <section className={"categorie-prestation " + hidden + " " + femmeDisplay}>
+                <h2>catégorie : Femme</h2>
+                {state.prestation.data.map((e, i) => {
+                    console.log(e)
+                    if (e.genre === "Femme") {
+                        return (<div key={i} className="prestation-wrapper">
+                            <p>{e.prestation}</p>
+                            <p>{e.price} €</p>
+                        </div>)
+                    }
+                })}
+            </section>
+            <section className={"categorie-prestation " + hidden + " " + hommeDisplay}>
+                <h2>catégorie : Homme</h2>
+                {state.prestation.data.map((e, i) => {
+                    console.log(e)
+                    if (e.genre === "Homme") {
+                        return (<div key={i} className="prestation-wrapper">
+                            <p>{e.prestation}</p>
+                            <p>{e.price} €</p>
+                        </div>)
+                    }
+                })}
+            </section>
+        </>)}
+    </main>)
 }
