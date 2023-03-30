@@ -30,10 +30,7 @@ export const Tarif = () => {
             }
         }
     }, [state.prestation.data, hommeDisplay, femmeDisplay])
-    console.log(state.prestation)
-    useEffect(() => {
-        console.log(state.prestation)
-    }, [state.prestation])
+    
 
     function actualisePrestation() {
         getPrestation()
