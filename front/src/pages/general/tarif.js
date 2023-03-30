@@ -30,6 +30,10 @@ export const Tarif = () => {
             }
         }
     }, [state.prestation.data, hommeDisplay, femmeDisplay])
+    console.log(state.prestation)
+    useEffect(() => {
+        console.log(state.prestation)
+    }, [state.prestation])
 
     function actualisePrestation() {
         getPrestation()
@@ -42,7 +46,7 @@ export const Tarif = () => {
     }
 
     return (<main>
-        {state.prestation.count === 0 ? (<div>aucune prestation</div>) : (<>
+        {state.prestation.count === 0 || state.prestation.prestation === false ? (<div>aucune prestation</div>) : (<>
             <section className="select-tarif">
                 <button onClick={(e) => {
                     setHidden()
