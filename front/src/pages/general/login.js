@@ -16,7 +16,6 @@ export const Login = () => {
         e.preventDefault()
         postLogin(email, password)
             .then(res => {
-                console.log(res)
                 if (res.message !== undefined) {
                     toastError(res.message)
                 }
