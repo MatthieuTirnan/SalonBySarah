@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {listUsers} from "../../store/slices/listUserSlice";
 import "../../asset/style/management.scss"
 import {toastError, toastSuccess} from "../../components/toast/toast";
+import {user} from "../../store/slices/userSlice";
 
 
 export const UserManagement = () => {
@@ -60,7 +61,17 @@ export const UserManagement = () => {
 
                             updateUser(id)
                                 .then((res) => {
-                                    console.log(res)
+                                    if (res.user._id === state.user._id) {
+                                        localStorage.clear()
+                                        dispatch(user({
+                                            pseudo: "",
+                                            email: "",
+                                            isAdmin: false,
+                                            _id: "",
+                                            jwt: "",
+                                            isMatch: false
+                                        }))
+                                    }
                                     if (res.message == 'Something went wrong') {
                                         toastError('Something went wrong')
                                     } else {
@@ -68,7 +79,6 @@ export const UserManagement = () => {
                                     }
                                     getUser()
                                         .then((res) => {
-                                            console.log(res)
                                             dispatch(listUsers(res))
                                         })
                                         .catch((err) => {

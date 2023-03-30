@@ -30,7 +30,7 @@ export const Tarif = () => {
             }
         }
     }, [state.prestation.data, hommeDisplay, femmeDisplay])
-    
+
 
     function actualisePrestation() {
         getPrestation()
@@ -67,7 +67,6 @@ export const Tarif = () => {
             <section className={"categorie-prestation " + hidden + " " + femmeDisplay}>
                 <h2>catégorie : Femme</h2>
                 {state.prestation.data.map((e, i) => {
-                    console.log(e)
                     if (e.genre === "Femme") {
                         return (<div key={i} className="prestation-wrapper">
                             <p>{e.prestation}</p>
@@ -79,7 +78,6 @@ export const Tarif = () => {
             <section className={"categorie-prestation " + hidden + " " + hommeDisplay}>
                 <h2>catégorie : Homme</h2>
                 {state.prestation.data.map((e, i) => {
-                    console.log(e)
                     if (e.genre === "Homme") {
                         return (<div key={i} className="prestation-wrapper">
                             <p>{e.prestation}</p>
