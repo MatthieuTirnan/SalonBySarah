@@ -34,7 +34,10 @@ export const PrestationManagement = () => {
         setFormDisplay("hiddenform")
         updatePrestation(currentPrestation)
             .then((res) => {
-                toastSuccess(res.message)
+                if(res.message=== "Price n'est pas un nombre"){
+                    toastError("Price n'est pas un nombre et ne peut pas être appliqué à la prestation")
+                }
+                else{toastSuccess(res.message)}
                 actualiseDisplay()
             })
             .catch((err) => {
