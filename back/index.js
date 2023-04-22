@@ -9,8 +9,17 @@ import dotenv from 'dotenv'
 dotenv.config()
 const app = express();
 const PORT = 9010;
+const allowedOrigins = ["http://matthieutirnan.ide.3wa.io:3000","http://localhost:3000"]
 
-app.use(cors())
+app.use(cors({
+    origin:function(origin,callback){
+        if(!origin || allowedOrigins.includes(origin)){
+            callback(null,true);
+        }else{
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
