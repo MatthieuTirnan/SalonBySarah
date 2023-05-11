@@ -16,9 +16,7 @@
     font-weight: bold;
     font-size: 20px;
     text-transform: uppercase;
-    @include desktop{
-    padding-right: 200px;
-    }
+   
   }
   a{
     margin:5px;
@@ -30,6 +28,8 @@
     }
   }
 }
-
+.message-for-contact {
+  width: 100%;
+}
 
 

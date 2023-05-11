@@ -43,7 +43,6 @@ export const Message = () => {
 
         postMessageUser(formData)
             .then((res) => {
-                console.log(res)
                 if (res.message === 'fichier manquant') {
                     toastError(res.message)
                 } else if (res.message === 'Unsupported image file type') {

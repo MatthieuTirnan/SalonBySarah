@@ -48,7 +48,7 @@ export const Login = () => {
                     </input>
                     <label>Mot de passe : </label>
                     <input type="password"
-                           placeholder="password"
+                           placeholder="Mot de passe"
                            name="password"
                            onChange={(e) => setPassword(e.target.value)}
                            required></input>
