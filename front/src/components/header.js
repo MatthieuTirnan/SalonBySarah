@@ -52,7 +52,7 @@ export const Header = () => {
                 <div className={menu_class}>
                     {!state.user.isMatch ? (
                         < div className="lien">
-                            <Link className="link-header" to="/login"> CONNECTION </Link>
+                            <Link className="link-header" to="/login"> CONNEXION </Link>
                             <Link className="link-header" to="/register"> CREER UN COMPTE </Link>
                         </div>
                     ) : (
